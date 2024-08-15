@@ -1,0 +1,53 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage{blindtext}
+\usepackage{subcaption}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{amssymb}
+\usepackage{caption}
+\usepackage{amsmath}
+\usepackage{circuitikz}
+\usepackage{hyperref}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{listings}
+
+\lstset{
+    inputencoding=utf8,
+    extendedchars=true,
+    literate={á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1 {ñ}{{\~n}}1 {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1 {Ñ}{{\~N}}1
+}
+\input{AEDmacros}
+\newcommand{\notimplies}{\;\not\!\!\!\implies}
+\title{Paradigmas de Lenguajes de Programación}
+\author{Tomás Agustín Hernández}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}[remember picture,overlay]
+        \node[anchor=south east, inner sep=0pt, xshift=-1cm, yshift=2cm] at (current page.south east) {
+            \begin{minipage}[b]{0.5\textwidth}
+                \includegraphics[width=\linewidth]{logo_uba.jpg}
+                \label{fig:bottom}
+            \end{minipage}
+        };
+    \end{tikzpicture}
+\end{figure}
+
+\newpage
+\section*{Recordando Haskell}
+Para ejecutar un archivo hay que instalar GHCI. Una vez instalado, nos paramos en la terminal en el directorio donde está el archivo que queremos ejecutar. \\
+\begin{itemize}
+    \item Cargar archivo: :l nombreArchivo
+    \item Ver tipo: :type tipo 
+    \item Ejecutar funcion: funcion parametro1 parametro2...
+    \item Recargar archivo: :r
+    \item Si necesitamos hacer cálculos para mandar un parámetro, usar paréntesis: Ej.: otherwise = n * factorial(n-1)
+    \item 
+\end{itemize} 
+
+\end{document} 
