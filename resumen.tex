@@ -49,5 +49,22 @@ Para ejecutar un archivo hay que instalar GHCI. Una vez instalado, nos paramos e
     \item Si necesitamos hacer cálculos para mandar un parámetro, usar paréntesis: Ej.: otherwise = n * factorial(n-1)
     \item 
 \end{itemize} 
+\section*{Maybe}
+El Maybe se utiliza en Haskell para recibir/devolver respuestas condicionales que pueden ser de un tipo u otro. \\
 
+Se define como $data \ Maybe \ a \ = \ Nothing \ | \ Just \ a$ \\
+
+Ej.: $ devolverFalsoSiVerdadero \:: \ Bool \rightarrow Prelude.Maybe \ Bool $ \\
+
+El Maybe deja la puerta abierta a un valor posible "Nothing". Entonces tenemos dos casos: Si me envian un True devuelvo False (tipo bool), caso contrario, devuelvo Nothing. 
+
+\section*{Either}
+El Either se utiliza en Haskell para poder recibir/devolver un parámetro que podría ser de un tipo u otro. \\
+Se define como $ data \ Either \ a \ b \ = \ Left \ a \ | \ Right \ b $ \\
+
+Para poder saber qué operación hacer según el tipo literalmente en código usamos (Left valor) o (Right valor). \\
+
+Ej.: $ devolverRepresentacionIntBool \ :: \ Either \ Int \ Bool \ \rightarrow \ Int $ \\
+
+Si es un entero, devuelvo ese mismo entero porque no hago nada. Eso lo hacemos con $Left(a) \ = \ a$, ahora, si el tipo es booleano tengo que decir explícitamente la respuesta según su valor. Es decir, $Right(False) \ = \ 0$ sino, $Right(True) \ = \ 1$.
 \end{document} 
