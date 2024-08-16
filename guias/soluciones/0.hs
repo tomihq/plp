@@ -49,6 +49,11 @@ aEntero (Left a) = a
 aEntero (Right False) = 0
 aEntero (Right True) = 1 
 
+aEntero2 :: Either Int Bool -> Int 
+aEntero2 a = case a of 
+             (Left a) -> a 
+             (Right a) -> if a then 1 else 0 
+
 devolverFalsoSiVerdadero :: Bool -> Prelude.Maybe Bool 
 devolverFalsoSiVerdadero b | b == False = Nothing
                            | otherwise = Just(not b)
@@ -90,6 +95,7 @@ sumatoria l = (head l) + sumatoria(tail l)
 
 promedio :: [Float] -> Float 
 promedio l = sumatoria l / cantidadElementos l
+{- Nota, usé / porque div es para enteros. Ver :t div y :t (/) -}
 
 difPromedio :: [Float] -> [Float]
 difPromedio l = difPromedioAux l (promedio l) []
@@ -97,11 +103,8 @@ difPromedio l = difPromedioAux l (promedio l) []
 difPromedioAux :: [Float] -> Float -> [Float] -> [Float]
 difPromedioAux l1 prom l2 | l1 == [] = l2 
                           | otherwise = (head l1) - prom : difPromedioAux (tail l1) prom []
-                     
-{- difPromedio :: [Float] -> [Float] 
-difPromedio l = difPromedioAux l promedio l 0
-  -}
-
+                                {- Voy creando una nueva lista con los elementos en cada paso recursivo.-}
+                    
 
 todosIguales :: [Int] -> Bool 
 todosIguales l = todosIgualesAux l (head l)
