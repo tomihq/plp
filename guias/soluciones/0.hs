@@ -113,3 +113,29 @@ todosIgualesAux :: [Int] -> Int -> Bool
 todosIgualesAux l e | l == [] = True
                     | head(l) /= e = False
                     | otherwise = todosIgualesAux (tail l) (head l)
+
+data AB a = Nil | Bin (AB a) a (AB a) {- Un arbol binario puede ser (raiz null) o Raiz existe pero hijos Nil. -}
+
+vacioAB :: AB a -> Bool 
+vacioAB Nil = True 
+vacioAB _ = False 
+
+negacionAB :: AB Bool -> AB Bool 
+negacionAB Nil = Nil 
+negacionAB (Bin left val right) = Bin (negacionAB left) (not val) (negacionAB right)
+
+{- Nota: Como devuelvo un AB Bool la respuesta debe ser un nuevo arbol binario -> :t Bin es justamente data AB a-}
+
+productoAB :: AB Int -> Int 
+productoAB Nil = 1
+productoAB (Bin left val right) = (productoAB left) * (val) * (productoAB right)
+
+{- Nota: Como tengo que devolver un Int, no vale devolver un nuevo Bin porque Bin tipa como AB a que es: O Nulo u otro Arbol Binario -}
+
+{- Bin (Bin (Bin Nil 5 Nil) 2 Nil) 3 (Bin Nil 4 Nill) 
+    Arbol con raiz valor 3, el hijo izquierdo del 3 es un nodo con valor 2 donde su nodo izquierdo es 5, donde su hijo izquierdo y derecho son nulos. Por otro lado, el hijo derecho del 4 es otro arbol binario que tiene dos hijos nulos.
+-}
+
+inOrder :: AB Int -> [Int]
+inOrder Nil = []
+inOrder (Bin left val right) = inOrder(left) ++ [(val)] ++ inOrder(right)
