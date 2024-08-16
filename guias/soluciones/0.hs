@@ -101,8 +101,8 @@ difPromedio :: [Float] -> [Float]
 difPromedio l = difPromedioAux l (promedio l) []
 
 difPromedioAux :: [Float] -> Float -> [Float] -> [Float]
-difPromedioAux l1 prom l2 | l1 == [] = l2 
-                          | otherwise = (head l1) - prom : difPromedioAux (tail l1) prom []
+difPromedioAux [] prom l2 = l2 
+difPromedioAux (x:xs) prom l2 = difPromedioAux xs prom ((x - prom) : l2)
                                 {- Voy creando una nueva lista con los elementos en cada paso recursivo.-}
                     
 
