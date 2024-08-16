@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1723733007.21122 "g:/YO/UBA/EXACTAS/Paradigmas de Lenguajes de Programacion/Mi cursada/plp/resumen.tex" "resumen.pdf" "resumen" 1723733008.94353 0
+["pdflatex"] 1723733022.8751 "g:/YO/UBA/EXACTAS/Paradigmas de Lenguajes de Programacion/Mi cursada/plp/resumen.tex" "resumen.pdf" "resumen" 1723733024.7472 0
   "AEDmacros.tex" 1712525433.64599 5225 2826756ed51c10569c498807042fc7bb ""
   "C:/Users/Tom/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1714145230.85494 81068 299f700eb05b1217173e62b88b513bd0 ""
   "C:/Users/Tom/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1713025115.90824 24235103 11db7660203453607b713c1a5631f4c3 ""
@@ -189,10 +189,10 @@
   "C:/Users/Tom/AppData/Local/Programs/MiKTeX/tex/latex/tools/xspace.sty" 1700599895 4545 9f5ea23ab1c91476c42749893f790666 ""
   "C:/Users/Tom/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "C:/Users/Tom/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.sty" 1700127522 55487 80a65caedd3722f4c20a14a69e785d8f ""
-  "g:/YO/UBA/EXACTAS/Paradigmas de Lenguajes de Programacion/Mi cursada/plp/resumen.tex" 1723733006.45756 2864 1846b16778396e3f7a293ad2d81c4661 ""
+  "g:/YO/UBA/EXACTAS/Paradigmas de Lenguajes de Programacion/Mi cursada/plp/resumen.tex" 1723733017.91497 2867 0a70d6a8721399614589cd784a2b053d ""
   "logo_uba.jpg" 1712525433.64999 229119 10f3a63be47e1e95e44f30008ec3af50 ""
-  "resumen.aux" 1723733008.65353 547 5494cd4bc8f7180a1565a37b54fde3ab "pdflatex"
-  "resumen.out" 1723733008.57853 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "resumen.aux" 1723733024.4376 547 5494cd4bc8f7180a1565a37b54fde3ab "pdflatex"
+  "resumen.out" 1723733024.33734 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
   (generated)
   "resumen.aux"
   "resumen.log"

@@ -1,7 +1,3 @@
-resumen.aux
-resumen.fdb_latexmk
-resumen.fls
-resumen.log
-resumen.out
-resumen.synctex.gz
-resumen.aux
+resumen.*
+
+!resumen.tex

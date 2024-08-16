@@ -52,3 +52,19 @@ aEntero (Right True) = 1
 devolverFalsoSiVerdadero :: Bool -> Prelude.Maybe Bool 
 devolverFalsoSiVerdadero b | b == False = Nothing
                            | otherwise = Just(not b)
+
+
+{- Ejercicio 4. 
+
+todosIguales :: [Int] -> Bool: Que indica si todos los elementosd e una lista son iguales.
+mi idea va a ser que: el caso base sea [] = []
+    Ahora la idea es que a partir del segundo recorrido chequee el elemento enviado anteriormente es igual a la cabeza de ese momento. Si la lista es vacia es true (todos iguales) pues queda un elemento, caso contrario false.
+-}
+
+todosIguales :: [Int] -> Bool 
+todosIguales l = todosIgualesAux l (head l)
+
+todosIgualesAux :: [Int] -> Int -> Bool 
+todosIgualesAux l e | l == [] = True
+                    | head(l) /= e = False
+                    | otherwise = todosIgualesAux (tail l) (head l)
