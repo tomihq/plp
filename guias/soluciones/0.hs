@@ -56,10 +56,52 @@ devolverFalsoSiVerdadero b | b == False = Nothing
 
 {- Ejercicio 4. 
 
-todosIguales :: [Int] -> Bool: Que indica si todos los elementosd e una lista son iguales.
+limpiar :: String → String → String, que elimina todas las apariciones de cualquier carácter de la primera
+cadena en la segunda. Por ejemplo, limpiar ``susto'' ``puerta'' evalúa a ``pera''. Nota: String es un
+renombre de [Char]. La notación ``hola'' es equivalente a [`h',`o',`l',`a'] y a `h':`o':`l':`a':[].
+
+Idea: Recorro las letras del primer string, por cada letra, veo si esta en la segunda, y si esta, la elimino (es decir), devuelvo una lista completamente nueva.
+Es decir, cada vez que borro 1 letra, es una lista nueva. "Deberia ir concatenando, las letras que son diferentes en una nueva lista"
+
+difPromedio :: [Float] → [Float] que dada una lista de números devuelve la diferencia de cada uno con el
+promedio general. Por ejemplo, difPromedio [2, 3, 4] evalúa a [-1, 0, 1].
+
+todosIguales :: [Int] -> Bool: Que indica si todos los elementos de una lista son iguales.
 mi idea va a ser que: el caso base sea [] = []
-    Ahora la idea es que a partir del segundo recorrido chequee el elemento enviado anteriormente es igual a la cabeza de ese momento. Si la lista es vacia es true (todos iguales) pues queda un elemento, caso contrario false.
+    Ahora la idea es que a partir del segundo recorrido chequee el elemento enviado anteriormente es igual a la cabeza de ese momento. Si la lista es vacia es true (todos iguales) pues queda un elemento, caso contrario chequeo si el elemento que me mandaron por parametro es igual a mi cabeza actual, si es asi lo dejo pasar, sino retorno false.
 -}
+
+{- limpiar :: [Char] -> [Char] -> [Char]
+limpiar [] p2 = p2
+limpiar p1 p2 = limpiarAux (head p1) p2 []
+
+limpiarAux :: Char -> [Char] -> [Char] -> [Char] 
+limpiarAux e p2 l | p2 == [] = l
+                  | head(p2) == e = limpiarAux e (tail p2) l 
+                  | otherwise = e : l  -}
+
+cantidadElementos :: [Float] -> Float 
+cantidadElementos [] = 0
+cantidadElementos l = 1 + cantidadElementos (tail l);
+
+sumatoria :: [Float] -> Float 
+sumatoria [] = 0
+sumatoria l = (head l) + sumatoria(tail l)
+
+promedio :: [Float] -> Float 
+promedio l = sumatoria l / cantidadElementos l
+
+difPromedio :: [Float] -> [Float]
+difPromedio l = difPromedioAux l (promedio l) []
+
+difPromedioAux :: [Float] -> Float -> [Float] -> [Float]
+difPromedioAux l1 prom l2 | l1 == [] = l2 
+                          | otherwise = (head l1) - prom : difPromedioAux (tail l1) prom []
+                     
+{- difPromedio :: [Float] -> [Float] 
+difPromedio l = difPromedioAux l promedio l 0
+  -}
+
 
 todosIguales :: [Int] -> Bool 
 todosIguales l = todosIgualesAux l (head l)
