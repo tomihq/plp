@@ -67,4 +67,23 @@ Para poder saber qué operación hacer según el tipo literalmente en código us
 Ej.: $ devolverRepresentacionIntBool \ :: \ Either \ Int \ Bool \ \rightarrow \ Int $ \\
 
 Si es un entero, devuelvo ese mismo entero porque no hago nada. Eso lo hacemos con $Left(a) \ = \ a$, ahora, si el tipo es booleano tengo que decir explícitamente la respuesta según su valor. Es decir, $Right(False) \ = \ 0$ sino, $Right(True) \ = \ 1$.
+
+\section*{Declaración de tipos en Haskell}
+Se utiliza $data \ nombretipo \ tipo \ = \ Tipo \ 1 \ | \ Tipo \ 2$ 
+El $|$ se interpreta como "o bien"
+\section*{Árboles Binarios}
+Es un tipo (para mi parecer) meramente recursivo. \\
+$data \ AB \ a \ = \ Nil \ | \ Bin \ (AB \ a) \ a \ (AB \ a)$
+Nótese que es algo re contra recursivo, porque para definir el tipo de AB a decimos que es un Bin que a su vez es de AB a y a su vez AB a es otro árbol binario. \
+Veamos unos ejemplos de esto
+\begin{itemize}
+    \item Bin (Nil) Nil (Nil): es el árbol que no tiene ni siquiera raíz. Y nótese que en cada paréntesis es importante indicar el Nil pues es la forma de que el tipado de Haskell nos lo acepte.
+    \item Bin (Bin Nil 3 Nil) 4 (Bin Nil 6 Nil): Es el árbol que comienza con un Nodo raíz que tiene el valor de 4. El hijo izquierdo del Nodo con valor 4 es otro árbol binario que tiene como valor 3 en su nodo y no tiene hijos. El hijo derecho del Nodo con valor 4 es otro árbol binario que tiene como valor 6 en su Nodo y no tiene hijos. 
+\end{itemize}
+Y así sucesivamente, veamos un dibujo para tener algo más visual. \\
+El siguiente árbol binario: Bin (Bin (Bin Nil 2 Nil) 3 Nil) 4 (Bin (Bin Nil 5 Nil) 6 Nil) representa el siguiente:
+\[\begin{minipage}[b]{0.5\textwidth}
+    \includegraphics[width=\linewidth]{assets/abb_haskell.jpg}
+\end{minipage}\]
+
 \end{document} 

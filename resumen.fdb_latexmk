@@ -1,8 +1,8 @@
 # Fdb version 4
-["pdflatex"] 1723733022.8751 "g:/YO/UBA/EXACTAS/Paradigmas de Lenguajes de Programacion/Mi cursada/plp/resumen.tex" "resumen.pdf" "resumen" 1723733024.7472 0
-  "AEDmacros.tex" 1712525433.64599 5225 2826756ed51c10569c498807042fc7bb ""
-  "C:/Users/Tom/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1714145230.85494 81068 299f700eb05b1217173e62b88b513bd0 ""
-  "C:/Users/Tom/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1713025115.90824 24235103 11db7660203453607b713c1a5631f4c3 ""
+["pdflatex"] 1723911273.56151 "g:/YO/UBA/EXACTAS/Paradigmas de Lenguajes de Programacion/Mi cursada/plp/resumen.tex" "resumen.pdf" "resumen" 1723911275.30334 0
+  "AEDmacros.tex" 1712525433 5225 a29b5124b00f3f425c63e9a9999700f1 ""
+  "C:/Users/Tom/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1714145230 81068 299f700eb05b1217173e62b88b513bd0 ""
+  "C:/Users/Tom/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1713025115 24235103 10b6741b17395380cf1e081181649e0e ""
   "C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1233951848 1004 54797486969f23fa377b128694d548df ""
   "C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1233951848 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
   "C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/tfm/public/amsfonts/symbols/msam10.tfm" 1233951854 916 f87d7c45f9c908e672703b83b72241a3 ""
@@ -28,6 +28,7 @@
   "C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1247596667 35752 024fb6c41858982481f6968b5fc26508 ""
   "C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb" 1247596667 32722 d7379af29a190c3f453aba36302ff5a9 ""
   "C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb" 1247596666 32362 179c33bbf43f19adbb3825bb4e36e57a ""
+  "C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb" 1247596667 32762 7fee39e011c23b3589931effd97b9702 ""
   "C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1247596667 32569 5e5ddc8df908dea60932f3c484a54c0d ""
   "C:/Users/Tom/AppData/Local/Programs/MiKTeX/tex/context/base/mkii/supp-pdf.mkii" 1580390158 71627 94eb9990bed73c364d7f53f960cc8c5b ""
   "C:/Users/Tom/AppData/Local/Programs/MiKTeX/tex/generic/atbegshi/atbegshi.sty" 1575571100 24708 5584a51a7101caf7e6bbf1fc27d8f7b1 ""
@@ -189,10 +190,12 @@
   "C:/Users/Tom/AppData/Local/Programs/MiKTeX/tex/latex/tools/xspace.sty" 1700599895 4545 9f5ea23ab1c91476c42749893f790666 ""
   "C:/Users/Tom/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "C:/Users/Tom/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.sty" 1700127522 55487 80a65caedd3722f4c20a14a69e785d8f ""
-  "g:/YO/UBA/EXACTAS/Paradigmas de Lenguajes de Programacion/Mi cursada/plp/resumen.tex" 1723733017.91497 2867 0a70d6a8721399614589cd784a2b053d ""
-  "logo_uba.jpg" 1712525433.64999 229119 10f3a63be47e1e95e44f30008ec3af50 ""
-  "resumen.aux" 1723733024.4376 547 5494cd4bc8f7180a1565a37b54fde3ab "pdflatex"
-  "resumen.out" 1723733024.33734 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "assets/abb_haskell.jpg" 1723911213 43490 64ca52ecc78eda935a1bf5d53ba124e6 ""
+  "g:/YO/UBA/EXACTAS/Paradigmas de Lenguajes de Programacion/Mi cursada/plp/resumen.tex" 1723911272 4252 7b972e1b6584756db8b35c103d16539b ""
+  "logo_uba.jpg" 1712525433 229119 10f3a63be47e1e95e44f30008ec3af50 ""
+  "resumen.aux" 1723911275 547 8711bca0169f8723ef256fc1f496c673 "pdflatex"
+  "resumen.out" 1723911274 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "resumen.tex" 1723911272 4252 7b972e1b6584756db8b35c103d16539b ""
   (generated)
   "resumen.aux"
   "resumen.log"

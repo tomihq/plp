@@ -1,4 +1,4 @@
-PWD G:\YO\UBA\EXACTAS\Paradigmas de Lenguajes de Programacion\Mi cursada\plp
+PWD g:\YO\UBA\EXACTAS\Paradigmas de Lenguajes de Programacion\Mi cursada\plp
 INPUT C:\Users\Tom\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
 INPUT g:\YO\UBA\EXACTAS\Paradigmas de Lenguajes de Programacion\Mi cursada\plp\resumen.tex
 OUTPUT resumen.log
@@ -349,6 +349,13 @@ INPUT C:\Users\Tom\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbo
 INPUT C:\Users\Tom\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
 INPUT C:\Users\Tom\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm7.tfm
 INPUT C:\Users\Tom\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm5.tfm
+INPUT .\assets\abb_haskell.jpg
+INPUT .\assets\abb_haskell.jpg
+INPUT .\assets\abb_haskell.jpg
+INPUT .\assets\abb_haskell.jpg
+INPUT .\assets\abb_haskell.jpg
+INPUT .\assets\abb_haskell.jpg
+INPUT .\assets\abb_haskell.jpg
 INPUT resumen.aux
 INPUT .\resumen.out
 INPUT .\resumen.out
@@ -362,5 +369,7 @@ INPUT C:\Users\Tom\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\
 INPUT C:\Users\Tom\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr12.pfb
 INPUT C:\Users\Tom\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr17.pfb
 INPUT C:\Users\Tom\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr17.pfb
+INPUT C:\Users\Tom\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr7.pfb
+INPUT C:\Users\Tom\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr7.pfb
 INPUT C:\Users\Tom\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy10.pfb
 INPUT C:\Users\Tom\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy10.pfb
