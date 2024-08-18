@@ -69,7 +69,7 @@ Una expresión puede ser:
 \end{itemize}
 \subsection*{Función Parcialmente Aplicada}
 Una función parcialmente aplicada es una función a las cuales se llama otra función pero no se le proporcionan todos los argumentos. \\
-Ahora, es importante que para que esta función parcialmente aplicada tenga sentido, se le manden todos los parámetros. \\
+Ahora, es importante que para que esta función parcialmente aplicada tenga sentido se le manden todos los parámetros. \\
 Es una especie de $ a \rightarrow b$
 Ej.: 
 \begin{lstlisting}
@@ -93,6 +93,15 @@ Una buena pregunta entonces es ¿pero por qué es una función parcial add 5? Pu
 
 \end{lstlisting}
 
+Otro ejemplo 
+\begin{lstlisting}
+    const :: a -> b -> a 
+    const x y = x
+
+    const (const 1) 2 -> const 1
+    El llamado de (const 1) es una función parcialmente aplicada porque no envía el valor de y, sin embargo, const (const 1) 2 no la aplica parcialmente porque le termina mandando los dos parámetros.
+\end{lstlisting}
+
 \subsection*{Aplicación de Expresiones}
 Es asociativa hacia la izquierda:
 \begin{itemize}
@@ -112,7 +121,7 @@ Ej.: ¿Como construimos la lista [1, 2] utilizando constructores?
 \end{itemize}
 ¿Y si quisieramos construir 1, 2, 3, 4? Recordemos la asociatividad a la izquierda, pero a la hora de querer utilizar una expresión, hay que cumplir el tipado. Hasta que ese tipado no se cumpla, Haskell tratará de resolver la expresión más profunda para ver si reduciendo cumple el tipo. \\
 \[((:) 1) \ (((:) \ 4)(((:) \ 2) (((:) \ 3) \ [])))\] \\
-Esto lo podemos ver como $a \rightarrow (b \rightarrow (c \rightarrow (d))) $ pues para conocer a, necesitamos construir la lista de la derecha, para conocer a b necesitamos la lista de la derecha, para conocer a c necesitamos la lista de d, y d inicializa la lista vacía. Esto es importantísimo porque claramente no podríamos usar (:) 1 sin una lista. Entonces Haskell evalúa todo lo de la derecha hasta que obtenga una lista. Si no se obtuviera una lista, sería inválido. \\
+Esto lo podemos ver como $a \rightarrow (b \rightarrow (c \rightarrow (d))) $ pues para conocer a, necesitamos construir la lista de la derecha, para conocer a b necesitamos la lista de la derecha, para conocer a c necesitamos la lista de d, y d inicializa la lista vacía. Esto es importantísimo porque claramente no podríamos usar (:) 1 sin una lista. Entonces Haskell evalúa todo lo de la derecha hasta que obtenga una lista. Si no se obtuviera una lista, sería inválido.
 \section*{Polimorfismo}
 Sucede en aquellas expresiones que tienen más de un tipo. 
 \begin{itemize}
@@ -164,13 +173,52 @@ Ej.: $predecesor \ (n+1) \ = \ n$ también está mal formada porque estamos haci
 \end{itemize}
 \subsection*{¿Cuando se detiene la evaluación de una expresión?}
 \begin{itemize}
-    \item Cuando el programa estalla (da error).
-    \item Cuando la expresión es una función \textbf{parcialmente aplicada}. ¿que seria esto? 
+    \item Cuando el programa estalla.
+    \begin{itemize}
+        \item Loop infinito.
+        \item Indefinición.
+    \end{itemize}
+    \item Cuando la expresión es una función \textbf{parcialmente aplicada}. ¿que seria esto? ¿se refiere a utilizar mal la función parcialmente aplicada? 
     \item La expresión es un constructor o un constructor aplicado. Ej.: True, (:) 1, [1, 2, 3]. 
     \begin{itemize}
         \item Yo lo veo como algo más del tipo: una fórmula atómica o algo irreducible.
     \end{itemize}
 \end{itemize}
+\subsection*{¿Cómo ayuda el Lazy Evaluation (Evaluación Perezosa) a Haskell?}
+Muchas veces nos ayuda a evitar tocar con un valor indefinido aunque esté ahí. Como no evalúa cosas que no necesita, si hay un indefinido por ahí y no necesita ni siquiera llegar, no lo toca.
+\begin{lstlisting}
+    indefinido :: Int 
+    indefinido = indefinido 
+    head(tail [indefinido, 1, indefinido])
+\end{lstlisting}
+¿Qué hace tail? Toma la cola de la lista, entonces como resultado arroja [1, indefinido] (ni siquiera evaluó el primer indefinido) \\ 
+¿Qué hace head ahora entonces? [1] (ni siquiera evaluó el indefinido del final)
+\subsection*{Importancia del orden de las Ecuaciones}
+El criterio más fuerte debe ir por encima del resto. Porque puede haber un caso que matchee y nunca se evalúe el siguiente caso. \\
+Veamos un ejemplo: 
+\begin{lstlisting}
+    esCorta (_:_:_) = False
+    esCorta _ = True 
+\end{lstlisting}
+
+Considerando este orden: 
+\begin{itemize}
+    \item Si mando una lista que siempre tiene $\ge$ 3 elementos da False.
+    \item Si mando una lista que tiene $ < $ 3 elementos es siempre True.
+\end{itemize}
+
+Cambiemos el orden y veamos qué cambia
+\begin{lstlisting}
+    esCorta _ = True 
+    esCorta (_:_:_) = False
+\end{lstlisting}
+Considerando este orden: 
+\begin{itemize}
+    \item Si la lista tiene 0, 1, 2, 3, 4, ... n elementos siempre dará True.
+\end{itemize}
+En la segunda aplicación ¡nunca caemos en el caso 2! y esto es importante porque sabemos que si tiene 1 cae siempre en la primera.
+\section*{Funciones de Orden Superior}
+
 \section*{Recordando Haskell}
 Para ejecutar un archivo hay que instalar GHCI. Una vez instalado, nos paramos en la terminal en el directorio donde está el archivo que queremos ejecutar. 
 \begin{itemize}

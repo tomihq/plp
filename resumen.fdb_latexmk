@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1723992265.03515 "g:/YO/UBA/EXACTAS/Paradigmas de Lenguajes de Programacion/Mi cursada/plp/resumen.tex" "resumen.pdf" "resumen" 1723992266.76658 0
+["pdflatex"] 1723994271.25512 "g:/YO/UBA/EXACTAS/Paradigmas de Lenguajes de Programacion/Mi cursada/plp/resumen.tex" "resumen.pdf" "resumen" 1723994273.06417 0
   "AEDmacros.tex" 1712525433 5225 a29b5124b00f3f425c63e9a9999700f1 ""
   "C:/Users/Tom/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1714145230 81068 299f700eb05b1217173e62b88b513bd0 ""
   "C:/Users/Tom/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/tcrm1000.pk" 1712457826 11548 3796600c7d6ffbd092a7f6f1782b47b9 ""
@@ -197,11 +197,11 @@
   "C:/Users/Tom/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "C:/Users/Tom/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.sty" 1700127522 55487 80a65caedd3722f4c20a14a69e785d8f ""
   "assets/abb_haskell.jpg" 1723911213 43490 64ca52ecc78eda935a1bf5d53ba124e6 ""
-  "g:/YO/UBA/EXACTAS/Paradigmas de Lenguajes de Programacion/Mi cursada/plp/resumen.tex" 1723992264 12784 9d4d4a0bf4c32e131477a160b813a373 ""
+  "g:/YO/UBA/EXACTAS/Paradigmas de Lenguajes de Programacion/Mi cursada/plp/resumen.tex" 1723994270 14872 d299bb06425b9701f3624c52e1684703 ""
   "logo_uba.jpg" 1712525433 229119 10f3a63be47e1e95e44f30008ec3af50 ""
-  "resumen.aux" 1723992266 547 9f8505be6395354ab4446c2b8ea05d82 "pdflatex"
-  "resumen.out" 1723992266 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "resumen.tex" 1723992264 12784 9d4d4a0bf4c32e131477a160b813a373 ""
+  "resumen.aux" 1723994272 547 e01953709dfc4e95a3030563675472ef "pdflatex"
+  "resumen.out" 1723994272 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "resumen.tex" 1723994270 14872 d299bb06425b9701f3624c52e1684703 ""
   (generated)
   "resumen.aux"
   "resumen.log"
