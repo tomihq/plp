@@ -1,8 +1,10 @@
 # Fdb version 4
-["pdflatex"] 1723911273.56151 "g:/YO/UBA/EXACTAS/Paradigmas de Lenguajes de Programacion/Mi cursada/plp/resumen.tex" "resumen.pdf" "resumen" 1723911275.30334 0
+["pdflatex"] 1723946663.27666 "g:/YO/UBA/EXACTAS/Paradigmas de Lenguajes de Programacion/Mi cursada/plp/resumen.tex" "resumen.pdf" "resumen" 1723946665.05784 0
   "AEDmacros.tex" 1712525433 5225 a29b5124b00f3f425c63e9a9999700f1 ""
   "C:/Users/Tom/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1714145230 81068 299f700eb05b1217173e62b88b513bd0 ""
+  "C:/Users/Tom/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/tcrm1000.pk" 1712457826 11548 3796600c7d6ffbd092a7f6f1782b47b9 ""
   "C:/Users/Tom/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1713025115 24235103 10b6741b17395380cf1e081181649e0e ""
+  "C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/tfm/jknappen/ec/tcrm1000.tfm" 993062508 1436 c7f957a372ef2fbe93c0982f96625e12 ""
   "C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1233951848 1004 54797486969f23fa377b128694d548df ""
   "C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1233951848 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
   "C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/tfm/public/amsfonts/symbols/msam10.tfm" 1233951854 916 f87d7c45f9c908e672703b83b72241a3 ""
@@ -11,6 +13,7 @@
   "C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/tfm/public/amsfonts/symbols/msbm10.tfm" 1233951854 908 2921f8a10601f252058503cc6570e581 ""
   "C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/tfm/public/amsfonts/symbols/msbm5.tfm" 1233951854 940 75ac932a52f80982a9f8ea75d03a34cf ""
   "C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/tfm/public/amsfonts/symbols/msbm7.tfm" 1233951854 940 228d6584342e91276bf566bcf9716b83 ""
+  "C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmbx10.tfm" 1136765053 1328 c834bbb027764024c09d3d2bf908b5f0 ""
   "C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmbx12.tfm" 1136765053 1324 c910af8c371558dc20f2d7822f66fe64 ""
   "C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmex10.tfm" 1136765053 992 662f679a0b3d2d53c1b94050fdaa3f50 ""
   "C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmmi12.tfm" 1136765053 1524 4414a8315f39513458b80dfc63bff03a ""
@@ -23,6 +26,7 @@
   "C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmsy10.tfm" 1136765053 1124 6c73e740cf17375f03eec0ee63599741 ""
   "C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmsy6.tfm" 1136765053 1116 933a60c408fc0a863a92debe84b2d294 ""
   "C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmsy8.tfm" 1136765053 1120 8b7d695260f3cff42e636090a8002094 ""
+  "C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb" 1247596666 34811 78b52f49e893bcba91bd7581cdc144c0 ""
   "C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb" 1247596666 32080 340ef9bf63678554ee606688e7b5339d ""
   "C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb" 1247596667 36299 5f9df58c2139e7edcf37c8fca4bd384d ""
   "C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1247596667 35752 024fb6c41858982481f6968b5fc26508 ""
@@ -191,11 +195,11 @@
   "C:/Users/Tom/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "C:/Users/Tom/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.sty" 1700127522 55487 80a65caedd3722f4c20a14a69e785d8f ""
   "assets/abb_haskell.jpg" 1723911213 43490 64ca52ecc78eda935a1bf5d53ba124e6 ""
-  "g:/YO/UBA/EXACTAS/Paradigmas de Lenguajes de Programacion/Mi cursada/plp/resumen.tex" 1723911272 4252 7b972e1b6584756db8b35c103d16539b ""
+  "g:/YO/UBA/EXACTAS/Paradigmas de Lenguajes de Programacion/Mi cursada/plp/resumen.tex" 1723946662 8184 1e0a22f1ec6faadc32c4df6c601c684a ""
   "logo_uba.jpg" 1712525433 229119 10f3a63be47e1e95e44f30008ec3af50 ""
-  "resumen.aux" 1723911275 547 8711bca0169f8723ef256fc1f496c673 "pdflatex"
-  "resumen.out" 1723911274 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "resumen.tex" 1723911272 4252 7b972e1b6584756db8b35c103d16539b ""
+  "resumen.aux" 1723946664 547 c9a15e5da98f08fb71fef19f8e768066 "pdflatex"
+  "resumen.out" 1723946664 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "resumen.tex" 1723946662 8184 1e0a22f1ec6faadc32c4df6c601c684a ""
   (generated)
   "resumen.aux"
   "resumen.log"
