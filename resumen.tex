@@ -218,6 +218,119 @@ Considerando este orden:
 \end{itemize}
 En la segunda aplicación ¡nunca caemos en el caso 2! y esto es importante porque sabemos que si tiene 1 cae siempre en la primera.
 \section*{Funciones de Orden Superior}
+Son funciones que reciben como parámetro otras funciones. 
+
+Definamos la composición de funciones $(g \ .\ f)$ \\
+Recordemos que en Álgebra vimos Composición de Funciones y es algo así: sean $A:B \rightarrow C$ y $D:A \rightarrow B$ \\
+
+La composición gof es $A \rightarrow B$. Es decir, va desde el dominio de D hasta la imagen de A. (la salida de una función debe ser la entrada de la otra.) \\
+
+En Haskell, la podemos definir así
+\begin{lstlisting}
+    ent: Entrada sal: Salida
+
+    (.) :: (b -> c) -> (a -> b) -> (a -> c)
+    
+    Queremos: (g . f) x => g (f x) 
+
+    Desglosemos
+    (.) :: (ent. de g -> sal. de g) -> (ent. de f -> sal. de f) -> (ent. de f -> sal. de g)
+    
+    El resultado de la composición nos da una nueva función que tiene como entrada un valor de tipo a, y la salida es un valor de tipo c.
+    
+    Entonces, primero se evalúa f x, lo cual produce un resultado de tipo b.
+    
+    Luego, este resultado (de tipo b) se pasa a g, produciendo un resultado de tipo c.
+  
+    (g . f) x: envía el parámetro x a la función f, y el resultado de f x se manda a g. Esto da como resultado g (f x)
+\end{lstlisting}
+Otra forma de definir la composición es usando Notación Lambda.
+\begin{lstlisting}
+    (.) :: (b -> c) -> (a -> b) -> (a -> c)
+    g . f = \ x -> g (f x)
+\end{lstlisting}
+Nótese que la notación lambda es súper útil para definir funciones sin nombre, que solamente hagan algo. Esto es muy útil cuando queremos mandar una función por parámetro y que una función dada la llame a esta función.
+\subsection*{¿Para qué queremos funciones de orden superior? Pt 1}
+\begin{lstlisting}
+    dobleL :: [Float] -> [Float]
+    dobleL [] = []
+    dobleL (x:xs) = x * 2 : dobleL xs 
+
+    esParL :: [Int] -> [Bool]
+    esParL [] = []
+    esParL (x:xs) = x 'mod' 2 == 0 : esParL xs
+\end{lstlisting}
+
+¿Qué es lo que tienen en común? Todas tienen una estructura bastante similar.
+\begin{lstlisting}
+    g [] = []
+    g (x : xs) = f x : g xs
+\end{lstlisting}
+Lo único que cambia es \textbf{qué se hace} en cada paso recursivo. \\
+Hagamos una pregunta ¿la cantidad de elementos de la entrada es igual a la de la salida? en este caso sí pero ¿qué operación se está haciendo? se están haciendo ciertas manipulaciones de los datos y se devuelve la información modificada en una lista nueva. \\
+Esto, en varios lenguajes se conoce como \textbf{map}. Se hace una manipulación de los datos pero se devuelve \textbf{la misma cantidad de elementos}. 
+\subsection*{Map}
+Recibe como parámetro una función que es aplicada a todos los elementos y devuelve una lista nueva. Se utiliza para modificar los valores de una lista dada según lo que haga la función. \\
+\begin{lstlisting}
+    map :: (a -> b) -> [a] -> [b]
+    map f [] = []
+    map f (x : xs) = f x : map f xs 
+\end{lstlisting}
+
+Entonces, podemos definir \textbf{qué operación de modificación} se le realizan a los elementos de una lista dada.
+\begin{lstlisting}
+    multiplicarPorDos :: [a] -> [b]
+    multiplicarPorDos xs = map (\x -> x * 2) xs 
+
+    dividirPorDos :: [a] -> [b]
+    dividirPorDos xs :: map(\x -> x / 2) xs 
+\end{lstlisting}
+Entonces gracias a Map nos abstraemos de tener miles de funciones con la misma estructura pero solo cambien \textbf{qué hacen} con los elementos. 
+\subsection*{¿Para qué queremos funciones de orden superior? Pt 2}
+\begin{lstlisting}
+    negativos :: [Int] -> [Int]
+    negativos [] = []
+    negativos (x:xs) = if x < 0 
+                       then x : negativos xs
+                       else negativos xs 
+    
+    pares :: [Int] -> [Int]
+    pares [] = []
+    pares (x:xs) = if x 'mod' 2 == 0
+                   then x : pares xs 
+                   else pares xs
+\end{lstlisting}
+¿Qué es lo que tienen en común? Todas tienen una estructura bastante similar, pero lo único que cambia es \textbf{cuando vamos a agregar a la lista los elementos}. \\
+
+\begin{lstlisting}
+    g [] = []
+    g (x:xs) = f x : g xs
+\end{lstlisting}
+
+Hagamos una pregunta ¿la cantidad de elementos de la entrada es igual a la de la salida? Puede que sí, puede que no.   \\
+¿Qué operación se está haciendo? se están filtrando ciertos elementos de una lista que no cumplan una condición dada. \\
+Esto, en varios lenguajes se conoce como \textbf{filter}. Se devuelve una nueva lista con los elementos que cumplan una condición dada.
+\subsection*{Filter}
+Recibe como parámetro una función que es aplicada a todos los elementos. Se utiliza para "borrar" elementos de una lista, o quitar aquellos que no cumplan un criterio dado. 
+\begin{lstlisting}
+    filter :: (a -> Bool) -> [a] -> [b]
+    filter p [] = []
+    filter p (x : xs) = if p x
+                        then x : filter p xs 
+                        else filter p xs
+\end{lstlisting}
+
+La función que le envíamos es para especificar \textbf{qué elementos nos queremos quedar}.
+
+Entonces, podemos definir \textbf{qué operación de filtro} se le realizan a los elementos de una lista dada.
+\begin{lstlisting}
+    eliminarImpares :: [a] -> [b]
+    eliminarImpares xs = filter (\x -> x `mod` 2 == 0) xs 
+
+    borrarNegativos :: [a] -> [b]
+    borrarNegativos xs = filter(\x -> x > 0) xs 
+\end{lstlisting}
+Entonces gracias a Filter nos abstraemos de tener miles de funciones con la misma estructura pero solo cambien \textbf{con qué elementos nos quedamos} dada una condición
 
 \section*{Recordando Haskell}
 Para ejecutar un archivo hay que instalar GHCI. Una vez instalado, nos paramos en la terminal en el directorio donde está el archivo que queremos ejecutar. 
