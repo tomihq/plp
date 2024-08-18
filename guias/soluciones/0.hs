@@ -104,8 +104,6 @@ difPromedioAux :: [Float] -> Float -> [Float] -> [Float]
 difPromedioAux [] prom l2 = l2 
 difPromedioAux (x:xs) prom l2 = difPromedioAux xs prom ((x - prom) : l2)
                                 {- Voy creando una nueva lista con los elementos en cada paso recursivo.-}
-                    
-
 todosIguales :: [Int] -> Bool 
 todosIguales l = todosIgualesAux l (head l)
 
@@ -139,3 +137,10 @@ productoAB (Bin left val right) = (productoAB left) * (val) * (productoAB right)
 inOrder :: AB Int -> [Int]
 inOrder Nil = []
 inOrder (Bin left val right) = inOrder(left) ++ [(val)] ++ inOrder(right)
+
+
+add :: Int -> Int -> Int 
+add x y = x + y 
+
+add5 :: Int -> Int 
+add5 = add 5

@@ -67,6 +67,32 @@ Una expresión puede ser:
     \item Una variable: longitud, ordenar, x, xs (+), (*). 
     \item La aplicación de una expresión a otra: ordenar lista, not True, (+) 1. 
 \end{itemize}
+\subsection*{Función Parcialmente Aplicada}
+Una función parcialmente aplicada es una función a las cuales se llama otra función pero no se le proporcionan todos los argumentos. \\
+Ahora, es importante que para que esta función parcialmente aplicada tenga sentido, se le manden todos los parámetros. \\
+Es una especie de $ a \rightarrow b$
+Ej.: 
+\begin{lstlisting}
+    add :: Int -> Int -> Int
+    add x y = x + y
+
+    add5 :: Int -> Int
+    add5 = add 5
+
+    add5 es una función que ejecuta la función parcial add pues le manda solo un parámetro y necesita dos.
+   
+\end{lstlisting}
+Una buena pregunta entonces es ¿pero por qué es una función parcial add 5? Pues hay una función add5 que la implementa sin pasarle todos los parámetros directamente explícitamente.
+\begin{lstlisting}
+    add5 3 -> Este 3 llega como "y" a add
+
+    add5 = add 5 
+    add = 5 + y
+    add = 5 + 3
+    add = 8 
+
+\end{lstlisting}
+
 \subsection*{Aplicación de Expresiones}
 Es asociativa hacia la izquierda:
 \begin{itemize}
@@ -87,8 +113,66 @@ Ej.: ¿Como construimos la lista [1, 2] utilizando constructores?
 ¿Y si quisieramos construir 1, 2, 3, 4? Recordemos la asociatividad a la izquierda, pero a la hora de querer utilizar una expresión, hay que cumplir el tipado. Hasta que ese tipado no se cumpla, Haskell tratará de resolver la expresión más profunda para ver si reduciendo cumple el tipo. \\
 \[((:) 1) \ (((:) \ 4)(((:) \ 2) (((:) \ 3) \ [])))\] \\
 Esto lo podemos ver como $a \rightarrow (b \rightarrow (c \rightarrow (d))) $ pues para conocer a, necesitamos construir la lista de la derecha, para conocer a b necesitamos la lista de la derecha, para conocer a c necesitamos la lista de d, y d inicializa la lista vacía. Esto es importantísimo porque claramente no podríamos usar (:) 1 sin una lista. Entonces Haskell evalúa todo lo de la derecha hasta que obtenga una lista. Si no se obtuviera una lista, sería inválido. \\
+\section*{Polimorfismo}
+Sucede en aquellas expresiones que tienen más de un tipo. 
+\begin{itemize}
+    \item $ id \ :: \ a \rightarrow a $
+    \item $(:) :: a \rightarrow [a] \rightarrow [a]$
+    \item $fst :: (a, b) \rightarrow a$
+    \item $cargarStringArray :: String -> [] \rightarrow [String]$. No es una expresión Polimórfica.
+\end{itemize}
+\textbf{Nota}: Es importante que si tenemos 2 parámetros de tipo a significa que los dos parámetros deben ser de ese tipo. Si tenemos 2 parámetros uno de tipo a y uno de b podría suceder que sean diferentes pero puede que sean el mismo. 
+\section*{Modelo de Cómputo (cálculo de valores)}
+Dada una expresión, se computa su valor usando las ecuaciones siempre y cuando estén bien tipadas. \\
+\textbf{Importante}: Que una expresión se cumpla el tipado, no significa que devuelva un valor.
+\begin{itemize}
+    \item $sumarUno :: a -> a$: No falla nunca.
+    \item $division :: a -> b$: Falla si b = 0. Esto nos demuestra que aunque los parámetros estén bien tipados, podemos tener indefiniciones.
+\end{itemize}
+\subsection*{¿Cómo está dado un programa en Funcional?}
+Un programa funcional está dado por un conjunto de \textbf{ecuaciones orientadas}. Se les llama de esta forma pues del \textbf{lado izquierdo está lo que define y del lado derecho la definición} (o expresión que produce el valor)
+Una ecuación e1 = e2 se interpreta desde dos puntos de vista
+\begin{itemize}
+    \item \textbf{Denotacional}: Declara que e1 y e2 tienen el mismo significado. 
+    \begin{itemize}
+        \item "\textbf{Denotan} lo mismo"
+    \end{itemize}
+    \item \textbf{Operacional}: Computar el valor de e1 se reduce a computar el valor de e2.
+    \begin{itemize}
+        \item "\textbf{Operan} de la misma forma"
+    \end{itemize}
+\end{itemize}
+\subsection*{¿Cómo es el lado izquierdo de una ecuación orientada?}
+No es una expresión arbitraria. Debe ser una función aplicada a \textbf{patrones}. \\
+Un patrón puede ser: 
+\begin{itemize}
+    \item Una variable: a, b, c.
+    \item Un comodin: \textunderscore. 
+    \item Un constructor aplicado a patrones: Recordemos que un constructor sería algo que construye un tipo. 
+    \begin{itemize}
+        \item True, False, 1, etc.
+    \end{itemize}
+\end{itemize}
+\textbf{Importante}: El lado izquierdo NO debe contener variables repetidas. \\
+Ej.: $iguales \ x \ x \ = \ True$ es una expresión mal formada. Esto pues dos valores que pueden ser diferentes, no pueden caer en la misma variable. \\
+Ej.: $predecesor \ (n+1) \ = \ n$ también está mal formada porque estamos haciendo un cálculo del lado izquierdo, y recordemos que del lado izquierdo solo hay definiciones. Del lado derecho se hacen los cómputos o cálculo de los valores.
+\subsection*{¿Cómo evalúamos las expresiones?}
+\begin{itemize}
+    \item Buscamos la subexpresión más externa que coincida con el lado izquierdo de una ecuación.
+    \item Reemplazar la subexpresión que coincide con el lado izquierdo de la ecuación por la expresión correspondiente al lado derecho.
+    \item Continuar evaluando la expresión resultante.
+\end{itemize}
+\subsection*{¿Cuando se detiene la evaluación de una expresión?}
+\begin{itemize}
+    \item Cuando el programa estalla (da error).
+    \item Cuando la expresión es una función \textbf{parcialmente aplicada}. ¿que seria esto? 
+    \item La expresión es un constructor o un constructor aplicado. Ej.: True, (:) 1, [1, 2, 3]. 
+    \begin{itemize}
+        \item Yo lo veo como algo más del tipo: una fórmula atómica o algo irreducible.
+    \end{itemize}
+\end{itemize}
 \section*{Recordando Haskell}
-Para ejecutar un archivo hay que instalar GHCI. Una vez instalado, nos paramos en la terminal en el directorio donde está el archivo que queremos ejecutar. \\
+Para ejecutar un archivo hay que instalar GHCI. Una vez instalado, nos paramos en la terminal en el directorio donde está el archivo que queremos ejecutar. 
 \begin{itemize}
     \item Cargar archivo: :l nombreArchivo
     \item Ver tipo: :type tipo 
