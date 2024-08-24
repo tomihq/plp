@@ -355,6 +355,7 @@ INPUT C:\Users\Tom\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmbx10.tfm
 INPUT C:\Users\Tom\AppData\Local\Programs\MiKTeX\tex\latex\base\omlcmr.fd
 INPUT C:\Users\Tom\AppData\Local\Programs\MiKTeX\tex\latex\base\omlcmr.fd
 INPUT C:\Users\Tom\AppData\Local\Programs\MiKTeX\tex\latex\base\omlcmr.fd
+INPUT C:\Users\Tom\AppData\Local\Programs\MiKTeX\fonts\tfm\jknappen\ec\tcbx1440.tfm
 INPUT C:\Users\Tom\AppData\Local\Programs\MiKTeX\tex\latex\base\omscmr.fd
 INPUT C:\Users\Tom\AppData\Local\Programs\MiKTeX\tex\latex\base\omscmr.fd
 INPUT C:\Users\Tom\AppData\Local\Programs\MiKTeX\tex\latex\base\omscmr.fd
@@ -368,6 +369,8 @@ INPUT .\assets\abb_haskell.jpg
 INPUT resumen.aux
 INPUT .\resumen.out
 INPUT .\resumen.out
+INPUT C:\Users\Tom\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\tcbx1440.pk
+INPUT C:\Users\Tom\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\tcbx1440.pk
 INPUT C:\Users\Tom\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\tcrm1000.pk
 INPUT C:\Users\Tom\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\tcrm1000.pk
 INPUT C:\Users\Tom\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmbx10.pfb

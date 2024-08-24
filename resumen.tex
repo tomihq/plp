@@ -108,6 +108,18 @@ Es asociativa hacia la izquierda:
     \item $ f \ x \ y \equiv \ (f \ x) \ y $
     \item $ ((((f \ a) \ b) \ c) \ d)$: Primero calcula el resultado que devuelve la expresión f enviando el valor de a. Nótese que la ídea seria que (f a) devuelva una expresión del tipo función pues luego le pasamos otro parámetro (b).
 \end{itemize}
+\subsection*{Importancia de la Aplicación de las Expresiones}
+¿Qué sucede si aplicamos Head Tail l? Recordemos que la asociatividad a la izquierda haría algo así Head(Tail) l pero Tail en ese momento no es nada, y si aplicamos head explota. \\
+En este caso los paréntesis son importantes: (head (tail l)) \\
+
+Veamos otro ejemplo $map(\backslash x \rightarrow x \ 0) \ (map(+) \ [1, 2, 3])$. En este caso la asociatividad a la izquierda nos muestra algo así $map(\backslash x \rightarrow x \ 0) \ ((map(+) \ [1, 2, 3]))$ \\
+Esto genera $map(\backslash x \rightarrow x \ 0) \ [2, 3, 4]$ ahora según lo que haga la función x, hace una cosa u otra. Imaginemos que lo llamamos como map (+1) [2, 3, 4] esto daría $[3, 4, 5]$
+\section*{Función \$}
+Aplica una función a un valor
+\begin{lstlisting}
+    g :: (a -> b) -> (a -> b)
+    g x y = x y 
+\end{lstlisting}
 \subsection*{Construyendo una lista paso a paso con constructores}
 Ej.: ¿Como construimos la lista [1, 2] utilizando constructores?
 \begin{itemize}
@@ -131,6 +143,10 @@ Sucede en aquellas expresiones que tienen más de un tipo.
     \item $cargarStringArray :: String -> [] \rightarrow [String]$. No es una expresión Polimórfica.
 \end{itemize}
 \textbf{Nota}: Es importante que si tenemos 2 parámetros de tipo a significa que los dos parámetros deben ser de ese tipo. Si tenemos 2 parámetros uno de tipo a y uno de b podría suceder que sean diferentes pero puede que sean el mismo. 
+\section*{Polimorfismo con Clases (Type Classes)}
+Es posible limitar el polimorfismo a clases específicas. Es decir, si nos mandan un tipo $a$ podemos decir que ese tipo $a$ es genérico pero de una clase específica. \\
+Ejemplo: $func :: Num \ a \implies a \rightarrow a \rightarrow a$ \\
+En este caso, $Num \ a $ es una Type Class.
 \section*{Modelo de Cómputo (cálculo de valores)}
 Dada una expresión, se computa su valor usando las ecuaciones siempre y cuando estén bien tipadas. \\
 \textbf{Importante}: Que una expresión se cumpla el tipado, no significa que devuelva un valor.
@@ -217,6 +233,18 @@ Considerando este orden:
     \item Si la lista tiene 0, 1, 2, 3, 4, ... n elementos siempre dará True.
 \end{itemize}
 En la segunda aplicación ¡nunca caemos en el caso 2! y esto es importante porque sabemos que si tiene 1 cae siempre en la primera.
+\section*{Notación Infija \& Notación Prefija}
+\textbf{Infija}: argumento + funcion + argumento \\
+\textbf{Prefija}: funcion + argumentos 
+\section*{Currificación}
+Una función es currificada cuando tiene la siguiente forma $ ab :: Int -> Int -> Int $ \\
+Esto puede parecer que recibe 2 parámetros y devuelve uno, pero en realidad lo que hace es básicamente por cada parámetro asociar a la izquierda y hacer una función por cada parámetro. \\
+Es decir, sería algo así $ab::Int -> (Int -> Int)$ \\
+La función Curry \textbf{NO CAMBIA} la manera en que la función original currificada recibe los argumentos, sino que, la función curry es una especie de $puente$ para que nosotros mandemos los argumentos separados y los aplique a la función no currificada. \\
+\textbf{Importante}: No tiene sentido hablar de currificación cuando las funciones tienen un solo parámetro \\
+Las funciones currificadas son realmente importantes en la Programación Funcional porque nos permite aplicarlas de forma parcial. Es una especie mas reutilizable. \\
+Una función no currificada tiene esta pinta $suma::(Int, Int) -> Int -> Int$ porque acá estoy obligando a la función suma a recibir una tupla de elementos, no puedo ir mandando de a uno parcialmente. \\
+Véase \hyperref[subsec:curry_uncurry]{\textbf{anexo}} para armar una función curry y uncurry
 \section*{Funciones de Orden Superior}
 Son funciones que reciben como parámetro otras funciones. 
 
@@ -250,6 +278,20 @@ Otra forma de definir la composición es usando Notación Lambda.
     g . f = \ x -> g (f x)
 \end{lstlisting}
 Nótese que la notación lambda es súper útil para definir funciones sin nombre, que solamente hagan algo. Esto es muy útil cuando queremos mandar una función por parámetro y que una función dada la llame a esta función.
+\subsection*{Llamados estándar vs llamados en composición}
+$not(null x) \equiv (not . null) x$ \\
+Esto quiere decir que si primero componemos todas las funciones que queremos aplicarle a un valor, es lo mismo que ir aplicando de una a una las funciones al argumento.
+\subsection*{Funciones Lambda}
+Son funciones anónimas, es decir, no tienen nombre.  \\
+\textbf{($\backslash x \rightarrow x+1$)}: Es una función anónima que dado un x, te devuelve una función que le aplica x+1.
+\subsection*{Funciones Lambda Anidadas}
+$\backslash y \rightarrow (\backslash x \rightarrow y)$: Esto a ojo es una función constante, porque dado un valor y, se aplica la función x pero se devuelve el mismo valor y. \\
+Los parámetros se obvían en algunos casos, este es uno. La mejor forma sería $\backslash y \rightarrow \backslash x \rightarrow y$. \\
+Mejor notación para funciones anidadas: $\backslash y \ x \rightarrow y$
+\subsection*{Reducción de Lambda}
+Preguntar $foldr(\backslash x \ rec \rightarrow fx:rec) \equiv \backslash x \rightarrow (:)(fx)$ y $ \backslash x \rightarrow ex \equiv e$
+\section*{Asignar nombre a una función}
+$a = \backslash x \rightarrow x $: al nombre \textbf{a} le asigno la función anónima $\backslash x \rightarrow x$
 \subsection*{¿Para qué queremos funciones de orden superior? Pt 1}
 \begin{lstlisting}
     dobleL :: [Float] -> [Float]
@@ -331,7 +373,141 @@ Entonces, podemos definir \textbf{qué operación de filtro} se le realizan a lo
     borrarNegativos xs = filter(\x -> x > 0) xs 
 \end{lstlisting}
 Entonces gracias a Filter nos abstraemos de tener miles de funciones con la misma estructura pero solo cambien \textbf{con qué elementos nos quedamos} dada una condición
+\section*{Recursión}
+¿Qué tienen en común los siguientes problemas? ¿En qué difieren? 
+\begin{lstlisting}
+    concat :: [[a]] -> [a]
+    concat [] = []
+    concat (x:xs) = x ++ concat xs
 
+    reverso :: [a] -> [a]
+    reverso [] = []
+    reverso (x:xs) = reverso xs ++ [x]
+
+    sum :: [int] -> int 
+    sum [] = 0
+    sum (x:xs) = x + sum xs
+
+    En común: 
+        1. Todos tienen un caso base, pero es diferente.
+        2. Todos hacen un paso recursivo, pero cambia la operación que hacen. 
+        3. El tipo de entrada puede no coincidir con el de la salida.
+\end{lstlisting}
+En este tipo de problemas lo mejor que podemos hacer es realizar una especie de función que nos permita modularizar lo más posible y aquello que difiere, pasarlo por parámetros. \\
+Este tipo de problemas lo podemos solucionar con Foldr. 
+\subsection*{Recursión Estructural (foldr)}
+\begin{itemize}
+    \item Se trabaja solamente con la cabeza de la lista.
+    \item Se hace recursión sobre la cola pero no se tiene acceso a ella, sino al llamado recursivo. 
+    \item La recursión es la clásica, va desde derecha a izquierda. La R de foldr es de Right. 
+\end{itemize}
+Su estructura formal es la siguiente 
+\begin{lstlisting}
+    g [] = <caso base> -> valor 
+    g (x:xs) = <caso recursivo> -> función cabeza de la lista y resultado de la recursión.
+\end{lstlisting}
+Por lo tanto foldr se define como
+\begin{lstlisting}
+    foldr :: (a -> (b -> b)) -> b -> [a] -> b 
+    foldr f z [] = <
+    foldr f z (x:xs) = f x (foldr f z xs)
+\end{lstlisting}
+¿Qué es lo que produce foldr (:) []? Es una identidad sobre listas porque haría recursión sobre una lista vacía. \\
+¿Qué es lo que hace la siguiente función foldr? $ foldr(\backslash x \ r \rightarrow x) \ 0 \ [1, 2]$
+\begin{itemize}
+    \item Toma la lista y hace recursión. Empieza con el 2, ejecuta la función y devuelve 2. Hace el paso recursivo.
+    \item Toma la lista y hace recursión. Ahora sigue con el 1, recibe 1 y la salida es 1. 
+    \item Esta función agarra el primer elemento de una lista, sería el head.
+\end{itemize}
+\textbf{Importante}: Foldr puede trabajar con listas infinitas.
+\subsection*{Iteración (foldl)}
+Este tipo de recursión es más que recursión una iteración, en este caso empezamos yendo desde el primer valor hasta el último. \\
+En este enfoque voy modificando una solución parcial. \\
+Por lo tanto foldl se define como
+\begin{lstlisting}
+    foldr :: (b -> a -> b) -> b -> [a] -> b 
+    foldr f ac [] = ac
+    foldr f ac (x:xs) = foldl f (f ac x) xs
+\end{lstlisting}
+¿Qué es lo que sucede en el siguiente ejemplo? \\
+\begin{lstlisting}
+    foldl (\x y -> 1) 0 unos
+    foldl f (f 0 1) unos
+    foldl f(f(f 0 1) 1) unos
+\end{lstlisting}
+Esto es in-realizable con foldl. Es decir, foldl no puede manejar listas infinitas.
+\subsection*{¿Por qué foldl es peor que foldr?}
+\textbf{foldl}: Procesa la lista de izquierda a derecha, lo que requiere evaluar toda la lista antes de devolver un resultado, lo que no es posible con listas infinitas. \\
+\textbf{foldr}: Procesa la lista de derecha a izquierda, permite trabajar de manera perezosa y puede manejar listas infinitas si la función y el valor inicial permiten una evaluación parcial o completa sin necesidad de procesar todos los elementos.
+\subsection*{Recursión Primitiva (recr)}
+No existe en Haskell. Es una manera de nosotros podemos tener las mismas ventajas de foldr pero en este caso, la recursión primitiva nos permite utilizar la cola de la lista 
+\begin{itemize}
+    \item Se trabaja solamente con la cabeza de la lista y la cola.
+    \item Se hace recursión sobre la cola.
+\end{itemize}
+Su estructura forma les la siguiente 
+\begin{lstlisting}
+    g [] = b
+    g (x:xs) = f x xs (g xs)
+\end{lstlisting}
+Por lo tanto recr se define como 
+\begin{lstlisting}
+    recr :: (a -> [a] -> b ->b) -> b -> [a] -> b 
+    recr f z [] = z
+    recr f z (x:xs) = f x xs (recr f z xs)
+\end{lstlisting}
+\section*{Tipos}
+Existen diferentes maneras de definir tipos. Esto es según sea el objetivo.
+Definimos tipos con la palabra \textbf{data} + Nombre = Tipo1 | Tipo2 | Tipo 3 \\
+Si hacemos en GHCI $:t Tipo1$ saldrá que es de tipo Nombre. \\
+\textbf{Nota}: $|$ indica que a continuación hay otro tipo.
+\subsection*{Tipos Comunes}
+Son no recursivos, ej: $data Dia = Lu | Ma | Mi | Mie | Ju | Vi | Sa | Do $ \\
+Lu, Ma, Mi, ... son constructores del tipo dia. \\
+Los argumentos podrán ser recibidos diciendo qué tipo se espera, y usamos pattern matching para utilizarlos.
+\begin{lstlisting}
+    EsLunes :: Dia -> Bool
+    EsLunes Lu = True 
+    EsLunes _ = False 
+
+    EsFinDeSemana :: Dia -> Bool
+    EsFinDeSemana Sa = True 
+    EsFinDeSemana Do = True 
+    EsFinDeSemana _ = False 
+\end{lstlisting}
+\subsection*{Tipos con Funciones}
+Los tipos también pueden tener tipos que necesiten argumentos. Difieren en la info que devuelven. \\
+Ej.: data Persona = LaPersona String String Int \\
+\textbf{Importante}
+\begin{itemize}
+    \item Si evaluamos $:t LaPersona$ sin enviar los argumentos retornará $LaPersona :: String -> String -> Int$. 
+    \item Si evaluamos $:t LaPersona "T", "H", 23$ enviando los argumentos retornará que LaPersona es de tipo Persona
+\end{itemize}
+\begin{lstlisting}
+    Edad :: Persona -> Int 
+    Edad (LaPersona n a e) = e
+
+    Cumpleaños :: Persona -> Persona 
+    Cumpleaños (LaPersona n a e) = LaPersona n a (e+1)
+\end{lstlisting}
+\textbf{Importante}: Nótese que estamos devolviendo \textbf{una nueva persona}. En programación funcional no existe el concepto de "modificar" algo, sino crear algo nuevo con lo anterior y cambiarle algo.
+\subsection*{Tipos Recursivos}
+Cuando tengo tipos recursivos, las funciones que los usen deben manejar casos bases y la recursión \\
+Ej.: data Nat = Zero | Succ Nat 
+\subsection*{Tipos Polimórficos} 
+Al igual que las funciones, podemos definir que los tipos tengan constructores de un tipo específico.
+\begin{lstlisting}
+    data List a = Vacia | Const a (List a)
+\end{lstlisting}
+\subsection*{Importante en Tipos}
+No se puede repetir un mismo constructor para un mismo tipo. \\
+Es decir
+\begin{lstlisting}
+    data List = Vacia | Cons Int ListI 
+    data List a = Vacia | Cost a (List a)
+
+    Error. No puede estar Vacia como constructor de dos tipos diferentes.
+\end{lstlisting}
 \section*{Recordando Haskell}
 Para ejecutar un archivo hay que instalar GHCI. Una vez instalado, nos paramos en la terminal en el directorio donde está el archivo que queremos ejecutar. 
 \begin{itemize}
@@ -377,5 +553,35 @@ El siguiente árbol binario: Bin (Bin (Bin Nil 2 Nil) 3 Nil) 4 (Bin (Bin Nil 5 N
 \[\begin{minipage}[b]{0.5\textwidth}
     \includegraphics[width=\linewidth]{assets/abb_haskell.jpg}
 \end{minipage}\]
+\subsection*{Curry \& Uncurry}
+\label{subsec:curry_uncurry}
+Digamos que necesitamos currificar una función que recibe una tupla de elementos. Es decir, algo así: $ suma :: (Int, Int) -> Int $ \\
+Por la definición de curry necesitamos que por cada argumento, haya una función que lo devuelva, por lo tanto el resultado sería algo así $ suma :: Int -> Int -> Int $. \\
+Veamos el tipo de función que queremos currificar: $((a, b) -> c)$, esto lo queremos llevar a $a -> b -> c$. \\
+Por lo tanto nuestra función curry sería algo así: 
+\begin{lstlisting}
+    curryOwn :: ((a, b) -> c) -> a -> b -> c
+    curryOwn f a b = f (a, b) 
+\end{lstlisting}
+Entonces, digamos que queremos hacer la suma currificada. 
+\begin{lstlisting}
+    sumTuple :: (Float, Float) -> Float
+    sumTuple (x, y) = x + y
 
+    sumarCurry :: Float -> Float -> Float
+    sumarCurry = curryOwn sumTuple
+\end{lstlisting}
+
+Lo que hace sumarCurry es llamar a curry(sumTuple) es decir, a curry le manda la función sumTuple. Los parámetros que le mandamos a sumarCurry como a -> b, los convierte en (a, b) para poder aceptar el tipo de la función sumTuple. \\
+
+¿Cómo sería entonces la función uncurry? 
+Si recibimos los argumentos en forma de $ a -> b -> c$ debo llevarlo a $ (a, b) -> c$
+\begin{lstlisting}
+    uncurryOwn :: a -> b -> c -> ((a, b) -> c)
+    uncurryOwn f (a, b) = f a b
+
+    sumarUncurry :: (a, b) -> c
+    sumarUncurry = uncurryOwn sumarCurry
+\end{lstlisting}
+Esto quiere decir que vamos a llamar a sumarUncurry que recibe la tupla, ahora sumarCurry está currificada, por lo que la tenemos que convertir nuevamente a la función no currificada, para luego llamar a sumTuple de la manera original.
 \end{document} 
