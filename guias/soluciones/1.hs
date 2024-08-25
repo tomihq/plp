@@ -50,3 +50,38 @@ sumarCurryDescurrificar = decurryOwn sumarCurry
 
 decurryOwn :: (a -> b -> c) -> ((a, b) -> c)
 decurryOwn f (a, b) = f a b 
+
+{- Este foldr recorre solo listas. -}
+sumFoldrlist :: Num a => [a] -> a 
+sumFoldrlist = foldr (\x ac -> x + ac) 0
+
+{- Este foldr recorre cualquier tipo de estructura de datos que pueda recorrerse. -}
+sumFoldr :: (Foldable t, Num a) => t a -> a 
+sumFoldr = foldr (\x ac -> x + ac) 0
+
+elemFoldr :: (Foldable t, Eq a) => a -> t a -> Bool
+elemFoldr y = foldr(\x acum -> (x == y) || acum) False 
+
+concatFoldr ::  [a] -> [a] -> [a]
+concatFoldr xs ys = foldr(:) ys xs 
+
+filterFoldr :: (a -> Bool) -> [a] -> [a]
+filterFoldr f = foldr (\x acc -> if f x then x : acc else acc) []
+{--
+mapFoldr (\x -> x+1) [1, 2, 3]
+    ac = [], x = 3, f(1):ac -> ac = [4]
+    ac = [2], x = 2, f(2):ac -> ac = [3, 4]
+    ac = [3, 4], x = 1, f(1):ac -> ac = [2, 3, 4]
+--}
+mapFoldr :: (a -> b) -> [a] -> [b]
+mapFoldr f = foldr(\x ac -> f(x):ac) []
+
+{--
+Tipo del acum: es un elemento de la lista, es un a. En cada llamado recursivo retorno un elemento. 
+MejorSegun(>) [5, 1, 2, 4]
+acc = 4, 4 > 2? si. acc = 4
+acc = 4, 4 > 1? si. acc = 4
+acc = 4, 4 > 5? no. acc = 5
+--}
+mejorSegun :: Foldable t => (a -> a -> Bool) -> t a -> a 
+mejorSegun f = foldr1(\x ac -> if f x ac then x else ac) 

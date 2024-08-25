@@ -413,13 +413,14 @@ Por lo tanto foldr se define como
     foldr f z (x:xs) = f x (foldr f z xs)
 \end{lstlisting}
 ¿Qué es lo que produce foldr (:) []? Es una identidad sobre listas porque haría recursión sobre una lista vacía. \\
-¿Qué es lo que hace la siguiente función foldr? $ foldr(\backslash x \ r \rightarrow x) \ 0 \ [1, 2]$
+¿Qué es lo que hace la siguiente función foldr? $ foldr(\backslash x \ r \rightarrow x) \ 0 \ [1, 2]$ 
 \begin{itemize}
     \item Toma la lista y hace recursión. Empieza con el 2, ejecuta la función y devuelve 2. Hace el paso recursivo.
     \item Toma la lista y hace recursión. Ahora sigue con el 1, recibe 1 y la salida es 1. 
     \item Esta función agarra el primer elemento de una lista, sería el head.
 \end{itemize}
-\textbf{Importante}: Foldr puede trabajar con listas infinitas.
+\textbf{Importante}: Foldr puede trabajar con listas infinitas. \\
+Véase \hyperref[subsec:folder_ex]{anexo} para ver ejemplos de Foldr. 
 \subsection*{Iteración (foldl)}
 Este tipo de recursión es más que recursión una iteración, en este caso empezamos yendo desde el primer valor hasta el último. \\
 En este enfoque voy modificando una solución parcial. \\
@@ -584,4 +585,15 @@ Si recibimos los argumentos en forma de $ a -> b -> c$ debo llevarlo a $ (a, b) 
     sumarUncurry = uncurryOwn sumarCurry
 \end{lstlisting}
 Esto quiere decir que vamos a llamar a sumarUncurry que recibe la tupla, ahora sumarCurry está currificada, por lo que la tenemos que convertir nuevamente a la función no currificada, para luego llamar a sumTuple de la manera original.
+\subsection*{Foldr}
+\label{subsec:foldr_ex}
+\begin{lstlisting}
+    // Solo recorre listas de tipo a. Es decir, devuelve la suma de los elementos.
+    sumFoldrlist :: Num a => [a] -> a 
+    sumFoldrlist = foldr (\x ac -> x + ac) 0
+
+    //Recorre tipos plegables. Acá no nos limitamos solo a listas, porque véase que usamos t a en vez de [a]
+    sumFoldr :: (Foldable t, Num a) => t a -> a 
+    sumFoldr = foldr (\x ac -> x + ac) 0
+\end{lstlisting}
 \end{document} 

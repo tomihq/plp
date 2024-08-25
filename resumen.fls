@@ -366,6 +366,7 @@ INPUT .\assets\abb_haskell.jpg
 INPUT .\assets\abb_haskell.jpg
 INPUT .\assets\abb_haskell.jpg
 INPUT .\assets\abb_haskell.jpg
+INPUT C:\Users\Tom\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmti10.tfm
 INPUT resumen.aux
 INPUT .\resumen.out
 INPUT .\resumen.out
@@ -391,3 +392,5 @@ INPUT C:\Users\Tom\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\
 INPUT C:\Users\Tom\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr7.pfb
 INPUT C:\Users\Tom\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy10.pfb
 INPUT C:\Users\Tom\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy10.pfb
+INPUT C:\Users\Tom\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmti10.pfb
+INPUT C:\Users\Tom\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmti10.pfb
