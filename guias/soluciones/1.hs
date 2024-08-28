@@ -85,3 +85,20 @@ acc = 4, 4 > 5? no. acc = 5
 --}
 mejorSegun :: Foldable t => (a -> a -> Bool) -> t a -> a 
 mejorSegun f = foldr1(\x ac -> if f x ac then x else ac) 
+
+sumasParciales:: (Num a) => [a] -> [a]
+sumasParciales = reverse . foldl (\ac x -> (x + (if length ac >= 1 then head ac else 0)) : ac) []
+
+sumaAlt :: (Num a) => [a] -> a
+sumaAlt =  foldr(\x ac -> x - ac) 0
+
+{-5. Ninguna de las dos es recursión estructural porque ambas operan en base a la cola de la lista xs. -}
+recr :: (a -> [a] -> b -> b) -> b -> [a] -> b
+recr _ z [] = z
+recr f z (x : xs) = f x xs (recr f z xs)
+
+{- 6a -}
+sacarUna :: (Eq a) => a -> [a] -> [a]
+sacarUna e = recr (\x xs res -> if x==e then xs else x:res) []
+{- Sacar una no se puede implementar con recursión estructural pues acá necesito utilizar la cola de la lista en un lugar que no es el propio llamado recursivo. -}
+

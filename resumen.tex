@@ -235,7 +235,8 @@ Considerando este orden:
 En la segunda aplicación ¡nunca caemos en el caso 2! y esto es importante porque sabemos que si tiene 1 cae siempre en la primera.
 \section*{Notación Infija \& Notación Prefija}
 \textbf{Infija}: argumento + funcion + argumento \\
-\textbf{Prefija}: funcion + argumentos 
+\textbf{Prefija}: funcion + argumentos \\
+\textbf{Importante}: $(\le) 18 \neq (\le 18)$ pues la opción de $(\le) 18$ sería $(18 \le x)$ mientras que $(\le 18)$ sería $(x \le 18)$. Donde claramente denota que el parámetro cuando está fuera de la notación infija es el primer argumento mientras que si lo ponemos adentro hardcodeamos su posición. Es decir $(18 \le)$ estaríamos diciendo $(18 \le x)$
 \section*{Currificación}
 Una función es currificada cuando tiene la siguiente forma $ ab :: Int -> Int -> Int $ \\
 Esto puede parecer que recibe 2 parámetros y devuelve uno, pero en realidad lo que hace es básicamente por cada parámetro asociar a la izquierda y hacer una función por cada parámetro. \\
@@ -243,6 +244,7 @@ Es decir, sería algo así $ab::Int -> (Int -> Int)$ \\
 La función Curry \textbf{NO CAMBIA} la manera en que la función original currificada recibe los argumentos, sino que, la función curry es una especie de $puente$ para que nosotros mandemos los argumentos separados y los aplique a la función no currificada. \\
 \textbf{Importante}: No tiene sentido hablar de currificación cuando las funciones tienen un solo parámetro \\
 Las funciones currificadas son realmente importantes en la Programación Funcional porque nos permite aplicarlas de forma parcial. Es una especie mas reutilizable. \\
+
 Una función no currificada tiene esta pinta $suma::(Int, Int) -> Int -> Int$ porque acá estoy obligando a la función suma a recibir una tupla de elementos, no puedo ir mandando de a uno parcialmente. \\
 Véase \hyperref[subsec:curry_uncurry]{\textbf{anexo}} para armar una función curry y uncurry
 \section*{Funciones de Orden Superior}
@@ -277,6 +279,7 @@ Otra forma de definir la composición es usando Notación Lambda.
     (.) :: (b -> c) -> (a -> b) -> (a -> c)
     g . f = \ x -> g (f x)
 \end{lstlisting}
+Recordemos que esto es algo recordable pues $fog$ seria meter g adentro de f y para eso, la salida de g debe ser la entrada de f. Y luego se devuelve como salida el dominio de g y la salida de f.
 Nótese que la notación lambda es súper útil para definir funciones sin nombre, que solamente hagan algo. Esto es muy útil cuando queremos mandar una función por parámetro y que una función dada la llame a esta función.
 \subsection*{Llamados estándar vs llamados en composición}
 $not(null x) \equiv (not . null) x$ \\
@@ -426,9 +429,9 @@ Este tipo de recursión es más que recursión una iteración, en este caso empe
 En este enfoque voy modificando una solución parcial. \\
 Por lo tanto foldl se define como
 \begin{lstlisting}
-    foldr :: (b -> a -> b) -> b -> [a] -> b 
-    foldr f ac [] = ac
-    foldr f ac (x:xs) = foldl f (f ac x) xs
+    foldl :: (b -> a -> b) -> b -> [a] -> b 
+    foldl f ac [] = ac
+    foldl f ac (x:xs) = foldl f (f ac x) xs
 \end{lstlisting}
 ¿Qué es lo que sucede en el siguiente ejemplo? \\
 \begin{lstlisting}
@@ -595,5 +598,43 @@ Esto quiere decir que vamos a llamar a sumarUncurry que recibe la tupla, ahora s
     //Recorre tipos plegables. Acá no nos limitamos solo a listas, porque véase que usamos t a en vez de [a]
     sumFoldr :: (Foldable t, Num a) => t a -> a 
     sumFoldr = foldr (\x ac -> x + ac) 0
+\end{lstlisting}
+\subsection*{Flip}
+Toma dos parámetros y devuelve una función que los devuelve en el orden inverso. \\
+Es decir: $(a \rightarrow b \rightarrow c) \ \rightarrow b \rightarrow a \rightarrow c$ \\
+Luego: $ flip \ f \ a \ b \ = \ f \ b \ a $
+\subsection*{Función identidad}
+Devuelve el mismo valor aplicado a la función. \\
+Es decir: $(a  \rightarrow b)  \rightarrow a \rightarrow b$ \\
+Luego: $ \$ f \ a \ = \ f \ a  $
+\subsection*{Función constante}
+Devuelve un valor enviado sin aplicarle ninguna función. \\
+Es decir: $a \rightarrow b \rightarrow a$ \\
+Luego: $const \ a \ b \ = \ a$
+\subsection*{¿Qué hacen las siguientes funciones compuestas?}
+\begin{lstlisting}
+    flip($) 0 id 
+
+    (==0) . (flip mod 2)
+
+    Primero veamos que hace flip mod 2.
+    mod 2 es notación infija (Integral a => 2 -> a -> a), entonces lo que está diciendo es que si le paso cualquier número va a hacer mod 2 x, y nosotros por lo que yo entiendo es que queremos ver si es par.
+    Por lo tanto, lo primero que haríamos es invertir los argumentos de mod 2 con flip (Integral a => a -> 2 -> a), entonces quedaría algo como mod x 2 donde el x lo tenemos que enviar nosotros.
+    Luego, se compone la función de mod x 2 == 0 esperando solo un argumento donde verifica si efectivamente un número dado es par. 
+    Entonces, (Integral a => x -> Bool)
+    
+    map f = ((:) . f)
+    Lo que hace esta función es básicamente aplicar una función f a todos los elementos y agregarlos a una lista particular.
+    
+    Dado ["hola", "abc"] quiero devolver ["cba", "aloh"]. Es decir, dar vuelta cada caracter de cada palabra y ademas dar vuelta las palabras. 
+
+    reverseAnidado :: ["String"] -> ["String"]
+    reverseAnidado = reverse . (map . reverse) 
+    Lo primero que hacemos es hacer un map haciendo reverse por cada caracter de la lista. Luego, reordenamos las palabras en sí.
+    El tipo de reverse es: [a] -> [a] pero con los elementos al revés. Entonces, por cada palabra (map) hacemos un reverse y las guardamos.
+    Finalmente, nos queda algo así ["aloh", "cba"], nos queda dar vuelta eso, entonces hacemos nuevamente un reverse de toda la lista. ["cba", "aloh"].
+    
+    listacomp f xs p = [f x | x <- xs, p x]
+    listacomp f xs p = map f (filter p xs)
 \end{lstlisting}
 \end{document} 
