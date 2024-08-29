@@ -621,6 +621,30 @@ Luego: $ \$ f \ a \ = \ f \ a  $
 Devuelve un valor enviado sin aplicarle ninguna función. \\
 Es decir: $a \rightarrow b \rightarrow a$ \\
 Luego: $const \ a \ b \ = \ a$
+\subsection*{Reduciendo expresiones elegantemente}
+\begin{itemize}
+    \item $filter(\backslash x \rightarrow length x > 3)$
+    \begin{itemize}
+        \item  ¿Puede hacerse algo mejor? No. Porque a x si o sí necesitamos aplicarle una función.
+    \end{itemize}
+    \item $filter(\backslash x \rightarrow x > n)$
+    \begin{itemize}
+        \item ¿Puede hacerse algo mejor? Sí. $filter (>n)$
+    \end{itemize}
+    \item $filter (\backslash x \rightarrow mod x 2 /= 0)$
+    \begin{itemize}
+        \item ¿Puede hacerse algo mejor? No. Porque a x le tenemos que calcular su módulo con 2.
+    \end{itemize}
+    \item $map(\backslash x \rightarrow map (\backslash y \rightarrow toUpper y) x)$
+    \begin{itemize}
+        \item ¿Puede hacerse algo mejor? Primero entendamos que hace, recorre una lista de palabras, luego en cada palabra toma cada letra y la pasa a mayúscula. Esto es un doble map, uno por palabra otro por letra. Entonces sí $map \ (map \ toUpper)$
+    \end{itemize}
+    \item $doblarElementos . filtrarPares$
+    \begin{itemize}
+        \item ¿Puede hacerse algo mejor? No. Esto es el equivalente a un lenguaje imperativo hacer doblarElementos(filtrarPares(lista))$
+    \end{itemize}
+
+\end{itemize}
 \subsection*{¿Qué hacen las siguientes funciones compuestas?}
 \begin{lstlisting}
     flip($) 0 id 
