@@ -102,3 +102,4 @@ sacarUna :: (Eq a) => a -> [a] -> [a]
 sacarUna e = recr (\x xs res -> if x==e then xs else x:res) []
 {- Sacar una no se puede implementar con recursión estructural pues acá necesito utilizar la cola de la lista en un lugar que no es el propio llamado recursivo. -}
 
+{-Rehago los ejercicios pero usando composicion y/o reducciones de expresiones-}

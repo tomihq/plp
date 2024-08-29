@@ -143,6 +143,8 @@ Sucede en aquellas expresiones que tienen más de un tipo.
     \item $cargarStringArray :: String -> [] \rightarrow [String]$. No es una expresión Polimórfica.
 \end{itemize}
 \textbf{Nota}: Es importante que si tenemos 2 parámetros de tipo a significa que los dos parámetros deben ser de ese tipo. Si tenemos 2 parámetros uno de tipo a y uno de b podría suceder que sean diferentes pero puede que sean el mismo. 
+\textbf{Importante}: Recordar que si usamos operadores, colocar las clases que correspondan. Ej.: $a>0$ a debe ser $(Num a, Ord a)$. \\
+Véase \hyperref[subsec:clases_tipos]{\underline{\textbf{anexo}}} para ver ejemplos de las clases de tipos.
 \section*{Polimorfismo con Clases (Type Classes)}
 Es posible limitar el polimorfismo a clases específicas. Es decir, si nos mandan un tipo $a$ podemos decir que ese tipo $a$ es genérico pero de una clase específica. \\
 Ejemplo: $func :: Num \ a \implies a \rightarrow a \rightarrow a$ \\
@@ -284,6 +286,7 @@ Nótese que la notación lambda es súper útil para definir funciones sin nombr
 \subsection*{Llamados estándar vs llamados en composición}
 $not(null x) \equiv (not . null) x$ \\
 Esto quiere decir que si primero componemos todas las funciones que queremos aplicarle a un valor, es lo mismo que ir aplicando de una a una las funciones al argumento.
+\textbf{Importante}: La composición funciona \textbf{sí y solo sí} alguna de las funciones está parcialmente aplicada. Ej.: $(== 0) . mod n m$ no funciona, pero $(== 0) . mod n$ sí.
 \subsection*{Funciones Lambda}
 Son funciones anónimas, es decir, no tienen nombre.  \\
 \textbf{($\backslash x \rightarrow x+1$)}: Es una función anónima que dado un x, te devuelve una función que le aplica x+1.
@@ -588,6 +591,13 @@ Si recibimos los argumentos en forma de $ a -> b -> c$ debo llevarlo a $ (a, b) 
     sumarUncurry = uncurryOwn sumarCurry
 \end{lstlisting}
 Esto quiere decir que vamos a llamar a sumarUncurry que recibe la tupla, ahora sumarCurry está currificada, por lo que la tenemos que convertir nuevamente a la función no currificada, para luego llamar a sumTuple de la manera original.
+\subsection*{Clases de Tipos}
+\label{subsec:clases_tipos}
+\begin{itemize}
+    \item Num a: Indica que el parámetro a es numérico
+    \item Ord a: Indica que el parámetro a es ordenable bajo algun criterio, es decir, podemos aplicar $ > \ < \ =$ etc.
+    \item Eq a: Indica que el parámetro a se puede igualar, es decir, podemos aplicar $=$
+\end{itemize}
 \subsection*{Foldr}
 \label{subsec:foldr_ex}
 \begin{lstlisting}
