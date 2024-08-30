@@ -86,20 +86,38 @@ acc = 4, 4 > 5? no. acc = 5
 mejorSegun :: Foldable t => (a -> a -> Bool) -> t a -> a 
 mejorSegun f = foldr1(\x ac -> if f x ac then x else ac) 
 
-sumasParciales:: (Num a) => [a] -> [a]
-sumasParciales = reverse . foldl (\ac x -> (x + (if length ac >= 1 then head ac else 0)) : ac) []
+sumasParciales :: Num a => [a] -> [a]
+sumasParciales = reverse . foldl(\acc x -> x + (if length acc >= 1 then head acc else 0) : acc) []
 
 sumaAlt :: (Num a) => [a] -> a
 sumaAlt =  foldr(\x ac -> x - ac) 0
 
-{-5. Ninguna de las dos es recursión estructural porque ambas operan en base a la cola de la lista xs. -}
+{-5. La segunda es recursion estructural-}
+entrelazar :: [a] -> [a] -> [a]
+entrelazar = foldr(\x rec -> (\ys -> if null ys then x:rec [] else x:head ys: rec (tail ys))) id {-importantisimo el caso base: acá no es vacío sino la funcion id si es vacio.-}
+
 recr :: (a -> [a] -> b -> b) -> b -> [a] -> b
 recr _ z [] = z
 recr f z (x : xs) = f x xs (recr f z xs)
 
 {- 6a -}
 sacarUna :: (Eq a) => a -> [a] -> [a]
-sacarUna e = recr (\x xs res -> if x==e then xs else x:res) []
+sacarUna n = foldr(\x rec -> if x==n then rec else x:rec) [] {- recordar que siempre armo una nueva lista, entonces sacarlo seria no ponerlo-}
 {- Sacar una no se puede implementar con recursión estructural pues acá necesito utilizar la cola de la lista en un lugar que no es el propio llamado recursivo. -}
 
-{-Rehago los ejercicios pero usando composicion y/o reducciones de expresiones-}
+insertarOrdenado :: (Ord a) => a -> [a] -> [a]
+insertarOrdenado n = foldr(\x rec -> if n<=x then n:x:rec else x:rec) [] {-recordar que siempre armo una nueva lista, si encuentro el valor primero pongo el menor, luego el del paso recursivo y luego la cola -}
+
+genLista :: a -> (a->a) -> Integer -> [a]
+genLista i f n = take (fromIntegral n) (iterate f i) {-genLista 2 (\x -> x+3) 5-}
+
+desdeHasta :: Enum a => a -> Integer -> [a]
+desdeHasta n m = genLista n succ m {-Como la funcion genLista es generica y no solo de numeros no puedo usar funciones especificas para numeros -}
+
+{-mapPares:
+    Necesito una funcion map que tome dos argumentos (pueden ser o no el mismo tipo a b y lo transforma en un tipo c)
+    Luego necesito tomar una lista de pares del tipo que recibira el map (a, b) y luego devuelvo transformados en el tipo c.
+
+-}
+mapPares :: (a -> b -> c) -> [(a, b)] -> [c]
+mapPares f = map (uncurry f) {-mapPares (\x y -> (x+1, y+2)) [(1, 2), (3, 4)]. Nota: usamos uncurry adentro del map porque los argumentos que vamos a aplicar estan como tuplas. -}

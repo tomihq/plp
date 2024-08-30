@@ -515,6 +515,14 @@ Es decir
 
     Error. No puede estar Vacia como constructor de dos tipos diferentes.
 \end{lstlisting}
+\section*{Listas}
+\begin{itemize}
+    \item Por extensión: Es dar la lista implícita escribiendo todos sus elementos. Ej. [1, 2, 3]
+    \item Secuencias: Progresiones aritméticas en un rango particular. Ej.: [3..7] es la lista que tiene los números del 3 al 7.
+    \item Por compresión: Se definen de la siguiente manera [expresion | selectores, condiciones]. Ej.: [(x,y) | x <- [0..5], y <- [0..3], x+y==4] es la lista de pares que tienen elementos de x e y que dan menos que 4
+\end{itemize}
+\section*{Lista Infinitas}
+
 \section*{Recordando Haskell}
 Para ejecutar un archivo hay que instalar GHCI. Una vez instalado, nos paramos en la terminal en el directorio donde está el archivo que queremos ejecutar. 
 \begin{itemize}
@@ -641,7 +649,7 @@ Luego: $const \ a \ b \ = \ a$
     \end{itemize}
     \item $doblarElementos . filtrarPares$
     \begin{itemize}
-        \item ¿Puede hacerse algo mejor? No. Esto es el equivalente a un lenguaje imperativo hacer doblarElementos(filtrarPares(lista))$
+        \item ¿Puede hacerse algo mejor? No. Esto es el equivalente a un lenguaje imperativo hacer doblarElementos(filtrarPares(lista))
     \end{itemize}
 
 \end{itemize}
