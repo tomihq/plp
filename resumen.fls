@@ -298,12 +298,6 @@ INPUT C:\Users\Tom\AppData\Local\Programs\MiKTeX\tex\latex\epstopdf-pkg\epstopdf
 INPUT C:\Users\Tom\AppData\Local\Programs\MiKTeX\tex\latex\00miktex\epstopdf-sys.cfg
 INPUT C:\Users\Tom\AppData\Local\Programs\MiKTeX\tex\latex\00miktex\epstopdf-sys.cfg
 INPUT C:\Users\Tom\AppData\Local\Programs\MiKTeX\tex\latex\00miktex\epstopdf-sys.cfg
-INPUT .\resumen.out
-INPUT .\resumen.out
-INPUT resumen.out
-INPUT resumen.out
-INPUT .\resumen.out
-INPUT .\resumen.out
 OUTPUT resumen.out
 OUTPUT resumen.pdf
 INPUT C:\Users\Tom\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmr17.tfm

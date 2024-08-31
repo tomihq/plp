@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.3.31) (preloaded format=pdflatex 2024.4.13)  31 AUG 2024 18:14
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.3.31) (preloaded format=pdflatex 2024.4.13)  31 AUG 2024 18:31
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -832,10 +832,7 @@ x.def
 File: l3backend-pdftex.def 2024-03-14 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count349
 \l__pdf_internal_box=\box67
-) (resumen.aux
-LaTeX Info: Redefining \. on input line 12.
-LaTeX Info: Redefining \% on input line 12.
-)
+) (resumen.aux)
 \openout1 = `resumen.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 26.
@@ -888,7 +885,6 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
 Package hyperref Info: Link coloring OFF on input line 26.
- (resumen.out) (resumen.out)
 \@outlinefile=\write4
 \openout4 = `resumen.out'.
 
@@ -969,12 +965,21 @@ Underfull \hbox (badness 10000) in paragraph at lines 134--135
 
  []
 
+
+LaTeX Warning: Hyper reference `subsec:clases_tipos' on page 3 undefined on inp
+ut line 147.
+
 [3] [4]
 Underfull \hbox (badness 10000) in paragraph at lines 243--249
 
  []
 
 [5]
+
+LaTeX Warning: Hyper reference `subsec:curry_uncurry' on page 6 undefined on in
+put line 251.
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 255--257
 
  []
@@ -1011,6 +1016,10 @@ Underfull \hbox (badness 10000) in paragraph at lines 439--440
 
  []
 
+
+LaTeX Warning: Hyper reference `subsec:foldl_ejercicios' on page 9 undefined on
+ input line 446.
+
 [9] [10]
 Underfull \hbox (badness 10000) in paragraph at lines 537--538
 
@@ -1041,7 +1050,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 551--552
 
  []
 
-<assets/abb_haskell.jpg, id=269, 1133.23375pt x 842.14626pt>
+<assets/abb_haskell.jpg, id=263, 1133.23375pt x 842.14626pt>
 File: assets/abb_haskell.jpg Graphic file (type jpg)
 <use assets/abb_haskell.jpg>
 Package pdftex.def Info: assets/abb_haskell.jpg  used on input line 570.
@@ -1067,15 +1076,24 @@ e a un len-gua-je im-pe-ra-ti-vo ha-cer do-bla-rE-le-men-tos(filtrarPares(lista
  []
 
 [13]
-Underfull \hbox (badness 10000) in paragraph at lines 685--691
+g:/YO/UBA/EXACTAS/Paradigmas de Lenguajes de Programacion/plp/resumen.tex:690: 
+Undefined control sequence.
+<recently read> \x 
+                   
+l.690 ...em La recursión la vamos a hacer con $\x
+                                                   (acc, sign)$
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
- []
-
+[14]
 
 Package caption Warning: Unused \captionsetup[sub] on input line 7.
 See the caption package documentation for explanation.
 
-[14] (resumen.aux
+[15] (resumen.aux
 LaTeX Info: Redefining \. on input line 12.
 LaTeX Info: Redefining \% on input line 12.
 )
@@ -1087,14 +1105,23 @@ L3 programming layer <2024-03-14>
 
 LaTeX Warning: There were undefined references.
 
-Package rerunfilecheck Info: File `resumen.out' has not changed.
-(rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+
+Package rerunfilecheck Warning: File `resumen.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `resumen.out':
+(rerunfilecheck)             Before: <no file>
+(rerunfilecheck)             After:  D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 43258 strings out of 474423
- 990426 string characters out of 5742662
- 2213496 words of memory out of 5000000
- 64853 multiletter control sequences out of 15000+600000
+ 43269 strings out of 474423
+ 990443 string characters out of 5742662
+ 2246496 words of memory out of 5000000
+ 64859 multiletter control sequences out of 15000+600000
  566954 words of font info for 70 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  84i,10n,93p,567b,1942s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -1111,9 +1138,9 @@ ograms/MiKTeX/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Users/Tom/AppData/Loc
 al/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/Tom/AppDat
 a/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Tom
 /AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on resumen.pdf (14 pages, 510729 bytes).
+Output written on resumen.pdf (15 pages, 514332 bytes).
 PDF statistics:
- 464 PDF objects out of 1000 (max. 8388607)
- 284 named destinations out of 1000 (max. 500000)
+ 475 PDF objects out of 1000 (max. 8388607)
+ 293 named destinations out of 1000 (max. 500000)
  23 words of extra memory for PDF output out of 10000 (max. 10000000)
 

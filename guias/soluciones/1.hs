@@ -87,10 +87,13 @@ mejorSegun :: Foldable t => (a -> a -> Bool) -> t a -> a
 mejorSegun f = foldr1(\x ac -> if f x ac then x else ac) 
 
 sumasParciales :: Num a => [a] -> [a]
-sumasParciales = reverse . foldl(\acc x -> x + (if length acc >= 1 then head acc else 0) : acc) []
+sumasParciales = reverse . foldl(\acc x -> if(length acc > 0) then x+(head acc):acc else x:acc) []
 
 sumaAlt :: (Num a) => [a] -> a
 sumaAlt =  fst . foldl(\(acc, isAdd) x  -> if(isAdd) then (acc+x, False) else (acc-x, True))  (0, True)
+
+sumaAltDer :: (Num a) => [a] -> a 
+sumaAltDer = fst . foldr(\x (acc, isAdd) -> if(isAdd) then (acc + x, False) else (acc - x, True)) (0, True)
 
 {-5. La segunda es recursion estructural-}
 entrelazar :: [a] -> [a] -> [a]
