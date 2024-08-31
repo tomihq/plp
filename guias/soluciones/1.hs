@@ -124,3 +124,12 @@ desdeHasta n m = genLista n succ m {-Como la funcion genLista es generica y no s
 -}
 mapPares :: (a -> b -> c) -> [(a, b)] -> [c]
 mapPares f = map (uncurry f) {-mapPares (\x y -> (x+1, y+2)) [(1, 2), (3, 4)]. Nota: usamos uncurry adentro del map porque los argumentos que vamos a aplicar estan como tuplas. -}
+
+armarPares :: [a] -> [b] -> [(a, b)]
+armarPares _ [] = []
+armarPares [] _ = []
+armarPares (x:xs) (y:ys) = (x, y) : armarPares xs ys 
+{-Probar: armarPares (desdeHasta 10 20) (desdeHasta 30 40)-}
+
+mapDoble :: (a -> b -> c) -> [a] -> [b] -> [c]
+mapDoble f l r = foldr(\x rec -> uncurry f x:rec) [] (armarPares l r)

@@ -418,6 +418,12 @@ Por lo tanto foldr se define como
     foldr f z [] = <
     foldr f z (x:xs) = f x (foldr f z xs)
 \end{lstlisting}
+\textbf{Importantísimo}: El tipado de foldr es $ Foldable t => (a \rightarrow b \rightarrow b) \rightarrow b \rightarrow t a \rightarrow b $
+\begin{itemize}
+    \item a = Es el elemento que tenemos actualmente en la recursión.
+    \item b = Es cualquier tipo que nos permita acumular. Puede ser una tupla, un número, lo que sea. Pero en cada paso recursivo hay que llenar eso. El caso base tiene que cumplir este tipo b.
+    \item Véase \hyperref[subsec:foldr_ejercicios]{\underline{\textbf{anexo}}} para ver ejemplos usando foldr.
+\end{itemize}
 ¿Qué es lo que produce foldr (:) []? Es una identidad sobre listas porque haría recursión sobre una lista vacía. \\
 ¿Qué es lo que hace la siguiente función foldr? $ foldr(\backslash x \ r \rightarrow x) \ 0 \ [1, 2]$ 
 \begin{itemize}
@@ -443,6 +449,12 @@ Por lo tanto foldl se define como
     foldl f(f(f 0 1) 1) unos
 \end{lstlisting}
 Esto es in-realizable con foldl. Es decir, foldl no puede manejar listas infinitas. \\
+\textbf{Importantísimo}: El tipado de foldl es $ Foldable t => (b \rightarrow a \rightarrow b) \rightarrow b \rightarrow t a \rightarrow b $
+\begin{itemize}
+    \item b = Es cualquier tipo que nos permita acumular. Puede ser una tupla, un número, lo que sea. Pero en cada paso recursivo hay que llenar eso. El caso base tiene que cumplir este tipo b.
+    \item a = Es el elemento que tenemos actualmente en la recursión.
+    \item Véase \hyperref[subsec:foldl_ejercicios]{\underline{\textbf{anexo}}} para ver ejemplos usando foldl.
+\end{itemize}
 Véase \hyperref[subsec:foldl_ejercicios]{\underline{\textbf{anexo}}} para ver ejemplos usando foldl.
 \subsection*{¿Por qué foldl es peor que foldr?}
 \textbf{foldl}: Procesa la lista de izquierda a derecha, lo que requiere evaluar toda la lista antes de devolver un resultado, lo que no es posible con listas infinitas. \\
@@ -681,6 +693,7 @@ Luego: $const \ a \ b \ = \ a$
     listacomp f xs p = map f (filter p xs)
 \end{lstlisting}
 \subsection*{Ejercicios Foldr}
+\label{subsec:foldr_ejercicios}
 1. Realizar lo mismo que el ejercicio hecho con (Foldl) pero el último elemento menos el anteúltimo, más el ante ante último, etc. \\
 En este caso es obvio que conviene usar foldr porque empezamos desde el último mandando como caso base a (0, True) para colocar mínimo el primer elemento. \\
 Vamos a tener que hacer también el tema de fst para terminar sacando la suma al revés. \\
@@ -690,9 +703,9 @@ Por lo tanto
     \item La recursión la vamos a hacer con $\x (acc, sign)$
     \item Ejemplo con [1, 2, 3]
     \begin{itemize}
-        \item x = 3, acc = 0, sign = + -> acc = 3
-        \item x = 2, acc = 3, sign = - -> acc = 1
-        \item x = 1, acc = 1, sign = + -> acc = 2
+        \item x = 3, acc = 0, sign = + $\rightarrow$ acc = 3
+        \item x = 2, acc = 3, sign = - $\rightarrow$ acc = 1
+        \item x = 1, acc = 1, sign = + $\rightarrow$ acc = 2
     \end{itemize}
 \end{itemize}
 \subsection*{Ejercicios Foldl}
