@@ -133,3 +133,12 @@ armarPares (x:xs) (y:ys) = (x, y) : armarPares xs ys
 
 mapDoble :: (a -> b -> c) -> [a] -> [b] -> [c]
 mapDoble f l r = foldr(\x rec -> uncurry f x:rec) [] (armarPares l r)
+
+mapDobleCorta :: (a -> b -> c) -> [a] -> [b] -> [c]
+mapDobleCorta f l r = map (uncurry f) (armarPares l r)
+
+sumaMat :: (Int -> Int -> Int) -> [[Int]] -> [[Int]] -> [[Int]]
+sumaMat _ [] _ = []
+sumaMat _ _ [] = []
+sumaMat f (x:xs) (y:ys) = map (uncurry f) (armarPares x y) : sumaMat f xs ys
+{--x e y son listas--}
