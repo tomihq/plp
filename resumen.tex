@@ -442,7 +442,8 @@ Por lo tanto foldl se define como
     foldl f (f 0 1) unos
     foldl f(f(f 0 1) 1) unos
 \end{lstlisting}
-Esto es in-realizable con foldl. Es decir, foldl no puede manejar listas infinitas.
+Esto es in-realizable con foldl. Es decir, foldl no puede manejar listas infinitas. \\
+Véase \hyperref[subsec:foldl_ejercicios]{\underline{\textbf{anexo}}} para ver ejemplos usando foldl.
 \subsection*{¿Por qué foldl es peor que foldr?}
 \textbf{foldl}: Procesa la lista de izquierda a derecha, lo que requiere evaluar toda la lista antes de devolver un resultado, lo que no es posible con listas infinitas. \\
 \textbf{foldr}: Procesa la lista de derecha a izquierda, permite trabajar de manera perezosa y puede manejar listas infinitas si la función y el valor inicial permiten una evaluación parcial o completa sin necesidad de procesar todos los elementos.
@@ -678,5 +679,17 @@ Luego: $const \ a \ b \ = \ a$
     
     listacomp f xs p = [f x | x <- xs, p x]
     listacomp f xs p = map f (filter p xs)
+\end{lstlisting}
+\subsection*{Ejercicios Foldl}
+\label{subsec:foldl_ejercicios}
+1. Defina la funcion sumaAlt, que realiza la suma alternada de los elementos de una lista. Es decir, primer elemento menos el segundo mas el tercero menos el cuarto y así. \\
+Lo primero que notamos es que de alguna manera vamos a tener que ver paso a paso si tenemos que sumar o restar. Esto lo podemos hacer de una manera simple, deberíamos en cada paso recursivo mandar la orden de si sumar o restar para poder usarlo en un condicional. \\
+Entonces nuestro paso recursivo además de llevar un acumulador va a llevar un booleano. Por lo tanto el caso base inicial podemos usar una especie de tupla como (0, True). \\
+Por otro lado, notamos que si usamos foldr haría el procedimiento al revés, por lo tanto tenemos que usar foldl para garantizar el desarrollo de izquierda a derecha. \\
+Importante notar que si queremos devolver un número, lo que va a devolver siempre el paso recursivo es algo igual al caso base (0, True) pero a nosotros no nos piden eso sino que nos piden que enviemos el número. \\
+Por lo tanto, luego de aplicar foldl podemos aplicar fst para obtener el acumulador. \\
+\begin{lstlisting}
+    sumaAlt :: (Num a) => [a] -> a
+    sumaAlt =  fst . foldl(\(acc, isAdd) x  -> if(isAdd) then (acc+x, False) else (acc-x, True))  (0, True)
 \end{lstlisting}
 \end{document} 

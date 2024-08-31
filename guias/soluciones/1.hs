@@ -90,7 +90,7 @@ sumasParciales :: Num a => [a] -> [a]
 sumasParciales = reverse . foldl(\acc x -> x + (if length acc >= 1 then head acc else 0) : acc) []
 
 sumaAlt :: (Num a) => [a] -> a
-sumaAlt =  foldr(\x ac -> x - ac) 0
+sumaAlt =  fst . foldl(\(acc, isAdd) x  -> if(isAdd) then (acc+x, False) else (acc-x, True))  (0, True)
 
 {-5. La segunda es recursion estructural-}
 entrelazar :: [a] -> [a] -> [a]
