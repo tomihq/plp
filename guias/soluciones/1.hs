@@ -187,7 +187,8 @@ potencia n m = foldNat 1 (multiplicacion n) m
 {-¿Como puedo generalizar esto usando Nat? Ej.: 2 \equiv Succ(Succ Zero) -}
 
 data Polinomio a = X | Cte a | Suma (Polinomio a) (Polinomio a) | Prod (Polinomio a) (Polinomio a)
-{-Ej: 
+{-
+Importante: Como tengo 4 constructores del tipo tengo 4 casos que considerar en la recursión. Lo mismo a la hora de probar.
 x^2 + 5x + 1 
 (Prod X X)
 (Prod (Cte 5) X)
