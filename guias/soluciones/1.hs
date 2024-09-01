@@ -141,6 +141,10 @@ sumaMat :: (Int -> Int -> Int) -> [[Int]] -> [[Int]] -> [[Int]]
 sumaMat _ [] _ = []
 sumaMat _ _ [] = []
 sumaMat f (x:xs) (y:ys) = map (uncurry f) (armarPares x y) : sumaMat f xs ys
+
+sumaMatCorta :: (Int -> Int -> Int) -> [[Int]] -> [[Int]] -> [[Int]]
+sumaMatCorta f = mapDoble(mapDoble(f))
+
 {--x e y son listas. Caso prueba: sumaMat (\x y -> x+y) [[1, 2], [3, 4]] [[5, 6], [7, 8]]--}
 
 {- trasponer :: [[Int]] -> [[Int]] -}
@@ -161,6 +165,21 @@ sumaMat f (x:xs) (y:ys) = map (uncurry f) (armarPares x y) : sumaMat f xs ys
     2:[]
     4:[2] = [4, 2] luego reverse [4, 2] = [2, 4]
 -}
+{-Definir y dar el tipo del esquema de recursión foldNat sobre los naturales. Utilizar el tipo Integer de
+ Haskell
 
-data Nat = Zero | Suc Nat
+ Recordemos la estructura de foldr: (a -> b -> b) -> b -> t a -> b 
+ Donde b es el caso base y a es la lista de elementos.
+ En este caso yo voy a obtener un numero natural (una función) y otro natural. Esta funcion se aplica entre los dos naturales.
+ -}
+data Nat = Zero | Succ Nat
 
+foldNat :: Integer -> (Integer -> Integer) -> Integer -> Integer 
+foldNat base _ 0 = base 
+foldNat base f n = f (foldNat base f (n-1))
+
+multiplicacion :: Integer -> Integer -> Integer
+multiplicacion n m = foldNat 0 (+n) m 
+
+potencia :: Integer -> Integer -> Integer 
+potencia n m = foldNat 1 (multiplicacion n) m

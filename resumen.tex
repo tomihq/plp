@@ -535,8 +535,52 @@ Es decir
     \item Secuencias: Progresiones aritméticas en un rango particular. Ej.: [3..7] es la lista que tiene los números del 3 al 7.
     \item Por compresión: Se definen de la siguiente manera [expresion | selectores, condiciones]. Ej.: [(x,y) | x <- [0..5], y <- [0..3], x+y==4] es la lista de pares que tienen elementos de x e y que dan menos que 4
 \end{itemize}
-\section*{Lista Infinitas}
+\section*{Estructuras Recursivas sobre Otras Estructuras de Datos}
+¿Cómo podemos plantear la estructura de un foldr para un árbol binario o cualquier estructura plegable que no sea una lista? \\
+Lo primero que podemos intuir es que en las listas, solo hay una recursión, sobre la lista propiamente pero en un Árbol Binario tenemos dos caminos: rama izquierda y rama derecha. Esto quiere decirque de alguna manera, tenemos que capturar 2 recursiones.
+\begin{itemize}
+    \item Planteamos varios problemas acerca de esa estructura de datos y vemos qué patrones hay en común. 
+    \item Las cosas que sean diferentes, las pasamos por parámetros. 
+\end{itemize}
+Por ejemplo, sean estas operaciones de un árbol binario 
+\begin{lstlisting}
+    nodos :: AB -> Int 
+    nodos Nil = 0
+    nodos (Bin i r d) = nodos i + 1 + nodos d 
 
+    preorder :: AB -> [a]
+    preorder Nil = []
+    preorder (Bin i r d) = [r] ++ preorder i ++ preorder d
+\end{lstlisting}
+Podemos observar que cambia lo siguiente 
+\begin{itemize}
+    \item Tipos de salida: En el primer ejemplo devolvemos un int, en el segundo una lista de a. La lista de a sería el tipo que tenga el AB. 
+    \item Caso base: En uno es [] y en otro 0. Por lo tanto tenemos que admitir un tipo b para el caso base. El caso base es del mismo tipo que el tipo de salida \textbf{siempre}.
+    \item Función que realiza: En uno hace sumas, en el otro hace concatenaciones. 
+\end{itemize}
+¿Cómo podríamos escribir las funciones anteriormente mencionadas de manera anónima? 
+\begin{lstlisting}
+    nodos: (\ri r rd -> ri + 1 + rd)(nodos i) r (nodos d)
+    preorder: (\ri r rd -> [r] ++ ri ++ rd) (preorder i) r (preorder d)
+\end{lstlisting}
+Recordemos la firma de foldr: $Foldable \ t \ \implies \ (a \ \rightarrow \ b \ \rightarrow \ b) \ \rightarrow \ b \ \rightarrow \ t \ a \ \rightarrow \ b$ \\
+Donde b era el caso base / recursivo y a el elemento actual, acá tenemos dos. \\
+Recordemos la estructura del tipo AB: AB a = Nil | Bin (AB a) a (AB a) \\
+Entonces nuestra función foldAB va a tener que estar preparado para recibir ambos (AB a) y a.
+foldAB :: (b $\rightarrow$ a $\rightarrow$ b $\rightarrow$ b) $\rightarrow$ b $\rightarrow$ AB a $\rightarrow$ b donde :t Bin: (AB a) $\rightarrow$ a $\rightarrow$ (AB) a $\rightarrow$ AB a donde 
+\begin{itemize}
+    \item $(b \rightarrow a \rightarrow b \rightarrow b)$
+    \begin{itemize}
+        \item la primera b: recursión rama izquierda
+        \item la a: la raíz 
+        \item la segunda b: recursión rama derecha 
+        \item la tercera b: el resultado del proceso.
+    \end{itemize}
+    \item b: el resultado.
+    \item AB a: la entrada 
+    \item b: el resultado.
+\end{itemize}
+Es súper importante entender que la firma de la función que acepta foldAB está prácticamente atada al tipo de la estructura de dato.
 \section*{Recordando Haskell}
 Para ejecutar un archivo hay que instalar GHCI. Una vez instalado, nos paramos en la terminal en el directorio donde está el archivo que queremos ejecutar. 
 \begin{itemize}
@@ -701,7 +745,7 @@ Vamos a tener que hacer también el tema de fst para terminar sacando la suma al
 Por lo tanto 
 \begin{itemize}
     \item El caso base es (0, True)
-    \item La recursión la vamos a hacer con $\x (acc, sign)$
+    \item La recursión la vamos a hacer con $ \backslash x (acc, sign)$
     \item Ejemplo con [1, 2, 3]
     \begin{itemize}
         \item x = 3, acc = 0, sign = + $\rightarrow$ acc = 3
