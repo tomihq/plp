@@ -769,5 +769,16 @@ donde la función armarPares tiene la siguiente pinta
     armarPares [] _ = []
     armarPares (x:xs) (y:ys) = (x, y) : armarPares xs ys 
 \end{lstlisting}
-
+2. Realice una suma de matrices.
+\begin{itemize}
+    \item Idea: Necesitamos de alguna manera recorrer la fila 1 de la matriz 1 y la fila 1 de la matriz 2. Esto lo podemos hacer facilmente reutilizando el ejercicio anterior (armarPares), es decir, enviamos armarPares con la fila1 matriz1 y fila1 matriz2. Esto nos armaría los pares de esa fila. 
+    \item Tenemos que generalizar este proceso para cada fila. Por lo tanto podemos recibir una matriz, y podemos hacer recursion sobre cada lista de la matriz.
+    \item A su vez, vamos a necesitar que una vez que tenemos los pares armados, sobre esos pares se aplique un map haciendo uncurry sobre f. Porque si tenemos F1 M1 + F1 M2 = [(1, 2), (3, 4), (5, 6)] esto indica que la fila de la M1 es [1, 3, 5] y la fila de la M2 es [2, 4, 6]. Por lo tanto, lo que necesito hacer es convertirlo en [[9, 12]] y agregarlo a la lista resultante. El Uncurry acá es ultra importante porque mi función pide $Int \rightarrow Int \rightarrow Int$ y yo voy a mandar $(Int, Int) \rightarrow Int$.
+\end{itemize}
+\begin{lstlisting}
+    sumaMat :: (Int -> Int -> Int) -> [[Int]] -> [[Int]] -> [[Int]]
+    sumaMat _ [] _ = []
+    sumaMat _ _ [] = []
+    sumaMat f (x:xs) (y:ys) = map (uncurry f) (armarPares x y) : sumaMat f xs ys
+\end{lstlisting}
 \end{document} 

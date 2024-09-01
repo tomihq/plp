@@ -112,10 +112,10 @@ insertarOrdenado :: (Ord a) => a -> [a] -> [a]
 insertarOrdenado n = foldr(\x rec -> if n<=x then n:x:rec else x:rec) [] {-recordar que siempre armo una nueva lista, si encuentro el valor primero pongo el menor, luego el del paso recursivo y luego la cola -}
 
 genLista :: a -> (a->a) -> Integer -> [a]
-genLista i f n = take (fromIntegral n) (iterate f i) {-genLista 2 (\x -> x+3) 5-}
+genLista i f n = take (fromIntegral n) (iterate f i) {- iterate f i empieza una lista desde i y le aplica f: iterate (\x -> x+2) [1, 3, 5, 7] take hace un prevent de infinity. -}
 
-desdeHasta :: Enum a => a -> Integer -> [a]
-desdeHasta n m = genLista n succ m {-Como la funcion genLista es generica y no solo de numeros no puedo usar funciones especificas para numeros -}
+desdeHasta ::  Integer -> Integer -> [Integer]
+desdeHasta n m = genLista n succ (m - n + 1) 
 
 {-mapPares:
     Necesito una funcion map que tome dos argumentos (pueden ser o no el mismo tipo a b y lo transforma en un tipo c)
@@ -141,4 +141,26 @@ sumaMat :: (Int -> Int -> Int) -> [[Int]] -> [[Int]] -> [[Int]]
 sumaMat _ [] _ = []
 sumaMat _ _ [] = []
 sumaMat f (x:xs) (y:ys) = map (uncurry f) (armarPares x y) : sumaMat f xs ys
-{--x e y son listas--}
+{--x e y son listas. Caso prueba: sumaMat (\x y -> x+y) [[1, 2], [3, 4]] [[5, 6], [7, 8]]--}
+
+{- trasponer :: [[Int]] -> [[Int]] -}
+{-  
+    Input: [[1, 2], [3, 4]]
+        1 2 
+        3 4
+
+    Output: [[1, 3], [2, 4]]
+        1 3  
+        2 4 
+
+    Necesito recorrer cada lista, tomando primero el primer elemento hasta la ultima sublista.
+    1:[]
+    3:[1] = [3, 1] luego reverse [3, 1] = [1, 3]
+
+    Lo mismo con la segunda componente
+    2:[]
+    4:[2] = [4, 2] luego reverse [4, 2] = [2, 4]
+-}
+
+data Nat = Zero | Suc Nat
+
