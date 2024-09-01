@@ -183,3 +183,23 @@ multiplicacion n m = foldNat 0 (+n) m
 
 potencia :: Integer -> Integer -> Integer 
 potencia n m = foldNat 1 (multiplicacion n) m
+
+{-¿Como puedo generalizar esto usando Nat? Ej.: 2 \equiv Succ(Succ Zero) -}
+
+data Polinomio a = X | Cte a | Suma (Polinomio a) (Polinomio a) | Prod (Polinomio a) (Polinomio a)
+{-Ej: 
+x^2 + 5x + 1 
+(Prod X X)
+(Prod (Cte 5) X)
+(Cte 1)
+
+x^2 + 5x = (Suma (Prod X X) (Prod (Cte 5) X))
+x^2 + 5x + 1 = Suma (Suma (Prod X X) (Prod (Cte 5) X)) (Cte 1) 
+
+-}
+{-evaluar (Suma (Suma(Prod X X) (Prod (Cte 5) X)) (Cte 1))  1-}
+evaluar :: (Num a) => Polinomio a -> a -> a 
+evaluar X val = val 
+evaluar (Cte c) _ = c 
+evaluar (Suma p1 p2) val = evaluar p1 val + evaluar p2 val
+evaluar (Prod p1 p2) val = evaluar p1 val * evaluar p2 val
