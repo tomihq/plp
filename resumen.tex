@@ -832,7 +832,7 @@ donde la función armarPares tiene la siguiente pinta
     sumaMat f = mapDoble(mapDoble(f))
 \end{lstlisting}
 \subsection*{Armando funciones que permitan hacer recursión sobre un tipo dado}
-1. foldNat: Necesitamos hacer recursión sobre los números enteros. Una excelente pregunta es ¿recursión sobre números naturales?. Sí. \\
+1. \textbf{foldNat}: Necesitamos hacer recursión sobre los números enteros. Una excelente pregunta es ¿recursión sobre números naturales?. Sí. \\
 Un número natural se define de la siguiente manera $data \ Nat \ = \ Zero \ | \ Succ \ Nat$. Es decir, tiene dos chances: O es cero, o es un sucesor de algún número. \\
 ¿Cuántos casos tendríamos que probar si quisieramos verificar la correctitud del tipo? 2. Que sea Zero o que sea algún sucesor. \\
 Así, de esta manera, podemos definir al número 4 como $Succ(Succ(Succ(Succ  \ Zero)))$. \\
@@ -858,5 +858,6 @@ Por último podemos definir la potencia reutilizando la multiplicación
     potencia :: Integer -> Integer -> Integer 
     potencia n m = foldNat 1 (multiplicacion n m) m
 \end{lstlisting}
-Es importante notar que la potencia requiere hacer foldNat nuevamente porque tenemos que hacer el proceso de multiplicación m veces. 
+Es importante notar que la potencia requiere hacer foldNat nuevamente porque tenemos que hacer el proceso de multiplicación m veces. \\
+2.\textbf{Polinomios}: Hablemos ahora de Polinomios 
 \end{document} 
