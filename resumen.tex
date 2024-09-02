@@ -514,7 +514,7 @@ Ej.: data Persona = LaPersona String String Int \\
 \textbf{Importante}: Nótese que estamos devolviendo \textbf{una nueva persona}. En programación funcional no existe el concepto de "modificar" algo, sino crear algo nuevo con lo anterior y cambiarle algo.
 \subsection*{Tipos Recursivos}
 Cuando tengo tipos recursivos, las funciones que los usen deben manejar casos bases y la recursión \\
-Ej.: data Nat = Zero | Succ Nat 
+Ej.: data Nat = Zero | Succ Nat \\
 \subsection*{Tipos Polimórficos} 
 Al igual que las funciones, podemos definir que los tipos tengan constructores de un tipo específico.
 \begin{lstlisting}
@@ -529,6 +529,7 @@ Es decir
 
     Error. No puede estar Vacia como constructor de dos tipos diferentes.
 \end{lstlisting}
+
 \section*{Listas}
 \begin{itemize}
     \item Por extensión: Es dar la lista implícita escribiendo todos sus elementos. Ej. [1, 2, 3]
@@ -825,4 +826,37 @@ donde la función armarPares tiene la siguiente pinta
     sumaMat _ _ [] = []
     sumaMat f (x:xs) (y:ys) = map (uncurry f) (armarPares x y) : sumaMat f xs ys
 \end{lstlisting}
+¿Qué es lo que podríamos cambiar? Estamos haciendo un laburo exactamente igual mapDoble. \\
+\begin{lstlisting}
+    sumaMat :: (Int -> Int -> Int) -> [[Int]] -> [[Int]] -> [[Int]]
+    sumaMat f = mapDoble(mapDoble(f))
+\end{lstlisting}
+\subsection*{Armando funciones que permitan hacer recursión sobre un tipo dado}
+1. foldNat: Necesitamos hacer recursión sobre los números enteros. Una excelente pregunta es ¿recursión sobre números naturales?. Sí. \\
+Un número natural se define de la siguiente manera $data \ Nat \ = \ Zero \ | \ Succ \ Nat$. Es decir, tiene dos chances: O es cero, o es un sucesor de algún número. \\
+¿Cuántos casos tendríamos que probar si quisieramos verificar la correctitud del tipo? 2. Que sea Zero o que sea algún sucesor. \\
+Así, de esta manera, podemos definir al número 4 como $Succ(Succ(Succ(Succ  \ Zero)))$. \\
+La recursión nos sirve justamente para esto, para poder hacer operaciones con números naturales. \\
+Ej.: Necesitamos multiplicar un número n m veces ¿Cómo hacemos esto? Sumamos el mismo número m veces. Es decir, si quiero hacer n * n equivale a decir n+n+n+n+n. Entonces ¿Cómo podríamos hacer esto? \\
+Para empezar, pensemos en qué tipo de operaciones queremos hacer con foldNat. Podríamos hacer multiplicación, potencia, etc. \\
+Pensemos por un momento ¿qué pasaría si el caso base fuese 0 si estamos sumando? Nada, porque justamente para la multiplicación la queremos hacer como n+n+n+n+n y si llegamos a Zero quiero que devuelva 0. \\
+Ahora ¿qué sucede si queremos hacer la potencia? Recordemos que la potencia se define como la multiplicación de un número m veces. Si nos abstraemos a nuestro esquema $n^{m} \equiv n * n * n * n ... m\equiv (n+n) + (n+n) + (n+n) + (n+n) ... m \ veces$ si quisieramos aplicar el caso base de 0 para la multiplicación se nos haría 0. Por lo tanto tenemos otro caso base, sería 1. \\
+Por lo tanto, definamos el foldNat pero utilizando el tipo de Integer (como pidió la cátedra)
+\begin{lstlisting}
+    foldNat :: Integer -> (Integer -> Integer) -> Integer -> Integer
+    foldNat base _ Zero = base 
+    foldNat base f n = f (foldNat base f (n-1))
+\end{lstlisting}
+Entonces ahora podemos definir la multiplicación como 
+\begin{lstlisting}
+    multiplicacion :: Integer -> Integer -> Integer 
+    multiplicacion n m = foldNat 0 (+n) m 
+\end{lstlisting}
+¡Nótese que acá el caso base es 0 porque estamos sumando! \\
+Por último podemos definir la potencia reutilizando la multiplicación 
+\begin{lstlisting}
+    potencia :: Integer -> Integer -> Integer 
+    potencia n m = foldNat 1 (multiplicacion n m) m
+\end{lstlisting}
+Es importante notar que la potencia requiere hacer foldNat nuevamente porque tenemos que hacer el proceso de multiplicación m veces. 
 \end{document} 
