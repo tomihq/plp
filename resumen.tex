@@ -625,16 +625,18 @@ Es súper importante entender que la firma de la función que acepta foldAB est�
     \end{itemize} 
     \item El programa \textbf{no depende del orden} de las ecuaciones. 
 \end{itemize}
-\subsection*{Principio de Reemplazo}
+\section*{Principio de Reemplazo}
 Sea $e1 = e2$ una ecuación del programa. Las siguientes operaciones preservan la igualdad de expresiones.
 \begin{itemize}
     \item Reemplazar \textbf{cualquier instancia} de e1 por e2.
-    \item Reemplazar \textbf{cualquier insntacia} de e2 por e1.
+    \item Reemplazar \textbf{cualquier instancia} de e2 por e1.
 \end{itemize}
 \textbf{Importante}: Si una igualdad se puede demostrar usando sólo el principio de reemplazo, decimos que la igualdad vale \textbf{por definición}.
 \[\begin{minipage}[b]{0.5\textwidth}
     \includegraphics[width=\linewidth]{assets/principio_reemplazo.png}
 \end{minipage}\]
+\section*{Inducción Estructural}
+\subsection*{Inducción sobre booleanos}
 \section*{Anexo}
 \subsection*{Recordando Haskell}
 Para ejecutar un archivo hay que instalar GHCI. Una vez instalado, nos paramos en la terminal en el directorio donde está el archivo que queremos ejecutar. 
