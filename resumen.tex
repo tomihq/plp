@@ -636,7 +636,46 @@ Sea $e1 = e2$ una ecuación del programa. Las siguientes operaciones preservan l
     \includegraphics[width=\linewidth]{assets/principio_reemplazo.png}
 \end{minipage}\]
 \section*{Inducción Estructural}
+Cada tipo de datos tiene su propio principio de inducción. \\
+\textbf{Importante}: El . acá cumple el rol del () en el $\forall$ es decir $\forall x :: Bool . \mathcal{P} \equiv (\forall x :: Bool)(\mathcal{P}) $
 \subsection*{Inducción sobre booleanos}
+Si $\mathcal{P}(True)$ y $\mathcal{P}(False)$ entonces $\forall x :: Bool \ \mathcal{P} (x)$ 
+\[\begin{minipage}[b]{0.7\textwidth}
+    \includegraphics[width=\linewidth]{assets/induccion_booleanos.png}
+\end{minipage}\]
+\subsection*{Inducción sobre pares}
+Si $(\forall x :: a)(\forall y :: b)(\mathcal{P}(x, y))$ entonces $\forall p :: (a, b) \mathcal{P}(p)$
+\[\begin{minipage}[b]{0.7\textwidth}
+    \includegraphics[width=\linewidth]{assets/induccion_pares.png}
+\end{minipage}\]
+\subsection*{Inducción sobre naturales}
+Si $\mathcal{P}(Zero)$ y $(\forall n :: Nat)(\mathcal{P}(n) \implies \mathcal{P}(Suc \ n))$ entonces $(\forall n :: Nat)(\mathcal{P}(n))$ donde 
+\begin{itemize}
+    \item $\mathcal{P}(n)$: Hipótesis Inductiva.
+    \item $\mathcal{P}(Suc \ n)$: Tesis Inductiva.
+\end{itemize}
+\[\begin{minipage}[b]{0.7\textwidth}
+    \includegraphics[width=\linewidth]{assets/induccion_naturales.png}
+\end{minipage}\]
+\subsection*{Inducción Estructural: Caso General}
+Sea $\mathcal{P}$ una propiedad acerca de las expresiones tipo T tal que 
+\begin{itemize}
+    \item $\mathcal{P}$ vale sobre todos los constructores base de T,
+    \item $\mathcal{P}$ vale sobre todos los constructores recursivos de T, asumiendo como hipótesis inductiva que vale para los parámetros de tipo T,
+\end{itemize}
+entonces $(\forall x :: T)(\mathcal{P}(x))$
+\subsection*{Principio de Inducción sobre Listas}
+\[\begin{minipage}[b]{0.7\textwidth}
+    \includegraphics[width=\linewidth]{assets/principio_induccion_listas.png}
+\end{minipage}\]
+\subsection*{Principio de Inducción sobre Árboles Binarios}
+\[\begin{minipage}[b]{0.7\textwidth}
+    \includegraphics[width=\linewidth]{assets/principio_induccion_ab.png}
+\end{minipage}\]
+\subsection*{Principio de Inducción sobre Polinomios}
+\[\begin{minipage}[b]{0.7\textwidth}
+    \includegraphics[width=\linewidth]{assets/principio_induccion_polinomios.png.png}
+\end{minipage}\]
 \section*{Anexo}
 \subsection*{Recordando Haskell}
 Para ejecutar un archivo hay que instalar GHCI. Una vez instalado, nos paramos en la terminal en el directorio donde está el archivo que queremos ejecutar. 
