@@ -88,8 +88,6 @@ mejorSegun f = foldr1(\x ac -> if f x ac then x else ac)
 
 sumasParciales :: Num a => [a] -> [a]
 sumasParciales = reverse . foldl(\acc x -> if(length acc > 0) then x+(head acc):acc else x:acc) []
-
-
 {-
 sumaAlt
     [1, 2, 3]
@@ -134,8 +132,11 @@ recr f z (x : xs) = f x xs (recr f z xs)
 
 {- 6a -}
 sacarUna :: (Eq a) => a -> [a] -> [a]
-sacarUna n = foldr(\x rec -> if x==n then rec else x:rec) [] {- recordar que siempre armo una nueva lista, entonces sacarlo seria no ponerlo-}
+sacarUna n = recr(\x xs rec  -> if x==n then xs else x:rec) [] {- recordar que siempre armo una nueva lista, entonces sacarlo seria no ponerlo-}
 {- Sacar una no se puede implementar con recursión estructural pues acá necesito utilizar la cola de la lista en un lugar que no es el propio llamado recursivo. -}
+
+sacarTodos :: (Eq a) => a -> [a] -> [a]
+sacarTodos n = foldr(\x rec -> if x /= n then x:rec else rec) []
 
 insertarOrdenado :: (Ord a) => a -> [a] -> [a]
 insertarOrdenado n = foldr(\x rec -> if n<=x then n:x:rec else x:rec) [] {-recordar que siempre armo una nueva lista, si encuentro el valor primero pongo el menor, luego el del paso recursivo y luego la cola -}
@@ -158,7 +159,20 @@ armarPares :: [a] -> [b] -> [(a, b)]
 armarPares _ [] = []
 armarPares [] _ = []
 armarPares (x:xs) (y:ys) = (x, y) : armarPares xs ys 
-{-Probar: armarPares (desdeHasta 10 20) (desdeHasta 30 40)-}
+
+{-
+    Foldr: Solo puede recorrer una lista a la vez. Es importante saber que si nosotros mandamos más de un argumento que no entre dentro del foldr, esos argumentos tendrán que ir dentro del acumulador del caso recursivo.
+    
+
+    Es decir, en este ejercicio tenemos [a] -> [b] -> [(a, b)]. El foldr hace recursion sobre [a] pero ¿qué pasa con [b]? En este caso el caso recursivo espera que se envie por parámetro una lista [b].
+
+    Por lo tanto, en este caso podemos ir "recorriendo" ambas listas al mismo tiempo porque podemos manipular la cabeza de la segunda lista y la primera a la vez, y como tenemos garantizado que el foldr va recorriendo la primera lista, lo que podemos hacer para ir achicando la segunda es mandar la cola de la segunda lista por argumento de la recursión.
+-}
+armarParesEst :: [a] -> [b] -> [(a, b)]
+armarParesEst = foldr (\x rec l2 -> if null l2 then [] else (x, head l2) : rec (tail l2))(const [])
+
+armarTriplasEst :: [a] -> [b] -> [c] -> [(a, b, c)]
+armarTriplasEst = foldr(\x rec l2 l3 -> if null l2 then [] else (if null l3 then [] else (x, head l2, head l3):rec (tail l2) (tail l3))) (\_ _ -> [])
 
 mapDoble :: (a -> b -> c) -> [a] -> [b] -> [c]
 mapDoble f l r = foldr(\x rec -> uncurry f x:rec) [] (armarPares l r)
