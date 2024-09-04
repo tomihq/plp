@@ -90,7 +90,7 @@ sumasParciales :: Num a => [a] -> [a]
 sumasParciales = reverse . foldl(\acc x -> if(length acc > 0) then x+(head acc):acc else x:acc) []
 
 sumaAlt :: (Num a) => [a] -> a
-sumaAlt =  fst . foldl(\(acc, isAdd) x  -> if(isAdd) then (acc+x, False) else (acc-x, True))  (0, True)
+sumaAlt =  foldr (-) 0
 
 sumaAltDer :: (Num a) => [a] -> a 
 sumaAltDer = fst . foldr(\x (acc, isAdd) -> if(isAdd) then (acc + x, False) else (acc - x, True)) (0, True)
