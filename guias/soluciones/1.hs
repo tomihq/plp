@@ -252,6 +252,15 @@ foldAB ::  (b -> a -> b -> b) -> b -> AB a  -> b
 foldAB _ b Nil = b 
 foldAB f b (Bin i r d)  = f  (foldAB f b i) r (foldAB f b d)
 
+esNil :: AB a -> Bool 
+esNil Nil = True 
+esNil _ = False
+{- recAB :: (b -> a -> b -> b) -> b -> AB a -> b -}
+
+{- altura :: AB a -> Integer  -}
+
+
 {-cantNodos (Bin Nil 1 (Bin Nil 2 Nil)) = 2-}
 cantNodos :: AB a -> Integer 
 cantNodos = foldAB (\ri r rd -> 1 + ri + rd) 0
+
