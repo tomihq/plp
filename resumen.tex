@@ -447,8 +447,9 @@ Por lo tanto foldr se define como
     \item Toma la lista y hace recursión. Ahora sigue con el 1, recibe 1 y la salida es 1. 
     \item Esta función agarra el primer elemento de una lista, sería el head.
 \end{itemize}
+\textbf{IMPORTANTÍSIMO}: Se pueden recorrer dos listas, tres listas, las que quieras a la vez con Foldr. La recursion se hace sobre una sola, pero las n-1 listas las enviarías por argumento en cada paso recursivo. Véase \hyperref[subsec:foldr_armar_pares]{\textbf{\underline{anexo}}} para ver ver el árbol de recursión y un ejemplo práctico. 
 \textbf{Importante}: Foldr puede trabajar con listas infinitas. \\
-Véase \hyperref[subsec:foldr_ex]{\textbf{\underline{anexo}}} para ver ejemplos de Foldr. 
+Véase \hyperref[subsec:foldr_ex]{\textbf{\underline{anexo}}} para ver ejemplos de Foldr. \\
 \subsection*{Recursión que \textbf{no} es estructural}
 \begin{lstlisting}
     ssort :: Ord a => [a] -> [a]
@@ -771,6 +772,22 @@ Esto quiere decir que vamos a llamar a sumarUncurry que recibe la tupla, ahora s
     sumFoldr :: (Foldable t, Num a) => t a -> a 
     sumFoldr = foldr (\x ac -> x + ac) 0
 \end{lstlisting}
+\subsection*{Foldr, el árbol de recursión y más de una lista}
+\label{subsec:foldr_armar_pares}
+Uno de los problemas más normales es tener que enviar más de una lista a procesar a una función dada en Haskell y realizar recursión estructural. \\
+Veamos el siguiente ejercicio: Arme pares de la forma [(a, b)] usando recursión estructural. \\
+Esto es súper simple si lo hacemos sin recursión estructural porque nos queda algo así 
+\begin{lstlisting}
+    armarPares :: [a] -> [b] -> [(a, b)]
+    armarPares [] _ = []
+    armarPares _ [] = []
+    armarPares (x:xs) (y:ys) = (x, y) : armarPares xs ys
+\end{lstlisting}
+¿Cómo hacemos esto con foldr? Veamos el árbol recursivo.
+\[\begin{minipage}[b]{0.9\textwidth}
+    \includegraphics[width=\linewidth]{assets/armar_pares_2.jpg}
+\end{minipage}\] 
+El error en la recursión estructural vendría del lado de que como estamos recorriendo dos listas a la vez, y mi llamado recursivo es del tipo $[b] \rightarrow [(a,b)]$ no puedo devolver $[]$ entonces lo que hago es devolver $const \ []$ y se aplica parcialmente al argumento que sería la segunda lista $const \ [] \ l2$ y como la primera lista está vacía entonces devuelve []. 
 \subsection*{Flip}
 Toma dos parámetros y devuelve una función que los devuelve en el orden inverso. \\
 Es decir: $(a \rightarrow b \rightarrow c) \ \rightarrow b \rightarrow a \rightarrow c$ \\
@@ -785,7 +802,7 @@ Es decir: $a \rightarrow b \rightarrow a$ \\
 Luego: $const \ a \ b \ = \ a$
 \subsection*{Reduciendo expresiones elegantemente}
 \begin{itemize}
-    \item $filter(\backslash x \rightarrow length x > 3)$
+    \item $filter(\backslash x \rightarrow length \ x > 3)$
     \begin{itemize}
         \item  ¿Puede hacerse algo mejor? No. Porque a x si o sí necesitamos aplicarle una función.
     \end{itemize}
@@ -833,41 +850,10 @@ Luego: $const \ a \ b \ = \ a$
     listacomp f xs p = [f x | x <- xs, p x]
     listacomp f xs p = map f (filter p xs)
 \end{lstlisting}
-\subsection*{Ejercicios Foldr}
-\label{subsec:foldr_ejercicios}
-1. Realizar lo mismo que el ejercicio hecho con (Foldl) pero el último elemento menos el anteúltimo, más el ante ante último, etc. \\
-En este caso es obvio que conviene usar foldr porque empezamos desde el último mandando como caso base a (0, True) para colocar mínimo el primer elemento. \\
-Vamos a tener que hacer también el tema de fst para terminar sacando la suma al revés. \\
-Por lo tanto 
-\begin{itemize}
-    \item El caso base es (0, True)
-    \item La recursión la vamos a hacer con $ \backslash x (acc, sign)$
-    \item Ejemplo con [1, 2, 3]
-    \begin{itemize}
-        \item x = 3, acc = 0, sign = + $\rightarrow$ acc = 3
-        \item x = 2, acc = 3, sign = - $\rightarrow$ acc = 1
-        \item x = 1, acc = 1, sign = + $\rightarrow$ acc = 2
-    \end{itemize}
-\end{itemize}
+
 \subsection*{Ejercicios Foldl}
 \label{subsec:foldl_ejercicios}
-1. Defina la funcion sumaAlt, que realiza la suma alternada de los elementos de una lista. Es decir, primer elemento menos el segundo mas el tercero menos el cuarto y así. \\
-Lo primero que notamos es que de alguna manera vamos a tener que ver paso a paso si tenemos que sumar o restar. Esto lo podemos hacer de una manera simple, deberíamos en cada paso recursivo mandar la orden de si sumar o restar para poder usarlo en un condicional. \\
-Entonces nuestro paso recursivo además de llevar un acumulador va a llevar un booleano. Por lo tanto el caso base inicial podemos usar una especie de tupla como (0, True). \\
-Por otro lado, notamos que si usamos foldr haría el procedimiento al revés, por lo tanto tenemos que usar foldl para garantizar el desarrollo de izquierda a derecha. \\
-Veamos el tipado de Foldl 
-\begin{lstlisting}
-    foldl :: Foldable t => (b -> a -> b) -> b -> t a -> b
-    Lo primero que recibe es un tipo b que en nuestro caso será (Int, Bool).
-    Luego a es el elemento que va cambiando en cada paso recursivo.
-\end{lstlisting}
-Importante notar que si queremos devolver un número, lo que va a devolver siempre el paso recursivo es algo igual al caso base (0, True) pero a nosotros no nos piden eso sino que nos piden que enviemos el número. \\
-Por lo tanto, luego de aplicar foldl podemos aplicar fst para obtener el acumulador.
-\begin{lstlisting}
-    sumaAlt :: (Num a) => [a] -> a
-    sumaAlt =  fst . foldl(\(acc, isAdd) x  -> if(isAdd) then (acc+x, False) else (acc-x, True))  (0, True)
-\end{lstlisting}
-2. Definir la función sumasParciales que dada una lista de números devuelve otra de la misma longitud que tiene en cada posicion la suma parcial de los elementos de la lista original desde la cabeza hasta la posición actual. \\
+1. Definir la función sumasParciales que dada una lista de números devuelve otra de la misma longitud que tiene en cada posicion la suma parcial de los elementos de la lista original desde la cabeza hasta la posición actual. \\
 Entendamos el enunciado: 
 \begin{itemize}
     \item Vamos a usar foldl para ir sumando de izquierda a derecha.

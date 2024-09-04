@@ -164,7 +164,7 @@ armarPares (x:xs) (y:ys) = (x, y) : armarPares xs ys
     Foldr: Solo puede recorrer una lista a la vez. Es importante saber que si nosotros mandamos más de un argumento que no entre dentro del foldr, esos argumentos tendrán que ir dentro del acumulador del caso recursivo.
     
 
-    Es decir, en este ejercicio tenemos [a] -> [b] -> [(a, b)]. El foldr hace recursion sobre [a] pero ¿qué pasa con [b]? En este caso el caso recursivo espera que se envie por parámetro una lista [b].
+    Es decir, en este ejercicio tenemos [a] -> [b] -> [(a, b)]. El foldr hace recursion sobre [a] pero ¿qué pasa con [b]? En este caso el caso recursivo espera que se envie por parámetro una lista [b]. Por lo tanto el tipo de rec es [b] -> [(a, b)]
 
     Por lo tanto, en este caso podemos ir "recorriendo" ambas listas al mismo tiempo porque podemos manipular la cabeza de la segunda lista y la primera a la vez, y como tenemos garantizado que el foldr va recorriendo la primera lista, lo que podemos hacer para ir achicando la segunda es mandar la cola de la segunda lista por argumento de la recursión.
 -}
