@@ -233,9 +233,25 @@ x^2 + 5x = (Suma (Prod X X) (Prod (Cte 5) X))
 x^2 + 5x + 1 = Suma (Suma (Prod X X) (Prod (Cte 5) X)) (Cte 1) 
 
 -}
-{-evaluar (Suma (Suma(Prod X X) (Prod (Cte 5) X)) (Cte 1))  1-}
-evaluar :: (Num a) => Polinomio a -> a -> a 
-evaluar X val = val 
-evaluar (Cte c) _ = c 
-evaluar (Suma p1 p2) val = evaluar p1 val + evaluar p2 val
-evaluar (Prod p1 p2) val = evaluar p1 val * evaluar p2 val
+
+{-foldPoli (1) id (devuelve el mismo valor que tiene en ese lugar) (+) (*) ((Suma (Prod X X) (Prod (Cte 5) X)))-}
+foldPoli :: (b) -> (a -> b) -> (b -> b -> b) -> (b->b->b) -> Polinomio a -> b
+foldPoli fx fcte fsuma fprod pol = case pol of 
+                                   x -> fx 
+                                   Cte c -> fcte c 
+                                   Suma p q -> fsuma (rec p) (rec q)
+                                   Prod p q -> fprod (rec p) (rec q)
+            where rec = foldPoli fx fcte fsuma fprod
+    
+evaluar2 :: Num a => a -> Polinomio a -> a
+evaluar2 x = foldPoli x id (+) (*)
+
+data AB a = Nil | Bin (AB a) a (AB a)
+
+foldAB ::  (b -> a -> b -> b) -> b -> AB a  -> b 
+foldAB _ b Nil = b 
+foldAB f b (Bin i r d)  = f  (foldAB f b i) r (foldAB f b d)
+
+{-cantNodos (Bin Nil 1 (Bin Nil 2 Nil)) = 2-}
+cantNodos :: AB a -> Integer 
+cantNodos = foldAB (\ri r rd -> 1 + ri + rd) 0
