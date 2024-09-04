@@ -175,15 +175,7 @@ armarTriplasEst :: [a] -> [b] -> [c] -> [(a, b, c)]
 armarTriplasEst = foldr(\x rec l2 l3 -> if null l2 then [] else (if null l3 then [] else (x, head l2, head l3):rec (tail l2) (tail l3))) (const (const []))
 
 mapDoble :: (a -> b -> c) -> [a] -> [b] -> [c]
-mapDoble f l r = foldr(\x rec -> uncurry f x:rec) [] (armarPares l r)
-
-mapDobleCorta :: (a -> b -> c) -> [a] -> [b] -> [c]
-mapDobleCorta f l r = map (uncurry f) (armarPares l r)
-
-sumaMat :: (Int -> Int -> Int) -> [[Int]] -> [[Int]] -> [[Int]]
-sumaMat _ [] _ = []
-sumaMat _ _ [] = []
-sumaMat f (x:xs) (y:ys) = map (uncurry f) (armarPares x y) : sumaMat f xs ys
+mapDoble f l r = mapPares f (armarParesEst l r)
 
 sumaMatCorta :: (Int -> Int -> Int) -> [[Int]] -> [[Int]] -> [[Int]]
 sumaMatCorta f = mapDoble(mapDoble(f))

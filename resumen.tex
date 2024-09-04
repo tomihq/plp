@@ -787,7 +787,8 @@ Esto es súper simple si lo hacemos sin recursión estructural porque nos queda 
 \[\begin{minipage}[b]{0.9\textwidth}
     \includegraphics[width=\linewidth]{assets/armar_pares_2.jpg}
 \end{minipage}\] 
-El error en la recursión estructural vendría del lado de que como estamos recorriendo dos listas a la vez, y mi llamado recursivo es del tipo $[b] \rightarrow [(a,b)]$ no puedo devolver $[]$ entonces lo que hago es devolver $const \ []$ y se aplica parcialmente al argumento que sería la segunda lista $const \ [] \ l2$ y como la primera lista está vacía entonces devuelve []. 
+El error en la recursión estructural vendría del lado de que como estamos recorriendo dos listas a la vez, y mi llamado recursivo es del tipo $[b] \rightarrow [(a,b)]$ no puedo devolver $[]$ entonces lo que hago es devolver $const \ []$ y se aplica parcialmente al argumento que sería la segunda lista $const \ [] \ l2$ y como la primera lista está vacía entonces devuelve []. \\
+Esto es súper importante a tener en cuenta, porque si mandamos más de un argumento en la recursión, recordar el concepto de curry.
 \subsection*{Flip}
 Toma dos parámetros y devuelve una función que los devuelve en el orden inverso. \\
 Es decir: $(a \rightarrow b \rightarrow c) \ \rightarrow b \rightarrow a \rightarrow c$ \\
