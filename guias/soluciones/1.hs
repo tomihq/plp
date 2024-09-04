@@ -89,11 +89,40 @@ mejorSegun f = foldr1(\x ac -> if f x ac then x else ac)
 sumasParciales :: Num a => [a] -> [a]
 sumasParciales = reverse . foldl(\acc x -> if(length acc > 0) then x+(head acc):acc else x:acc) []
 
+
+{-
+sumaAlt
+    [1, 2, 3]
+    1 - [2, 3]
+    1 - (2 - [3])
+    1 - 2 - (3 - [])
+            3
+        2-3 = -1
+    1 - (-1) = 2
+-}
 sumaAlt :: (Num a) => [a] -> a
 sumaAlt =  foldr (-) 0
 
+{-
+sumaAltDer
+    [1, 2, 3, 4] solo con foldl(-)
+    (foldl(-) 0 [1, 2, 3, 4])
+    (foldl(-) -1 [2, 3, 4]) 
+    (foldl(-) -3 [3, 4])
+    (foldl(-) -6 [4])
+    (foldl(-) -10 [])
+
+    Esto me esta haciendo 1-2-3-4. Yo necesito 4-3+2-1 = 2
+    Lo que me produce foldl(flip(-)) es lo siguiente
+    [1, 2, 3, 4]
+    (foldl(flip(-)) 0 [1, 2, 3, 4])
+    (foldl(flip(-)) 1-0 = 1 [2, 3, 4])
+    (foldl(flip(-)) 2 - 1 = 2 [3, 4])
+    (foldl(flip(-)) 3-1 = 2 [4])
+    (foldl(flip(-)) 4-2 = 2 [])
+-}
 sumaAltDer :: (Num a) => [a] -> a 
-sumaAltDer = fst . foldr(\x (acc, isAdd) -> if(isAdd) then (acc + x, False) else (acc - x, True)) (0, True)
+sumaAltDer = foldl (flip (-)) 0 
 
 {-5. La segunda es recursion estructural-}
 entrelazar :: [a] -> [a] -> [a]
