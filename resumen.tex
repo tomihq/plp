@@ -638,7 +638,7 @@ Sea $e1 = e2$ una ecuación del programa. Las siguientes operaciones preservan l
 \end{minipage}\]
 \section*{Inducción Estructural}
 Cada tipo de datos tiene su propio principio de inducción. \\
-\textbf{Importante}: El . acá cumple el rol del () en el $\forall$ es decir $\forall x :: Bool . \mathcal{P} \equiv (\forall x :: Bool)(\mathcal{P}) $
+\textbf{Importante}: El . acá cumple el rol del () en el $\forall$ es decir $\forall x :: Bool . \mathcal{P} \equiv (\forall x :: Bool)(\mathcal{P}) $ y el $::$ cumple el rol de \textbf{es del tipo...}
 \subsection*{Inducción sobre booleanos}
 Si $\mathcal{P}(True)$ y $\mathcal{P}(False)$ entonces $\forall x :: Bool \ \mathcal{P} (x)$ 
 \[\begin{minipage}[b]{0.7\textwidth}
@@ -669,6 +669,7 @@ entonces $(\forall x :: T)(\mathcal{P}(x))$
 \[\begin{minipage}[b]{0.7\textwidth}
     \includegraphics[width=\linewidth]{assets/principio_induccion_listas.png}
 \end{minipage}\]
+\textbf{Propiedad}: Si $f::a \rightarrow b, \ xs::[a], ys::[a]$ entonces map f (xs ++ ys) = map f xs ++ map f ys 
 \subsection*{Principio de Inducción sobre Árboles Binarios}
 \[\begin{minipage}[b]{0.7\textwidth}
     \includegraphics[width=\linewidth]{assets/principio_induccion_ab.png}
@@ -677,6 +678,68 @@ entonces $(\forall x :: T)(\mathcal{P}(x))$
 \[\begin{minipage}[b]{0.7\textwidth}
     \includegraphics[width=\linewidth]{assets/principio_induccion_polinomios.png}
 \end{minipage}\]
+\subsection*{Relación entre foldr y foldl}
+\textbf{Propiedad}: Si $f::a\rightarrow b \rightarrow b, \ z::b, \ xs::[a]$ entonces foldr f z xs = foldl (flip f) z (reverse xs) \\
+\textbf{Lema}: Si $g::b \rightarrow a \rightarrow b, \ z::b, x::a, xs::[a]$ entonces foldl g z (xs ++ [x]) = g (foldl g z xs) xs
+\subsection*{Puntos de vista intensional vs extensional}
+Sí, es con \textbf{s}. Es intensional. \\
+¿Es equivalente mergesort = insertionSort? La realidad es que: hacen lo mismo (llegan al mismo resultado); ordenan algo pero de una manera diferente. \\
+\begin{itemize}
+    \item Punto de vista intensional: Dos valores son iguales si están definidos de la misma manera.
+    \item Punto de vista extensional: Dos valores son iguales si son indistinguibles al observarlos.
+\end{itemize}
+Entonces mergesort = insertionSort desde el lado extensional, porque hacen lo mismo pero no son iguales desde el punto de vista intensional. 
+\newpage
+\subsection*{Principio de Extensionalidad Funcional}
+Sean $f, \ g :: a \rightarrow b$. \\
+\textbf{Propiedad Inmediata}: Si $f = g$ entonces $(\forall x :: a)(f \ x  =  g \ x)$ \\
+\textbf{Principio de extensionalidad funcional}: Si $(\forall x :: a)(f \ x  =  g \ x) $ entonces $f=g$
+\[\begin{minipage}[b]{0.7\textwidth}
+    \includegraphics[width=\linewidth]{assets/extensionalidad_funcional.png}
+\end{minipage}\]
+\subsection*{Demostración de Desigualdades}
+¿Cómo demostramos que no vale una igualdad e1 = e2 :: A? \\
+Entiendo que básicamente hay que encontrar hacer \textbf{ALGO} para demostrar que no son iguales. Este \textbf{ALGO} es una funcionalidad que devuelva algo con uno, y otra cosa con otro. Por lo tanto debería ser del tipo $obs \ a :: A \rightarrow Bool$. \\
+Demostrar que \textbf{no} vale la igualdad: $id = swap :: (Int, Int) \rightarrow (Int, Int)$. \\
+Esto es fácil de probar porque sabemos que $id$ nos da exactamente lo mismo que envíamos, y swap justamente da vuelta todo. Por lo tanto podemos comparar el primer elemento con id y el primer elemento haciendo el swap. \\
+Ej.: $(1, 2) \rightarrow id (1, 2) \rightarrow (1, 2)$ pero $swap (1, 2) = (2, 1)$ y el primer elemento de $id (1, 2) \rightarrow (1, 2)$ es decir, $1 \neq 2$ que arroja el swap. \\
+Por lo tanto
+\begin{lstlisting}
+    Ej: (1, 2)
+    obs :: ((Int, Int) -> (Int, Int)) -> Bool 
+    obs f = fst (f (1,2)) == 1
+
+    obs id -> True 
+    obs swap False
+\end{lstlisting}
+Nótese que el obs está \textbf{exactamente armado para este caso particular}. Para demostrar que las funciones no hacen lo mismo.
+\section*{Isomorfismo de Tipos}
+Decimos que dos tipos son isomorfos si podemos pasar de uno al otro aplicando alguna función y al componerlas el resultado arroja la función identidad. 
+\begin{lstlisting}
+    ("hola", (1, True)) :: (String, (Int, Bool))
+    ((True, "hola"), 1) :: ((Bool, String), Int)
+    Estos dos tipos son isomorfos porque podemos transformar los valores de un tipo en valores del otro
+
+    f :: (String, (Int, Bool)) -> ((Bool, String), Int)
+    f (s, (i, b)) = f((b, s), i)
+
+    g :: ((Bool, String), Int) -> (String, (Int, Bool))
+    g ((b, s), i) = f (s, (i, b))
+
+\end{lstlisting}
+¡Es básicamente crear una función que reciba los parámetros de otra manera y los mande a la otra función de la otra forma! Una especie de Curry/Uncurry. \\
+Con esto se puede demostrar que $g . f = id$ y $f . g = id$ \\
+Formalmente, podemos decir que dos tipos de datos A y B son \textbf{isomorfos} si 
+\begin{itemize}
+    \item Hay una función $f :: A \rightarrow B$ total.
+    \item Hay una función $g :: B \rightarrow A$ total 
+    \item Se puede demostrar que $g . f = id :: A \rightarrow A$
+    \item Se puede demostrar que $f . g = id :: B \rightarrow B$
+\end{itemize}
+En criollo: Debe existir una función que me mapee de f a g y viceversa. Por último, si hago f(g) o g(f) tienen que dar la identidad. \\
+\textbf{Notación}: $A \simeq B$ indican que A y B son isomorfos.
+
+
 \section*{Anexo}
 \subsection*{Recordando Haskell}
 Para ejecutar un archivo hay que instalar GHCI. Una vez instalado, nos paramos en la terminal en el directorio donde está el archivo que queremos ejecutar. 
