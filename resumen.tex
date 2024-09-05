@@ -633,8 +633,8 @@ Sea $e1 = e2$ una ecuación del programa. Las siguientes operaciones preservan l
     \item Reemplazar \textbf{cualquier instancia} de e2 por e1.
 \end{itemize}
 \textbf{Importante}: Si una igualdad se puede demostrar usando sólo el principio de reemplazo, decimos que la igualdad vale \textbf{por definición}.
-\[\begin{minipage}[b]{0.5\textwidth}
-    \includegraphics[width=\linewidth]{assets/principio_reemplazo.png}
+\[\begin{minipage}[b]{0.9\textwidth}
+    \includegraphics[width=\linewidth]{assets/principio_reemplazo_dibujo.jpg}
 \end{minipage}\]
 \section*{Inducción Estructural}
 Cada tipo de datos tiene su propio principio de inducción. \\
@@ -642,12 +642,15 @@ Cada tipo de datos tiene su propio principio de inducción. \\
 \subsection*{Inducción sobre booleanos}
 Si $\mathcal{P}(True)$ y $\mathcal{P}(False)$ entonces $\forall x :: Bool \ \mathcal{P} (x)$ 
 \[\begin{minipage}[b]{0.7\textwidth}
-    \includegraphics[width=\linewidth]{assets/induccion_booleanos.png}
+    \includegraphics[width=\linewidth]{assets/induccion_booleanos_dibujo.jpg}
 \end{minipage}\]
 \subsection*{Inducción sobre pares}
 Si $(\forall x :: a)(\forall y :: b)(\mathcal{P}(x, y))$ entonces $\forall p :: (a, b) \mathcal{P}(p)$
 \[\begin{minipage}[b]{0.7\textwidth}
     \includegraphics[width=\linewidth]{assets/induccion_pares.png}
+\end{minipage}\]
+\[\begin{minipage}[b]{0.7\textwidth}
+    \includegraphics[width=\linewidth]{assets/induccion_pares_dibujo.jpg}
 \end{minipage}\]
 \subsection*{Inducción sobre naturales}
 Si $\mathcal{P}(Zero)$ y $(\forall n :: Nat)(\mathcal{P}(n) \implies \mathcal{P}(Suc \ n))$ entonces $(\forall n :: Nat)(\mathcal{P}(n))$ donde 
@@ -658,6 +661,9 @@ Si $\mathcal{P}(Zero)$ y $(\forall n :: Nat)(\mathcal{P}(n) \implies \mathcal{P}
 \[\begin{minipage}[b]{0.7\textwidth}
     \includegraphics[width=\linewidth]{assets/induccion_naturales.png}
 \end{minipage}\]
+\[\begin{minipage}[b]{0.7\textwidth}
+    \includegraphics[width=\linewidth]{assets/induccion_naturales_dibujo.jpg}
+\end{minipage}\]
 \subsection*{Inducción Estructural: Caso General}
 Sea $\mathcal{P}$ una propiedad acerca de las expresiones tipo T tal que 
 \begin{itemize}
@@ -666,10 +672,9 @@ Sea $\mathcal{P}$ una propiedad acerca de las expresiones tipo T tal que
 \end{itemize}
 entonces $(\forall x :: T)(\mathcal{P}(x))$
 \subsection*{Principio de Inducción sobre Listas}
-\[\begin{minipage}[b]{0.7\textwidth}
-    \includegraphics[width=\linewidth]{assets/principio_induccion_listas.png}
+\[\begin{minipage}[b]{0.9\textwidth}
+    \includegraphics[width=\linewidth]{assets/induccion_listas_dibujo.jpg}
 \end{minipage}\]
-\textbf{Propiedad}: Si $f::a \rightarrow b, \ xs::[a], ys::[a]$ entonces map f (xs ++ ys) = map f xs ++ map f ys 
 \subsection*{Principio de Inducción sobre Árboles Binarios}
 \[\begin{minipage}[b]{0.7\textwidth}
     \includegraphics[width=\linewidth]{assets/principio_induccion_ab.png}
