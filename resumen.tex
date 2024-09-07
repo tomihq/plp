@@ -864,17 +864,20 @@ Extendamos nuestro tipo de Expr
 Ej.: Si tenía x = 2 y ahora quiero agregar z = 4, voy a tener lo anterior + z = 4 en un nuevo ambiente. Sería una especie de asegura de especificación. \\
 Por lo tanto, definamos \textbf{de qué manera} vamos a usar el Environment. 
 \begin{lstlisting}
+    
+    data Env a = EE [(Id, a)]
+
     emptyEnv :: Env a
-    emptyEnv = EmptyEnv
+    emptyEnv = EE []
 
     lookupEnv :: Env a -> Id -> a
-    lookupEnv  EmptyEnv _ = error "Variable no encontrada en el entorno"
-    lookupEnv (ExtendEnv env y val)  x
-        | x == y    = val
-        | otherwise = lookupEnv env x
+    lookupEnv (EE e) x = 
+    case lookup x e of
+        Just y  -> y
+        Nothing -> error ("La variable " ++ x ++ " no está definida.")
 
     extendEnv :: Env a -> Id -> a -> Env a
-    extendEnv env key value = ExtendEnv env key value
+    extendEnv (EE e) x a = EE ((x, a) : e)
 
     data Val = VN Int | VB Bool | VS String deriving Eq -> Agregamos VS String (para el ID)
 
@@ -924,6 +927,79 @@ Probemos ahora sí ejecutar expresiones del tipo let y var. Definamos una variab
         \item Output: 7
     \end{itemize}
 \end{itemize}
+\subsection*{Simulando un Lenguaje Imperativo con nuestro Intérprete}
+¿Qué es lo que tiene un lenguaje imperativo que no tiene un lenguaje funcional? la asignación. \\
+La asignación en un lenguaje imperativo se hace comúmente de la siguiente forma 
+\begin{itemize}
+    \item El nombre de la variable se busca su address en memoria. 
+    \item Se hace una escritura sobre ese address con un nuevo valor manteniendo el mismo nombre.
+\end{itemize}
+Entonces de alguna manera necesitamos simular una memoria. Para eso definamos el tipo y las funciones que necesitamos (los dió la catedra). 
+\begin{lstlisting}
+    module Memory(Addr, Mem, emptyMem, freeAddress, load, store) where
+
+    type Addr = Int
+    data Mem a = MM [(Addr, a)]
+
+    instance Show (Mem a) where
+    show (MM _) = "<memoria>"
+
+    emptyMem :: Mem a
+    emptyMem = MM []
+
+    freeAddress :: Mem a -> Addr
+    freeAddress (MM []) = 0
+    freeAddress (MM xs) = maximum (map fst xs) + 1
+
+    load :: Mem a -> Addr -> a
+    load (MM xs) a =
+    case lookup a xs of
+        Just b  -> b
+        Nothing -> error "La dirección de memoria no está."
+
+    store :: Mem a -> Addr -> a -> Mem a
+    store (MM xs) a b = MM ((a, b) : xs)
+
+\end{lstlisting}
+Luego, modificamos las acciones que pueden tener nuestras expresiones en un lenguaje imperativo: asignar un valor nuevo a una variable y ejecutar una secuencia de expresiones  
+\begin{lstlisting}
+    type Id = String 
+    data Expr = EConstNum Int 
+                | EConstBool Bool 
+                | EAdd Expr Expr  
+                | ELet Id Expr Expr 
+                | EVar Id
+                | EAssignID Expr 
+                | ESeq Expr Expr 
+\end{lstlisting}
+Entonces ahora sí ¿qué cambia de evalExpr? 
+\begin{itemize}
+    \item Ya no recibimos el valor por una Env sino que ahora recibimos un address.
+    \item El valor de un address particular está atado a la memoria y depende de esa memoria. 
+\end{itemize}
+\begin{lstlisting}
+    evalExpr :: Expr -> Env Addr -> Mem Val -> (Val, Mem Val)
+    evalExpr (EVar x) env mem = (load mem(lookupEnv x), mem)
+    evalExpr (EAdd e1 e2) env mem =
+            let (v1, mem') = evalExpr e1 env mem 
+            let (v2, mem') = evalExpr e2 env mem'
+            in (addVal v1 v2, mem'')
+    evalExpr (ELet x e1 e2) env mem = 
+            let addr = freeAddr mem 
+            (val, mem') = evalExpr e1 env mem 
+                mem'' = store mem' addr v 
+            in evalExpr e2 env' mem''
+    evalExpr (EAssign x expr) env mem = 
+            let addr = lookupEnv env x 
+            (v, mem') = evalExpr e env mem 
+                mem'' = store mem' addr v 
+            in (v, mem'')
+    eval (ESeq e1 e2) env mem = 
+        let (v1, mem') = evalExpr e1 env mem 
+        in eval e2 env mem'
+\end{lstlisting}
+
+
 \section*{Anexo}
 \subsection*{Recordando Haskell}
 Para ejecutar un archivo hay que instalar GHCI. Una vez instalado, nos paramos en la terminal en el directorio donde está el archivo que queremos ejecutar. 

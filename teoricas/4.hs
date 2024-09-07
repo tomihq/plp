@@ -2,19 +2,19 @@ data Val = VN Int | VB Bool | VS String deriving Eq
 
 type Id = String 
 
-data Env a = EmptyEnv | ExtendEnv (Env a) Id a 
+data Env a = EE [(Id, a)]
 
 emptyEnv :: Env a
-emptyEnv = EmptyEnv
+emptyEnv = EE []
 
 lookupEnv :: Env a -> Id -> a
-lookupEnv  EmptyEnv _ = error "Variable no encontrada en el entorno"
-lookupEnv (ExtendEnv env y val)  x
-    | x == y    = val
-    | otherwise = lookupEnv env x
+lookupEnv (EE e) x = 
+  case lookup x e of
+    Just y  -> y
+    Nothing -> error ("La variable " ++ x ++ " no está definida.")
 
 extendEnv :: Env a -> Id -> a -> Env a
-extendEnv env key value = ExtendEnv env key value
+extendEnv (EE e) x a = EE ((x, a) : e)
 
 addVal :: Val -> Val -> Val 
 addVal (VN n) (VN m) = VN (n+m)
