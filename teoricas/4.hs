@@ -13,8 +13,8 @@ lookupEnv (ExtendEnv env y val)  x
     | x == y    = val
     | otherwise = lookupEnv env x
 
-extendEnv ::  Env a -> Id -> a -> Env a
-extendEnv key value env = extendEnv key value env
+extendEnv :: Env a -> Id -> a -> Env a
+extendEnv env key value = ExtendEnv env key value
 
 addVal :: Val -> Val -> Val 
 addVal (VN n) (VN m) = VN (n+m)
@@ -27,7 +27,6 @@ instance Show Val where
             showVal (VN n) = show n
             showVal (VB b) = show b
             showVal (VS s) = show s
-(ELet "x" (EConstNum 3) (ELet "y" (EConstNum 4) (EAdd((EVar "x") (EVar "y")))))
 data Expr = EConstNum Int 
             | EConstBool Bool 
             | EAdd Expr Expr  
