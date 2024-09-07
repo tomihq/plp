@@ -743,8 +743,100 @@ Formalmente, podemos decir que dos tipos de datos A y B son \textbf{isomorfos} s
 \end{itemize}
 En criollo: Debe existir una función que me mapee de f a g y viceversa. Por último, si hago f(g) o g(f) tienen que dar la identidad. \\
 \textbf{Notación}: $A \simeq B$ indican que A y B son isomorfos.
-
-
+\section*{Intérpretes}
+Un intérprete ejecuta programas, no los traduce como si fuese un compilador. 
+\subsection*{Sintaxis Concreta}
+Se pueden representar programas como cadenas de texto. Es tedioso de interpretar algo así: if $x>0$ then x else -x 
+\subsection*{Sintaxis Abstracta}
+Podemos representar instrucciones a través de árboles: (Eif (gt (var "x") cte 0)) (var("x")) (neg (var("x")))
+\subsection*{Lenguaje de Expresiones Aritméticas}
+Veamos como hacer un intérprete que pueda reconozca números y haga sumas. \\
+Primero tenemos que definir los tipos de expresiones que vamos a querer reconocer (expresiones) en nuestro intérprete.
+\begin{lstlisting}
+    data Expr = EConstNum Int 
+              | EAdd Expr Expr 
+\end{lstlisting}
+Nótese que EAdd es un constructor del tipo Expr recursivo que en algún momento llegará al caso base de EConstNum que devuelve un Int. \\
+¿Es posible comparar los resultados de las Expr desde una manera de igualdad? ¡No! Los tipos no aceptan \textbf{ningún tipo de operación} a menos que lo indiquemos. Si queremos que estos tipos puedan compararse de la siguiente forma $n_{1} = n_{2}$ tenemos que configurar \textbf{deriving (EQ)} donde EQ es una clase. 
+\begin{lstlisting}
+    data Expr = EConstNum Int 
+              | EAdd Expr Expr 
+              deriving Eq
+\end{lstlisting}
+¿Es posible mostrar el resultado en consola de las operaciones que hagamos? ¡No! Los tipos no aceptan \textbf{ningún tipo de operación} a menos que lo indiquemos. Si queremos que el resultado pueda mostrarse en consola de alguna manera específica tenemos que hacer una instancia de Show. 
+\begin{lstlisting}
+    instance Show Expr where
+    show = showExpr
+      where 
+        showExpr :: Expr -> String 
+        showExpr (EConstNum n) = show n
+        showExpr (EAdd e1 e2) = "(" ++ show e1 ++ "+" ++ show e2 ++ ")"
+\end{lstlisting}
+Bueno, ahora sí. ¿Cómo podemos usar todo esto para computar nuestras expresiones? Necesitamos de alguna manera una función que nos permita enviar expresiones, tomarlas por pattern matching y hacer algo. 
+\begin{lstlisting}
+    evalExpr :: Expr -> Int
+    evalExpr (EConstNum n) = n
+    evalExpr (EAdd n m) = evalExpr n + evalExpr m
+\end{lstlisting}
+Pero ¿cómo lo usamos?. Primero tenemos que llamar a la función enviando la información que nos pide, es decir, algo del tipo Expr. \\
+Probemos hacer 1+2, esto en sintáxis concreta sería algo como: $evalExpr \ (EAdd \ (EConstNum \ 1) \ (EConstNum \ 2))$. ¡Nótese que estamos utilizando los constructores del tipo! \\
+Entonces, el resultado es: $ghci> \ evalExpr \ (EAdd \ (EConstNum \ 1) \ (EConstNum \ 2)) \implies 3$
+\subsection*{Nuestro Lenguaje de Expresiones Aritméticas con Booleanos}
+Queremos agregarle booleanos a nuestro lenguaje. ¿Qué debemos hacer? Lo primero es lo primero, tenemos que ver si debemos refactorizar algo o simplemente extender. Como hasta ahora hicimos solamente cosas de números raramente vamos a tener que refactorizar algo aunque eso está por verse. \\
+Por lo tanto lo primero que debemos hacer es aceptar que el booleano sea un constructor del tipo Expr
+\begin{lstlisting}
+    data Expr =   EConstNum Int 
+                | EConstBool Bool 
+                | EAdd Expr Expr 
+    deriving Eq
+\end{lstlisting}
+Entonces ahora podemos extender la clase Show 
+\begin{lstlisting}
+        ... mismo antes
+        showExpr (EConstBool b) = show b
+\end{lstlisting}
+Por último, podemos aceptar evaluar la expresión de booleano (que sería un caso base) ante eventuales operaciones de este tipo. \\
+\begin{lstlisting}
+    evalExpr :: Expr -> Int
+    evalExpr (EConstNum n) = n
+    evalExpr (EConstBool b) = b
+    evalExpr (EAdd n m) = evalExpr n + evalExpr m
+\end{lstlisting}
+¿Cuál es el problema que estamos viendo? El problema es que ahora evalExpr \textbf{no} solo devuelve Int sino que Bool. Por esto, podemos crear un nuevo tipo que sean los tipos de salida de nuestras expresiones. \\
+\begin{lstlisting}
+    data Val = VN Int | VB Bool  deriving Eq
+\end{lstlisting}
+Luego, 
+\begin{lstlisting}
+    evalExpr :: Expr -> Val
+    evalExpr (EConstNum n) = n
+    evalExpr (EConstBool b) = b
+    evalExpr (EAdd n m) = evalExpr n + evalExpr m
+\end{lstlisting}
+Pero ahora hay otro problema: \textbf{evalExpr n y evalExpr m devuelven un tipo Val, el tipo Val es un Int | Bool}. Veamos para qué tipos está permitida la suma infija (Num a => a -> a -> a). Por lo tanto, \textbf{ahora que estamos usando Val no podemos usar la suma porque Val no necesariamente es un número, también puede ser un booleano}. Así que como nosotros sabemos que \textbf{vamos a usar el +} cuando tenemos números hay que hacer una función específica para ese tipo. \\
+Creamos entonces, una función que vamos a llamar para que nos devuelva una nueva instancia del tipo Val que haga las sumas correspondientes
+\begin{lstlisting}
+    addVal :: Val -> Val -> Val 
+    addVal (VN n) (VN m) = VN (n+m)
+    addVal _ _ = error "Algún sumando no es numérico"
+\end{lstlisting}
+Por lo tanto, reemplazamos + con addVal 
+\begin{lstlisting}
+    evalExpr :: Expr -> Val
+    evalExpr (EConstNum n)  = VN n
+    evalExpr (EConstBool b) = VB b
+    evalExpr (EAdd n m) = addVal (evalExpr n) (evalExpr m)
+\end{lstlisting}
+¿Qué falta ahora? Configurar el show de nuestra nueva clase Val porque evalExpr nos devuelve algo de tipo Val y todavía no definimos cómo mostrarlo. 
+\begin{lstlisting}
+    instance Show Val where 
+    show = showVal 
+        where 
+            showVal :: Val -> String 
+            showVal (VN n) = show n
+            showVal (VB b) = show b
+\end{lstlisting}
+Por último, ejecutamos igual que antes y funcionará todo: $evalExpr \ (EAdd \ (EConstNum \ 1) \ (EConstNum \ 2)) \rightarrow 3$
 \section*{Anexo}
 \subsection*{Recordando Haskell}
 Para ejecutar un archivo hay que instalar GHCI. Una vez instalado, nos paramos en la terminal en el directorio donde está el archivo que queremos ejecutar. 
