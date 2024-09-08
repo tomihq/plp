@@ -246,21 +246,81 @@ foldPoli fx fcte fsuma fprod pol = case pol of
 evaluar2 :: Num a => a -> Polinomio a -> a
 evaluar2 x = foldPoli x id (+) (*)
 
-data AB a = Nil | Bin (AB a) a (AB a)
+data AB a = Nil | Bin (AB a) a (AB a) deriving Show
 
 foldAB ::  (b -> a -> b -> b) -> b -> AB a  -> b 
 foldAB _ b Nil = b 
 foldAB f b (Bin i r d)  = f  (foldAB f b i) r (foldAB f b d)
 
+{-La recursión primitiva sobre arboles es aplicarle la funcion a la rama izquierda y derecha-}
+recAB :: b -> (a -> AB a -> AB a -> b -> b -> b) -> AB a -> b 
+recAB z _ Nil = z
+recAB z f (Bin izq r der) = f r izq der (recAB z f izq) (recAB z f der)
+
 esNil :: AB a -> Bool 
 esNil Nil = True 
 esNil _ = False
-{- recAB :: (b -> a -> b -> b) -> b -> AB a -> b -}
 
-{- altura :: AB a -> Integer  -}
-
+altura :: AB a -> Integer  
+altura = foldAB(\ri r rd -> 1 + max ri rd) 0
 
 {-cantNodos (Bin Nil 1 (Bin Nil 2 Nil)) = 2-}
 cantNodos :: AB a -> Integer 
 cantNodos = foldAB (\ri r rd -> 1 + ri + rd) 0
+
+{-Aca uso recursion primitiva porque me basta solamente con hacer un fold de ambos lados e ir comparando con la raiz. Es decir, me voy para un lado u otro segun corresponda. Si tengo que buscar el mayor voy hacia la derecha, si tengo que buscar el min voy hacia la izquierda-}
+mejorSegunAB :: (a -> a -> Bool) -> AB a -> a 
+mejorSegunAB f (Bin izq r der) = foldAB(\ri r rd -> if f r ri && f r rd then r else if f ri rd then ri else rd) r (Bin izq r der)
+
+{- En este ejercicio necesito recursion primitiva porque necesito los subarboles izquierdo y derecho con sus valores respectivos para poder comparar con la raiz. -} 
+esABB :: Ord a => AB a -> Bool 
+esABB = recAB True (\r recIzq recDer ri rd -> menor r recDer && mayor r recIzq && ri && rd) 
+    where mayor _ Nil = True 
+          mayor r (Bin i r2 d) = r >= r2
+          menor _ Nil  = True 
+          menor  r (Bin i r2 d) = r <= r2
+
+ramas :: AB a -> [[a]]
+ramas = recAB [] (\r izq der caminosIzq caminosDer ->
+    if null caminosIzq && null caminosDer
+      then [[r]]
+      else map (r:) caminosIzq ++ map (r:) caminosDer)
+
+cantHojas :: AB a -> Int 
+cantHojas = foldAB(\ri _ rd -> if ri == 0 && rd == 0 then 1 else ri + rd) 0 
+
+espejo :: AB a -> AB a 
+espejo  = foldAB(\ri r rd -> Bin rd r ri) Nil 
+
+data AIH a = Hoja a | BinAIH (AIH a) (AIH a) deriving Show
+
+{-
+    b: Rec izq
+    b: Rec der 
+    b: Res 
+    a: Hoja
+    AIH a: Input
+    b: res
+-}
+foldAIH :: (b -> b -> b) -> b -> AIH a -> b 
+foldAIH _ b (Hoja v)  = b
+foldAIH f b (BinAIH i d) = f (foldAIH f b i) (foldAIH f b d)
+
+alturaAIH :: AIH a -> Int 
+alturaAIH = foldAIH(\ri rd -> 1 + max ri rd) 0
+
+tamaño :: AIH a -> Int 
+tamaño = foldAIH(\ri rd -> ri + rd) 1 {-cuando llego a una hoja devuelvo 1-}
+
+data RoseTree a = RT (a, [RoseTree a])
+{-  
+    La funcion va a recibir el valor de a.
+    La funcion recursiva va a recibir n hijos (resueltos por un map, [b]).
+    Devuelve un resultado b. 
+    Necesito un caso base (b)
+    El parametor de RoseTree a 
+    Devuelve un b
+-}
+foldRT :: (a -> [b] -> b) -> b -> RoseTree a -> b
+foldRT f b (RT (value, children)) = f value (map (foldRT f b) children)
 
