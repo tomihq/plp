@@ -319,8 +319,12 @@ data RoseTree a = RT (a, [RoseTree a])
     Devuelve un resultado b. 
     Necesito un caso base (b)
     El parametor de RoseTree a 
-    Devuelve un b
--}
-foldRT :: (a -> [b] -> b) -> b -> RoseTree a -> b
-foldRT f b (RT (value, children)) = f value (map (foldRT f b) children)
+    Devuelve un b.
 
+    La primera recursion termina anidando los primeros hijos
+-}
+foldRT :: (a -> [b] -> b)  -> RoseTree a -> b
+foldRT f (RT (value, children)) = f value (map (foldRT f) children)
+
+hojasRT :: RoseTree a -> [a]
+hojasRT = foldRT(\v hijos -> if length hijos == 0 then [v] else concat hijos) {-como cada RT tiene mas de 1 hijo, el concat los aplana-}
