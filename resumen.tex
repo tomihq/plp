@@ -696,11 +696,8 @@ Sí, es con \textbf{s}. Es intensional. \\
 Entonces mergesort = insertionSort desde el lado extensional, porque hacen lo mismo pero no son iguales desde el punto de vista intensional. 
 \subsection*{Principio de Extensionalidad Funcional}
 Sean $f, \ g :: a \rightarrow b$. \\
-\textbf{Propiedad Inmediata}: Si $f = g$ entonces $(\forall x :: a)(f \ x  =  g \ x)$ \\
-\textbf{Principio de extensionalidad funcional}: Si $(\forall x :: a)(f \ x  =  g \ x) $ entonces $f=g$
-\[\begin{minipage}[b]{0.7\textwidth}
-    \includegraphics[width=\linewidth]{assets/extensionalidad_funcional.png}
-\end{minipage}\]
+\textbf{Principio de extensionalidad funcional}: Si $(\forall x :: a)(f \ x  =  g \ x) $ entonces $f=g$ \\
+El ppio. de extensionalidad funcional nos dice que si son funciones son iguales entonces son iguales punto a punto donde las evaluemos.
 \subsection*{Demostración de Desigualdades}
 ¿Cómo demostramos que no vale una igualdad e1 = e2 :: A? \\
 Entiendo que básicamente hay que encontrar hacer \textbf{ALGO} para demostrar que no son iguales. Este \textbf{ALGO} es una funcionalidad que devuelva algo con uno, y otra cosa con otro. Por lo tanto debería ser del tipo $obs \ a :: A \rightarrow Bool$. \\
@@ -1437,5 +1434,5 @@ Por último podemos definir la potencia reutilizando la multiplicación
     potencia n m = foldNat 1 (multiplicacion n m) m
 \end{lstlisting}
 Es importante notar que la potencia requiere hacer foldNat nuevamente porque tenemos que hacer el proceso de multiplicación m veces. \\
-2.\textbf{Polinomios}: Hablemos ahora de Polinomios 
+\subsection*{}
 \end{document} 
