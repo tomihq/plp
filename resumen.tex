@@ -694,7 +694,6 @@ Sí, es con \textbf{s}. Es intensional. \\
     \item Punto de vista extensional: Dos valores son iguales si son indistinguibles al observarlos.
 \end{itemize}
 Entonces mergesort = insertionSort desde el lado extensional, porque hacen lo mismo pero no son iguales desde el punto de vista intensional. 
-\newpage
 \subsection*{Principio de Extensionalidad Funcional}
 Sean $f, \ g :: a \rightarrow b$. \\
 \textbf{Propiedad Inmediata}: Si $f = g$ entonces $(\forall x :: a)(f \ x  =  g \ x)$ \\
@@ -994,12 +993,186 @@ Entonces ahora sí ¿qué cambia de evalExpr?
             (v, mem') = evalExpr e env mem 
                 mem'' = store mem' addr v 
             in (v, mem'')
-    eval (ESeq e1 e2) env mem = 
+        
+    evalExpr (ESeq e1 e2) env mem = 
         let (v1, mem') = evalExpr e1 env mem 
         in eval e2 env mem'
 \end{lstlisting}
+\subsection*{Agregando los condicionales a nuestro intérprete}
+\begin{lstlisting}
+    evalExpr (EIf c t e) env mem = 
+        case eval c env mem of 
+            (VB b, m) -> evalExpr (if b then t else e) env m
+            (VN n, m) -> error "Cond no bool"
+\end{lstlisting}
+\textbf{Nota}: Es posible encontrar este código en la carpeta de teóricas hecho por mí.
+\section*{Características Funcionales}
+Volvamos a nuestro lenguaje púramente funcional sin memoria ni direcciones. \\
+\begin{lstlisting}
+    evalExpr :: Expr -> Env Val -> Val
+    evalExpr (EConsNum n) _ = h 
+    evalExpr (EConsBool b) _ = b
+    evalExpr (EAdd e1 e2) _ = evalExpr e1 env 'addVal' evalExpr e2 env
+    evalExpr (EVar x) env = lookup env x 
+    evalExpr (ELet x e1 e2) env = evalExpr e2 (extendEnv env x (evalExpr x env))
+    evalExpr (EIf c t e) env = evalExpr (if isTrue(evalExpr c env) then t else e) env 
+        where isTrue (v b x) = x
+              isTrue _ = False 
+\end{lstlisting}
+Prácticamente todos los lengaujes funcionales están basados en el cálculo-$\lambda$ \\
+El cálculo-$\lambda$ es un lenguaje que tiene solamente tres constructores. 
+\begin{itemize}
+    \item EVar Id $ -- x$
+    \item ELam Id Expr $-- \backslash x \rightarrow e $
+    \item EApp Expr Expr $-- e1 \ e2$
+\end{itemize}
+Ahora queremos evaluar cosas como $(\backslash x \rightarrow x + x)$ \\
+Por lo tanto en nuestro data Val agreguemos el constructor VFunction, y en las expresiones que queremos evaluar agreguemos la composición y las funciones lambda. \\
+\begin{lstlisting}
+    data Val = VN Int | VB Bool | VFunction Id Expr 
 
+    data Expr = ... 
+                | ELan Id expr -- \x -> c 
+                | EApp expr expr -- e1(e2)
+\end{lstlisting}
+Ahora agreguemos el cuerpo de esas operaciones de expresiones 
+\begin{lstlisting}
+    ...
+    evalExpr (ELam x e) env = VFunction x e 
+    evalExpr (EApp e1 e2) env = 
+        let v1 = evalExpr e1 env 
+        let v2 = evalExpr e2 env 
+        in case v1 of 
+            VFunction x e -> evalExpr e (extendEnv env x v2)
+                        _ -> error "aplicando una no funcion"
+\end{lstlisting}
+\textbf{Importante}: la e es el cuerpo de la función mientras que (extendEnv env x v2) es el pasaje de parámetros a una función lambda. Los parámetros se pasan a través del environment. \\
+Con esta implementación tenemos un problema, si queremos hacer lo siguiente 
+\begin{lstlisting}
+    let suma = \x -> \ y -> x + y in
+    let f = suma 5 in 
+    let x = 0 in 
+        f 3 
+\end{lstlisting}
+Tenemos el problema que nosotros querríamos que eso sea 8, pues estamos justamente aplicando parcialmente suma enviando un 5 pero esto da 3. ¿Por qué? \\
+En Haskell, este comportamiento no sucede (porque ya lo contempla) pero es importante entender \textbf{qué es lo que pasa}. \\
+Cuando hacemos let f = suma 5, f es un nombre a la función parcialmente aplicada suma que como primer argumento se le envía 5. \\
+Sin embargo, cuando hacemos x = 0 f 3 lo que estamos haciendo es pisar el comportamiento de f diciendo ahora que la x que antes habíamos indicado vía (suma 5) ya no es suma 5, sino que ahora es suma 0. \\
+Entonces, el paso a paso sería algo así 
+\begin{lstlisting}
+    let suma = \x -> \y -> x + y in 
+    let f = suma 5 in 
+    
+    f = \y -> x + y -> f no recuerda nada de lo definido parcialmente
 
+    let x = 0 in 
+        f 3 
+    
+    f = \3 -> x + 3 -> x tiene el valor de 0 en el entorno 
+    f = 0 + 3 = 3 
+\end{lstlisting}
+\textbf{Importante}: Las funciones parcialmente aplicadas deben recordar la definición en el ambiente que se les dió y qué parametros se les dieron a la hora de definirlas. De lo contrario, podría cambiar su comportamiento. Esto es conocido como \textbf{Closures}
+\section*{Closures}
+Son funciones que recuerdan su ambiente a la hora de ser definidas. Cuando decimos ambiente decimos también con qué argumentos se definieron. Se utiliza para \textbf{capturar el entorno} en el que la función fue creada, permitiendo que acceda a variables externas en su ámbito local. \\
+En lenguajes como JavaScript se ven de la siguiente forma 
+\begin{lstlisting}
+    function crearContador() {
+    let contador = 0;
+    return function() {
+        contador++;
+        return contador;
+    }
+}
+
+const contador1 = crearContador();
+console.log(contador1()); // 1
+console.log(contador1()); // 2
+\end{lstlisting}
+\textbf{Importante}: Un closure mantiene la referencia al entorno donde fue creada, permitiendo que acceda a las variables de ese entorno en ese momento incluso después de que el entorno ya no exista.
+En nuestro intérprete debemos reemplazar las VFunctions por VClosures. \\
+Los Closures suelen estar ligados a estrategias de evaluación, es decir, a las técnicas para evaluar aplicaciones de dos funciones. 
+\section*{Thunk}
+Un Thunk es una función que \textbf{no se evalúa hasta que realmente se lo necesite}. Es una técnica para diferir la evaluación de una expresión hasta que su valor sea necesario. \\
+Ej.: let exp = 2 + 3 no devuelve 5 hasta que realmente se lo necesite. \\
+En lenguajes como JavaScript se ven de la siguiente forma: let thunk = () $\implies$ 2 + 3; entonces cuando la necesitamos hacemos básicamente thunk() \\
+\textbf{Importante}: Un Thunk difiere la evaluación de una expresión pero no capturan variables de su entorno. 
+\subsection*{Estrategias de Evaluación de dos funciones}
+\begin{itemize}
+    \item Llamada por valor (call-by-value)
+    \begin{itemize}
+        \item \textcolor{red}{Se evalúa e1 hasta que sea un closure.}
+        \item Se evalúa e2 hasta que sea un valor.
+        \item \textcolor{blue}{Se evalúa el cuerpo de la función utilizando el resultado de e2 (valor)}
+        \item El parámetro queda ligado al valor de e2.
+    \end{itemize}
+    \item Llamada por nombre (call-by-name)
+    \begin{itemize}
+        \item \textcolor{red}{Se evalúa e1 hasta que sea un closure.}
+        \item \textcolor{blue}{Se evalúa el cuerpo de la función.}
+        \item \textcolor{purple}{El parámetro queda ligado a la expresión e2 sin evaluar (en este contexto, es un thunk)}
+        \item \textbf{Cada vez} que se usa el parámetro se evalúa la expresión e2.
+    \end{itemize}
+    \item Llamada por necesidad (call-by-need)
+    \begin{itemize}
+        \item \textcolor{red}{Se evalúa e1 hasta que sea un closure.}.
+        \item \textcolor{blue}{Se evalúa el cuerpo de la función.}
+        \item \textcolor{purple}{El parámetro queda ligado a la expresión e2 sin evaluar.}
+        \item \textbf{La primera vez} que el parámetro se necesita, se evalúa e2.
+        \item Se guarda el resultado para evitar evaluar e2 nuevamente (necesito memoria)
+    \end{itemize}
+\end{itemize}
+\textbf{Importante}: En colores, están los pasos que comparten entre las diferentes estrategias.
+\subsection*{Aplicando Closures a nuestro Intérprete (Call By Value)}
+Cambiemos entonces, VFunction por VClosures. 
+\begin{lstlisting}
+    data Val = VN Int | VB Bool | VClosure Id Expr (Env Val)
+\end{lstlisting}
+¡Importante el env! Es la idea de los closures. \\
+Ahora modifiquemos el evalExpr para utilizar closures. 
+\begin{lstlisting}
+    evalExpr :: Expr -> Env Val -> Val 
+    evalExpr (ELam x e) env = VClosure x e env 
+    evalExpr (EApp e1 e2) env = 
+        let v1 = eval e1 env 
+        let v2 = eval e2 env 
+            in case v1 of 
+                VClosure x e env' -> evalExpr e (extendEnv env' x v2)
+                             _ -> error "Aplicando una no función"
+\end{lstlisting}
+¿Por qué esta estrategia es Call By Value? Porque al evaluar al expresión e estamos directamente pasando el valor de evaluar e2 de antemano.  
+\subsection*{Aplicando Closures a nuestro Intérprete (Call By Name)}
+Como acá necesitamos sí o sí diferir de no calcular el valor de e2 de antemano, entonces acá \textbf{evaluamos expresiones no valores}. 
+\begin{lstlisting}
+    data Thunk = TT Expr (Env Thunk)
+    data Val = ...
+             | VClosure Id Expr (Env Thunk) 
+
+    evalExpr :: Expr -> Env Thunk -> Val     
+    evalExpr (EVar x) env = 
+                    case lookup env x f 
+                    tt e env' -> eval e env' 
+    evalExpr (EApp e1 e2) env = 
+        let v1 = eval e1 env 
+            in case v1 of 
+                VClosure x e env' -> evalExpr e (extendEnv env' x) (tt e2 env)
+                             _ -> error "Aplicando una no función"
+\end{lstlisting}
+¿Por qué esta estrategia es Call By Name? Porque en ningún momento evalúamos e2 si no la necesitamos. Sino que solamente se evalúa obteniendo su valor cuando se necesita en su ambiente dado.
+\subsection*{Aplicando Closures a nuestro Intérprete (Call By Need)}
+En call-by-need hay dos tipos de valores 
+\begin{itemize}
+    \item Valores que ya están calculados (atómicos): enteros, booleanos, closures. 
+    \item Valores pendientes de ser evalúados (thunks).
+\end{itemize}
+Para utilizar call by need tenemos que tener en cuenta 
+\begin{itemize}
+    \item Asociación de Identificadores a Direcciones: Esto quiere decir que el entorno (Env) asocia los nombres de las variables (identificadores) con \textbf{direcciones de memoria}. 
+    \item Asociación de Direcciones a Valores: Esas direcciones de memoria de los identificadores tienen valores finales o thunks. 
+    \item Evaluar una expresión: Nos da como resultado su valor final. 
+\end{itemize}
+Ej conceptual: let x = (2 + 3) * 4 \\
+En este ejemplo x es básicamente un nombre o identificador que almacena un thunk dentro (2+3) * 4. \\
+Si en algun momento se llegase a utilizar, x toma el valor de 20 y lo guarda en la memoria. 
 \section*{Anexo}
 \subsection*{Recordando Haskell}
 Para ejecutar un archivo hay que instalar GHCI. Una vez instalado, nos paramos en la terminal en el directorio donde está el archivo que queremos ejecutar. 
