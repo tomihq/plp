@@ -688,7 +688,7 @@ entonces $(\forall x :: T)(\mathcal{P}(x))$
 \textbf{Lema}: Si $g::b \rightarrow a \rightarrow b, \ z::b, x::a, xs::[a]$ entonces foldl g z (xs ++ [x]) = g (foldl g z xs) xs
 \subsection*{Puntos de vista intensional vs extensional}
 Sí, es con \textbf{s}. Es intensional. \\
-¿Es equivalente mergesort = insertionSort? La realidad es que: hacen lo mismo (llegan al mismo resultado); ordenan algo pero de una manera diferente. \\
+¿Es equivalente mergesort = insertionSort? La realidad es que: hacen lo mismo (llegan al mismo resultado); ordenan algo pero de una manera diferente.
 \begin{itemize}
     \item Punto de vista intensional: Dos valores son iguales si están definidos de la misma manera.
     \item Punto de vista extensional: Dos valores son iguales si son indistinguibles al observarlos.
@@ -1308,7 +1308,7 @@ Luego: $const \ a \ b \ = \ a$
     \begin{itemize}
         \item ¿Puede hacerse algo mejor? No. Porque a x le tenemos que calcular su módulo con 2.
     \end{itemize}
-    \item $map(\backslash x \rightarrow map (\backslash y \rightarrow toUpper y) x)$
+    \item $map(\backslash x \rightarrow map (\backslash y \rightarrow toUpper \ y) \ x)$
     \begin{itemize}
         \item ¿Puede hacerse algo mejor? Primero entendamos que hace, recorre una lista de palabras, luego en cada palabra toma cada letra y la pasa a mayúscula. Esto es un doble map, uno por palabra otro por letra. Entonces sí $map \ (map \ toUpper)$
     \end{itemize}
@@ -1351,10 +1351,10 @@ Luego: $const \ a \ b \ = \ a$
 Entendamos el enunciado: 
 \begin{itemize}
     \item Vamos a usar foldl para ir sumando de izquierda a derecha.
-    \item El tipado de foldl es b -> a -> b donde b es nuestro primer argumento acumulador y a el elemento.
+    \item El tipado de foldl es b $\rightarrow$ a $\rightarrow$ b donde b es nuestro primer argumento acumulador y a el elemento.
     \item Necesito de alguna manera tener el valor inmediato anterior. Podemos hacer algo como empezar enviando una lista vacia como caso base, y a medida que vamos haciendo la recursion tomar la cabeza de la lista.
     \item Si la lista esta vacia entonces solo agrego x a la lista de la recursion (primer elemento), si no esta vacia sumo con el elemento de la lista (cabeza) 
-    \item Porque foldl labura asi -> [1, 2, 3]
+    \item Porque foldl labura asi $\rightarrow$ [1, 2, 3]
     \begin{itemize}
         \item 1:[] = [1]
         \item 2 + (head [1]) : [1] = [3, 1]
