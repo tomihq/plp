@@ -40,6 +40,9 @@
     \end{tikzpicture}
 }
 
+\newcommand{\equivDef}[1]{%
+  \underset{#1}{\equiv}%
+}
 
 
 
@@ -1352,6 +1355,50 @@ $\tau_{1}, \tau_{2}, \dots, \tau_{n} \vDash \sigma \iff \forall \ v \ valuacion 
 \textbf{En criollo}: Vale que $\tau_{1}, \tau_{2}, \dots, \tau_{n} \vDash \sigma \iff$ para toda valuación v tal que v satisface a todas las hipótesis $v \vDash \tau_{i}$ para toda $i \in 1, \dots, n \implies v \vDash \sigma$ 
 \subsection*{Consistencia}
 Decimos que $\Gamma$ es consistente si $\Gamma \nvdash \bot$, es decir, $\Gamma$ es consistente si no se puede derivar una contradicción a partir de él.
+\section*{Cálculo Lambda ($\lambda$)}
+\subsection*{Con booleanos}
+Definamos algunas cosas 
+\begin{itemize}
+    \item \textbf{Tipos}: $\tau, \sigma, \rho, \dots ::= bool \ | \ \tau \rightarrow \sigma$. 
+    Asumimos que el constructor de tipos $\leftarrow$ es asociativo a derecha.
+    \item \textbf{Términos}: Variables $X = \{X, Y, Z, \dots\}$
+    \item \textbf{Construcción explícita de función (sin nombre)}: $\lambda x . M$ 
+    \item \textbf{Aplicación de una función a un argumento}: $MN$ 
+    \item \textbf{Constantes para cada valor de verdad}: true y false.
+\end{itemize}
+\textbf{Observación}: Todo es una función, es decir, una función tomando un argumento constante u otra función es lo mismo. \\
+Ej.: Una función que toma una función y la compone consigo misma es $\lambda f . \lambda x . f(fx)$ \\
+\textbf{Observación 2}: No existen funciones que tomen varios argumentos. \\ 
+Ej.: $f(x,y) = $ if $y$ then $x$ else true en cálculo lambda se escribe $\lambda y . \lambda x . if \ x \ then \ y \ else \ true$ \\
+\textbf{Observación 3}: La aplicación asocia a la izquierda: $F \ false \ true = (F \ false) true$ \\
+\textbf{Observación 4}: La abstracción y el if tienen menor precedencia que la aplicación. \\
+Ej.: $\lambda x:\tau . M \ N = \lambda x : \tau . (M \ N) \neq (\lambda x : \tau . M) N$ 
+\subsubsection*{Gramática del cálculo lambda con booleanos}
+Los términos válidos de cálculo lambda con booleanos los podemos describir con una gramática formal 
+\[M \ ::= \ x \ |\  \lambda x \ . \ M \ | \ MM \ | \ true \ | \ false \ | \ if \ M \ then \ M \ else \ M\] 
+\subsubsection{Tipos en Cálculo Lambda}
+En el Cálculo Lambda tipado damos los tipos en las operaciones. \\
+Ej.: $\backslash \lambda x:\sigma \ . \ M$
+\subsubsection*{Función Identidad}
+En cálculo lambda existe una función id \textbf{propia por cada tipo}.
+\subsubsection{Semántica Operacional}
+La \textbf{gramática} nos dice qué terminos podemos escribir sitácticamente. \\
+La \textbf{semántica} nos da el significado de los términos. \\
+Las siguientes reglas tienen la forma $M \rightarrow N$ y se lee $M \ reduce \ a \ N$ o $M \ se \ reescribe \ como \ N$ \\
+\begin{itemize}
+    \item $(\lambda x . M) N \rightarrow M \{x := N\}$ ($\beta$ reducción)
+    \item if true then $M$ else $N \rightarrow M$ ($if_{t}$)
+    \item if false then $M$ else $N \rightarrow N$ ($if_{f}$)
+\end{itemize}
+\subsubsection{Captura de variables}
+$\lambda x:bool \ . \ x \equiv $ boolean main(boolean var)$\{return \ x\}$ \\
+Cuando las variables están ligadas a un cuantificador podemos cambiarle el nombre sin problema alguno (pensar en el nombre de un parámetro de función en un lenguaje imperativo). \\
+Ej.: $x \ (\lambda x:bool \ . \ x) \equiv x \ (\lambda y:bool \ . \ x)$ \\
+Esto de que cambiar el nombre de la variable ligada al cuantificador se debe a que son clases de equivalencia ($\alpha$).
+\subsubsection{Clases de Equivalencia (Alfa equivalencia)}
+Los términos que difieren sólo en el nombre de las variables $ligadas$ se consideran iguales: $\lambda x:bool \ . \ x \equivDef{\alpha} \lambda y:bool \ xy$
+\subsubsection{Sistema de Tipos}
+Hasta ahora veníamos utilizando tipos estrictos, pero normalmente el Cálculo Lambda \textbf{no viene tipado}.
 
 \section*{Anexo}
 \subsection*{Recordando Haskell}
