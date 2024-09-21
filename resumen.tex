@@ -18,6 +18,31 @@
     literate={á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1 {ñ}{{\~n}}1 {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1 {Ñ}{{\~N}}1
 }
 \input{AEDmacros}
+\newcommand{\barratexto}[3]{
+    \begin{tikzpicture}
+        \draw[thick] (0,0) -- (3,0);
+        \node at (1.5, 0.3) {#1};
+        \node at (1.5,-0.5) {#2}; 
+        \node at (4,0) {#3}; 
+    \end{tikzpicture}
+}
+\newcommand{\sd}[3]{
+    \begin{tikzpicture}
+        % Nodos para las expresiones matemáticas
+        \node (A) at (0,0) {\(#1\)};
+        \node (B) at (0,-1) {\(#2\)};
+        
+        % Dibujar la línea horizontal en el medio
+        \draw[thick] (-2, -0.5) -- (2, -0.5);  
+        
+        % Colocar el texto del tercer parámetro al final de la línea
+        \node[anchor=west] at (2.2, -0.5) {#3};
+    \end{tikzpicture}
+}
+
+
+
+
 \newcommand{\notimplies}{\;\not\!\!\!\implies}
 \title{Paradigmas de Lenguajes de Programación}
 \author{Tomás Agustín Hernández}
@@ -1170,6 +1195,164 @@ Para utilizar call by need tenemos que tener en cuenta
 Ej conceptual: let x = (2 + 3) * 4 \\
 En este ejemplo x es básicamente un nombre o identificador que almacena un thunk dentro (2+3) * 4. \\
 Si en algun momento se llegase a utilizar, x toma el valor de 20 y lo guarda en la memoria. 
+\section*{Sistemas Deductivos}
+Es una herramienta matemática que formaliza el lenguaje de la demostración. \\
+Existen muchos sistemas deductivos, acá vamos a ver el de deducción natural que es uno parecido a la forma de pensar del humano. \\
+Está dado por un conjunto de \textbf{axiomas} y \textbf{reglas de inferencia} que tienen la siguiente estructura 
+\begin{center}
+    \barratexto{}{$\langle$ axioma $\rangle$}{$\langle$ nombre $\rangle$}
+    \barratexto{$\langle premisa_{0} \rangle$ $\langle premisa_{1} \rangle$... $\langle premisa_{n} \rangle$}{$\langle$ nombre de la regla $\rangle $}{$\langle conclusion \rangle$}
+\end{center}
+\textbf{Axioma}: Afirmaciones básicas que se asumen como verdaderas. No es posible deducirlas de otras afirmaciones. \\
+\textbf{Reglas de Inferencia}: Permiten derivar afirmaciones (teoremas) a partir de axiomas y otras afirmaciones.
+\subsection*{Árbol de Derivación}
+\begin{itemize}
+    \item Las premisas son hojas.
+    \item Los nodos representan afirmaciones.
+    \item La raíz es la afirmación que se quiere probar.
+    \item Las ramas representan las reglas de inferencias que conectan a las afirmaciones. 
+\end{itemize}
+Si llegamos a una prueba correcta, \textbf{las hojas son axiomas}.
+\subsection*{Afirmación Derivable (Teorema)}
+Una afirmación es derivable si existe alguna derivación sin premisas que la tiene como conclusión.
+\subsection*{Fórmulas}
+\begin{itemize}
+    \item Cualquier variable proposicional es una fórmula.
+    \item Si $\rho$ es una fórmula, entonces $\neg \rho$ es una fórmula.
+    \item Si $\rho$ y $\sigma$ son fórmulas, $\rho \land \sigma$ es una fórmula.
+    \item Si $\rho$ y $\sigma$ son fórmulas, $\rho \lor \sigma$ es una fórmula.
+    \item Si $\rho$ y $\sigma$ son fórmulas, $\rho \implies \sigma$ es una fórmula.
+    \item Si $\rho$ y $\sigma$ son fórmulas, $\rho \iff \sigma$ es una fórmula.
+\end{itemize}
+Al ser un conjunto inductivo, viene provisto de 
+\begin{itemize}
+    \item Esquema de prueba para probar propiedades sobre ellos \textbf{inducción estructural}.
+    \item Esquema de recursión para definir funciones sobre el conjunto \textbf{recursión estructural}.
+\end{itemize}
+\subsection*{Gramática de la Lógica Proposicional}
+Las fórmulas son las expresiones que se pueden generar a partir de la siguiente gramática 
+\[\tau, \sigma, \rho ... :: = P \ | \ \bot \ | \ (\tau \land \sigma) \ | \ (\tau \implies \sigma) \ | \ (\tau \lor \sigma) \ | \ \neg \tau\] 
+Llamamos \textbf{contexto} a un conjunto finito de fórmulas.
+\subsection*{Valuación}
+Una valuación es una función $v : \mathcal{V} \implies \{V, F\}$ que asigna valores de verdad a las variables proposicionales. \\
+Una valuación satisface una propositión $\tau$ si $ v \vDash \tau$ donde: 
+\begin{itemize}
+    \item $v \vDash P \ sii \ v(P) = V$
+    \item $v \vDash \neg \tau \ sii \ v \nvDash \tau$
+    \item $v \vDash \tau \lor \sigma \ sii \ v \vDash \tau \ o \ v \vDash \sigma$
+    \item $v \vDash \tau \land \sigma \ sii \ v \vDash \tau \ y \ v \vDash \sigma$
+    \item $v \vDash \tau \implies \sigma \ sii \ v \nvDash \tau \ o \ v \vDash \sigma$
+     \item $v \vDash \tau \iff \sigma \ sii \ v \vDash \tau \ sii \ v \vDash \sigma$
+\end{itemize}
+\textbf{Nota}: Una valuación es una fila de la tabla de verdad. \\
+\textbf{Nota 2}: $\vDash$ se lee como \textbf{satisface} \\
+A modo de ejercicio escribamos uno de estas valuaciones con árboles de derivación a nivel de sistema deductivo: 
+\begin{center}
+    \barratexto{$v \vDash \tau \ v \vDash \sigma$}{$\langle$ $v \vDash \tau \land \sigma $ $\rangle$}{$\langle$ $\land$ $\rangle$}
+\end{center}
+\subsection*{Equivalencia Lógica y Tipos de Fórmulas}
+Dadas dos fórmulas $\tau$ y $\sigma$: 
+\begin{itemize}
+    \item $\tau$ es lógicamente equivalente a $\sigma$ cuando $v \vDash \tau$ sii $v \vDash \sigma$ para toda valuación $v$.
+\end{itemize}
+Una fórmula $\tau$ es: 
+\begin{itemize}
+    \item Una tautología si $v \vDash \tau$ para toda valuación $v$. 
+    \item Satisfactible si existe una valuación $v$ tal que $v \vDash \tau$
+    \item Insatisfactible si no es satisfactible.
+\end{itemize}
+Un conjunto de fórmulas $\Gamma$ es 
+\begin{itemize}
+    \item Satisfactible si existe una valuación $v$ tal que $\forall \tau \in \Gamma$ se tiene $v \vDash \tau$
+    \item Insatisfactible si no es satisfactible.
+\end{itemize}
+\subsection*{Teorema de la Insatisfactibilidad}
+Una fórmula $\tau$ es una tautología sii $\neg \tau$ es insatisfactible.
+\subsection*{Sistema Deductivo basado en Reglas de Prueba}
+\begin{itemize}
+    \item Secuente (expresión que incluye conclusión): $\tau_{1}, \tau_{2}, ..., \tau_{n} \vDash \sigma$
+    \begin{itemize}
+        \item Denota que a partir de asumir que el conjunto de fórmulas $\tau_{1}, \tau_{2}, ..., \tau_{n}$ son tautologías, podemos obtener una prueba de la validez de $\sigma$
+    \end{itemize}
+    \item Reglas de prueba: \begin{center}
+        \sd{\Gamma_{1} \vDash \tau_{1} \dots \Gamma_{n} \vDash \tau_{n}}{\Gamma \vDash \sigma: conclusion}{nombre de la regla}
+    \end{center}
+   
+\end{itemize}
+\subsection*{Convenciones de Notación}
+\begin{itemize}
+    \item Omitimos los paréntesis más externos de las fórmulas: $\tau \land \neg(\sigma \lor \rho) = (\tau \land \neg(\sigma \lor \rho))$
+    \item La implicación es asociativa a la derecha: $\tau \implies \sigma \implies \rho = (\tau \implies (\sigma \implies \rho))$
+    \item Los conectivos $\land, \lor$ \textbf{no} son conmutativos ni asociativos 
+    \begin{itemize}
+        \item  $\tau \lor (\sigma \lor \rho) \neq (\tau \lor \sigma) \lor \rho$
+        \item $\tau \land \sigma \neq \sigma \land \tau$
+    \end{itemize}
+\end{itemize}
+\subsection*{Consecuencia Lógica}
+\begin{itemize}
+    \item $\bot$ es siempre falso
+    \item $v \vDash \emptyset$
+    \item $\emptyset \vDash T$  todas las tautologías
+\end{itemize}
+\subsection*{Lógica Intusionista (NJ) vs Lógica Clásica (NK)}
+Las reglas de la lógica intusionista están contenidas en las reglas de la lógica clásica. \\
+Algunas reglas que podemos aplicar en la \textbf{lógica clásica} que no podemos usar en la Lógica Intusionista 
+\begin{itemize}
+    \item PBC (proof by contradiction): No es derivable, es decir, no se puede deducir.
+    \item LEM (law of excluded middle): Es un axioma, no tiene premisas y por lo tanto no se puede probar.
+    \item $\neg \neg e$ (doble negation elimination)
+\end{itemize}
+Las reglas \textbf{PBC}, \textbf{LEM} y \textbf{$\neg \neg e$} son equivalentes.
+\[\begin{minipage}[b]{0.5\textwidth}
+    \includegraphics[width=\linewidth]{assets/logica_1.png}
+\end{minipage}\]
+\[\begin{minipage}[b]{0.5\textwidth}
+    \includegraphics[width=\linewidth]{assets/logica_2.png}
+\end{minipage}\]
+\subsection*{Weakening (Debilitamiento) y Strengthening (Fortalecimiento)}
+\textbf{Weakening}: Lo voy a decir en criollo, su demostración se hace por inducción, pero básicamente es que si algo se cumple solo con \textbf{$\tau$} entonces si agrego otras hipótesis también seguirá valiendo. \\
+Se dice que es Weakening porque estamos haciendo más débil la prueba, esto es porque a mayor cantidad de información que tiene el contexto es más dificil de probar. \\
+\begin{center}
+    \sd{}{\Gamma \vDash \sigma}{} $\implies$ \sd{}{\Gamma, \tau \vDash \sigma}{}
+\end{center}
+\textbf{Strengthening}: Es lo contrario a Weakening, la idea es que podemos ir sacando hipótesis que no nos sirven y poder seguir probando que vale. Se utiliza mucho en algo llamado Cálculo Lambda que veremos luego. \\
+Se dice que es Strengthening porque estamos haciendo más fuerte la prueba, esto es porque a menor cantidad de información que tiene el contexto es más fácil de probar.
+\subsection*{Correctitud (Soundness) y Completitud}
+\textbf{Importante}: Utilizamos $\vDash$ para hablar de satisfacibilidad en el contexto de \textbf{semántica} mientras que utilizamos $\vdash$ para indicar que una fórmula se puede derivar en el contexto de \textbf{sintáxis}. \\
+
+Correctitud y Completitud responde a la siguiente pregunta: ¿cuál es la relación entre la sintáxis y la semántica?
+\begin{itemize}
+    \item \textbf{Sintáxis}: Conjunto de fórmulas $\tau$ tal que $\neg \tau$ es un secuente válido. 
+    \item \textbf{Semántica}: Conjutno de fórmulas $\tau$ tal que $v \vDash \tau$ para toda valuación $v$. Ej: Tautologías.
+\end{itemize}
+\[\Gamma \vDash T \iff \Gamma \vdash T\]
+\textbf{Corrección} \\
+$\vDash \tau$ secuente válido implica que $\tau$ es tautología.
+\begin{itemize}
+    \item $\sigma_{1}, \sigma_{2}, \dots, \sigma_{n} \vdash \tau$ secuente válido implica que $\sigma_{1}, \sigma_{2}, \dots, \sigma_{n} \vDash \tau$
+\end{itemize}
+\textbf{Para demostrar}: Hacemos inducción en la estructura de la prueba analizando por casos la última regla aplicada en la prueba. \\
+Caso base, la última regla fue un axioma. \\
+Casos recursivos, el resto de reglas $\land_{i}, \land_{e1}, etc$ \\
+\textbf{Completitud}
+$\tau$ tautología implica que $\vdash \tau$ es secuente válido. 
+\begin{itemize}
+    \item $\sigma_{1}, \sigma_{2}, \dots, \sigma_{n} \vDash \tau$ implica que $\sigma_{1}, \sigma_{2}, \dots, \sigma_{n} \vdash \tau$ es un secuente válido. 
+\end{itemize}
+\textbf{Para demostrar}: Usamos el contrarrecíproco: si $P \implies Q$ vale que $\neg Q \implies \neg P$ \\
+Luego probar estos dos lemas
+\begin{itemize}
+    \item Si $\Gamma \nvdash \tau$ entonces $\Gamma \cup \{\neg \tau\}$ es consistente (sale por contrarrecíproco).
+    \item Si $\Gamma$ es consistente, entonces tiene modelo. Ej.: $\Gamma$ es satisfactible (es más dificil).
+\end{itemize}
+\subsection*{Consecuencia Semántica}
+Sean $\tau_{1}, \tau_{2}, \dots, \tau_{n}, \sigma$ fórmulas de la lógica proposicional. \\
+$\tau_{1}, \tau_{2}, \dots, \tau_{n} \vDash \sigma \iff \forall \ v \ valuacion \ ((v \vDash \tau_{1} \land v \vDash \tau_{2} \land \dots \land v \vDash \tau_{n}) \implies (v \vDash \sigma))$ \\
+\textbf{En crillo}: Vale que $\tau_{1}, \tau_{2}, \dots, \tau_{n} \vDash \sigma \iff$ para toda valuación v tal que v satisface a todas las hipótesis $v \vDash \tau_{i}$ para toda $i \in 1, \dots, n \implies v \vDash \sigma$ \\
+\subsection*{Consistencia}
+Decimos que $\Gamma$ es consistente si $\Gamma \nvdash \bot$, es decir, $\Gamma$ es consistente si no se puede derivar una contradicción a partir de él.
+
 \section*{Anexo}
 \subsection*{Recordando Haskell}
 Para ejecutar un archivo hay que instalar GHCI. Una vez instalado, nos paramos en la terminal en el directorio donde está el archivo que queremos ejecutar. 
