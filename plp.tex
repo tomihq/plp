@@ -1376,13 +1376,13 @@ Ej.: $\lambda x:\tau . M \ N = \lambda x : \tau . (M \ N) \neq (\lambda x : \tau
 \subsubsection*{Gramática del cálculo lambda con booleanos}
 Los términos válidos de cálculo lambda con booleanos los podemos describir con una gramática formal 
 \[M \ ::= \ x \ |\  \lambda x \ . \ M \ | \ MM \ | \ true \ | \ false \ | \ if \ M \ then \ M \ else \ M\] 
-\subsubsection{Tipos en Cálculo Lambda}
+\subsection{Tipos en Cálculo Lambda}
 En el Cálculo Lambda tipado damos los tipos en las operaciones. \\
 Ej.: $\backslash \lambda x:\sigma \ . \ M$
-\subsubsection*{Función Identidad}
+\subsection*{Función Identidad}
 En cálculo lambda existe una función id \textbf{propia por cada tipo}.
-\subsubsection{Semántica Operacional}
-La \textbf{gramática} nos dice qué terminos podemos escribir sitácticamente. \\
+\subsection{Semántica Operacional}
+La \textbf{gramática} nos dice qué terminos podemos escribir sintácticamente. \\
 La \textbf{semántica} nos da el significado de los términos. \\
 Las siguientes reglas tienen la forma $M \rightarrow N$ y se lee $M \ reduce \ a \ N$ o $M \ se \ reescribe \ como \ N$ \\
 \begin{itemize}
@@ -1395,11 +1395,135 @@ $\lambda x:bool \ . \ x \equiv $ boolean main(boolean var)$\{return \ x\}$ \\
 Cuando las variables están ligadas a un cuantificador podemos cambiarle el nombre sin problema alguno (pensar en el nombre de un parámetro de función en un lenguaje imperativo). \\
 Ej.: $x \ (\lambda x:bool \ . \ x) \equiv x \ (\lambda y:bool \ . \ x)$ \\
 Esto de que cambiar el nombre de la variable ligada al cuantificador se debe a que son clases de equivalencia ($\alpha$).
+
+\subsubsection{Conjunto de Variables Libres}
+Se denota como $fv(M)$.
+\subsection{Sistema de Tipos}
+Hasta ahora veníamos utilizando tipos estrictos, pero normalmente el Cálculo Lambda \textbf{no viene tipado}. \\
+Los tipos de cálculo lambda con booleanos los definimos inductivamente por 
+\begin{itemize}
+    \item Bool es un tipo.
+    \item Si $\tau$ y $\sigma$ son tipos, $\tau \rightarrow \sigma$ es un tipo que representa las funciones de $\tau$ en $\sigma$.
+\end{itemize}
+Gracias a los tipos, debemos escribir \textbf{de qué tipo son cada una de las variables}. \\
+\textbf{Importante}: Solo nos vamos a interesar en \textbf{términos sin variables libres}, es suficiente con escribir el tipo cuando se liga la variable. \\
+\textbf{Nota}: Solo los subtérminos tendrán variables libres. \\
+Ej.: $\lambda x:Bool . x$ es la identidad sobre los booleanos. \\
+Ej.: $\lambda x:Bool \rightarrow Bool.x$ es la identidad sobre las funciones de booleanos en booleanos. \\
+
+La gramática de cálculo lambda con booleanos tipado la definimos con una \textbf{gramática de tipos} y una de \textbf{términos} de la siguiente manera
+\begin{itemize}
+    \item $\tau :: = Bool | \tau \rightarrow \tau$
+    \item $M ::= x \ | \ \lambda x: \tau . M \ | \ M M \ | \ tt \ | \ ff \ | \ if \ M \ then \ M \ else \ M$
+\end{itemize}
+Donde $M$ representa un término y $\tau$ el tipo. \\
+\subsection{Contexto}
+Dijimos anteriormente que solo damos tipo a los \textbf{términos sin variables libres} pero ¿que pasa con este caso: $\lambda x:Bool.yx$? \\
+Podemos notar que $y$ es una variable libre, y como estamos usando tipos booleanos tiene que ser una función Bool en algo pero ¿como defino ese algo? \\
+Un \textbf{contexto} nos da tipos para variables, entonces en vez de decir $\lambda x:Bool.yx:Bool \rightarrow Bool$ decimos, si $y:Bool \rightarrow Bool$, entonces $\lambda x:Bool.yx : Bool \rightarrow Bool$ \\
+\textbf{Notación}: $y: Bool \rightarrow Bool \vdash \lambda x: Bool.yx : Bool \rightarrow Bool$ donde del lado izquierdo del $\vdash$ definimos el contexto.
+\subsubsection{Contexto de Tipado}
+Es un conjunto finito de pares $(x_{i}:\tau_{i})$ 
+\[\{x_{1}:\tau_{1}, \dots, x_{n}:\tau_{n}\}\]
+\textbf{Nota}: Lo notamos con letras griegas mayúsculas $(\Gamma, \triangle)$ y \textbf{sin variables repetidas}, es decir, $(i \neq j \implies x_{i} \neq x_{j})$
+\subsubsection{Juicios de Tipado}
+El sistema de tipos predica sobre \textbf{juicios de tipado} de la forma: $\Gamma \vdash M:\tau$
+\subsection{Sistema de tipos}
+La relación de tipado $\Gamma \vdash M:\tau$ se define inductivamente por: 
+\[\begin{minipage}[b]{1\textwidth}
+    \includegraphics[width=\linewidth]{assets/sistema_tipos.png}
+\end{minipage}\]
+donde 
+\begin{itemize}
+    \item $ax_{v}$: variable 
+    \item $ax_{t}$: true 
+    \item $ax_{f}$: false
+    \item $\rightarrow_{i}$: abstracción
+    \item $\rightarrow_{e}$: aplicación
+    \item $if$: condicional
+\end{itemize}
+\textbf{Importante}: Es posible que también se utilice la siguiente notación. 
+\[\begin{minipage}[b]{0.7\textwidth}
+    \includegraphics[width=\linewidth]{assets/tipado_operaciones2.png}
+\end{minipage}\]
+\subsubsection{Término Bueno}
+Decimos que un término es bueno si existe un contexto del que puedo derivarlo. 
+\subsubsection{Contexto Vacio}
+Un contexto está vacío si no existe ninguna variable libre.
+\subsubsection{Tipando operaciones}
+\[\begin{minipage}[b]{0.8\textwidth}
+    \includegraphics[width=\linewidth]{assets/tipado_operaciones.jpg}
+\end{minipage}\]
+\[\begin{minipage}[b]{0.8\textwidth}
+    \includegraphics[width=\linewidth]{assets/tipado_condicional.jpg}
+\end{minipage}\]
 \subsubsection{Clases de Equivalencia (Alfa equivalencia)}
 Los términos que difieren sólo en el nombre de las variables $ligadas$ se consideran iguales: $\lambda x:bool \ . \ x \equivDef{\alpha} \lambda y:bool \ xy$
-\subsubsection{Sistema de Tipos}
-Hasta ahora veníamos utilizando tipos estrictos, pero normalmente el Cálculo Lambda \textbf{no viene tipado}.
-
+\subsubsection{Aplicando Clases de Equivalencia}
+Recordemos que las variables ligadas, en cualquier lenguaje de programación serían como el parámetro de una función y da igual que nombre le pongamos. Lo importante es NO tener dos parámetros con el mismo nombre.
+\[\begin{minipage}[b]{0.9\textwidth}
+    \includegraphics[width=\linewidth]{assets/alfa_reduccion.jpg}
+\end{minipage}\]
+\textbf{Nota}: Al igual que en un lenguaje de programación da igual a qué variable ligada le cambiemos su nombre.
+\subsubsection{Unicidad de Tipos}
+Si $\Gamma \vdash M:\sigma$ y $\Gamma \vdash M:\rho$ ent $\sigma = \rho$ 
+\subsubsection{Teorema (Weakening + Strengthening)}
+Si $\Gamma \vdash M:\tau$ es derivable y $fv(M) \subseteq \Gamma \cap \Gamma'$ entonces $\Gamma' \vdash M:\tau$ es derivable
+\begin{itemize}
+    \item Weakening: Agregar más hipótesis hace que la afirmación sea más débil y dificil de demostrar.
+    \item Strengthening: Sacar hipótesis hace que la afirmación sea más fuerte y fácil de demostrar.
+\end{itemize}
+Veamos un ejemplo de Strengthening: $x:Bool \vdash True:Bool$ \\
+Hagámosnos una pregunta ¿utilizamos en algún lado la x? No, entonces tenemos que preguntarnos ¿realmente la necesitamos en el contexto? No. Entonces podemos quitarla y la afirmación será aún más fuerte. \\
+Entonces $\emptyset \vdash True:Bool$
+\subsection{Semántica Formal}
+El sistema de tipos nos indica cómo se construyen los programos pero además queremos darles \textbf{significado} (semántica).
+Existen tres formas de dar semántica formal 
+\begin{itemize}
+    \item \textbf{Semántica Operacional}: Indica cómo se ejecuta el programa hasta llegar a un resultado. 
+    \begin{itemize}
+        \item small-step: ejecución paso a paso.
+        \item big-step: evaluación directa al resultado.
+    \end{itemize}
+    \item \textbf{Semántica Denotacional}:  Interpreta los programas como objetos matemáticos.
+    \item \textbf{Semántica Axiomática}: Establece relaciones lógicas entre el estado del programa antes y después de la ejecución.
+\end{itemize}
+\subsubsection{Small-Step}
+La semántica operacional predica sobre \textbf{juicios de evaluación}: $M \rightarrow N$ donde M y N son programas. 
+\subsubsection{Valores}
+Los valores son los posibles resultados de evaluar programas: $V::=true \ |\ false \ | \ \lambda x: \tau.M$ 
+\subsection{Semántica Operacional small-step}
+\[\begin{minipage}[b]{0.7\textwidth}
+    \includegraphics[width=\linewidth]{assets/evaluacion_expresiones_booleanas.png}
+\end{minipage}\]
+\[\begin{minipage}[b]{0.8\textwidth}
+    \includegraphics[width=\linewidth]{assets/evaluacion_funciones.png}
+\end{minipage}\]
+\subsubsection{Sustitución}
+La operación de sustitución $M\{x:=N\}$ nos devuelve un nuevo término tal que resulta de reemplazar todas las ocurrencias libres de x en M por N. \\
+\textbf{Nota}: Se implementa por pattern matching porque es un constructor recursivo. 
+\[\begin{minipage}[b]{0.8\textwidth}
+    \includegraphics[width=\linewidth]{assets/def_sustitucion.png}
+\end{minipage}\]
+\subsection{Propiedades de la Evaluación}
+\subsubsection{Teorema (Determinismo)}
+Si $M \rightarrow N_{1}$ y $M \rightarrow N_{2}$ entonces $N_{1} = N_{2}$
+\subsubsection{Teorema (Preservación de Tipos o Subject Reduction)}
+Si $\Gamma \vdash M : \tau$ y $M \rightarrow N$ entonces $\Gamma \vdash N:\tau$ \\
+Si deducimos el tipo $\tau$ para un término sin ejecutar el programa, y luego ejecutamos el programa obteniendo N, entonces el término N tiene el mismo tipo. 
+\subsubsection{Teorema (Progreso)}
+Si $\vdash M:\tau$ entonces: 
+\begin{itemize}
+    \item O bien M es un término cerrado irreducible bien tipado, osea un valor. 
+    \item O bien existe un $N$ tal que $M \rightarrow N$
+\end{itemize}
+\subsubsection{Teorema (Terminación)}
+Si $\vdash M:\tau$ entonces no hay una cadena infinita de pasos: $M \rightarrow M_{1} \rightarrow M_{2} \rightarrow ...$
+\subsubsection{Canonicidad}
+\begin{itemize}
+    \item Si $\vdash M:bool$ es derivable, entonces la evaluación de M termina y el resultado es true o false.
+    \item Si $\vdash M:\tau \rightarrow \sigma$ es derivable, entonces la evaluación de M termina y el resultado es una abstracción. 
+\end{itemize}
 \section*{Anexo}
 \subsection*{Recordando Haskell}
 Para ejecutar un archivo hay que instalar GHCI. Una vez instalado, nos paramos en la terminal en el directorio donde está el archivo que queremos ejecutar. 
