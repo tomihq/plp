@@ -1593,7 +1593,9 @@ Si quisieramos que siga valiendo el progreso podemos extender la semántica y ag
 \[\begin{minipage}[b]{0.8\textwidth}
     \includegraphics[width=\linewidth]{assets/forma_normal.png}
 \end{minipage}\]
-(No entendí qué caso es el conflictivo si tuvimos que cambiar de $\lambda x: \sigma . M$ a $\lambda x:\sigma . F$) ¿qué no podíamos hacer antes?
+(No entendí qué caso es el conflictivo si tuvimos que cambiar de $\lambda x: \sigma . M$ a $\lambda x:\sigma . F$) ¿qué no podíamos hacer antes? \\
+Entiendo que diciendo que tengas $\lambda x:\sigma . F$ estas diciendo que si le metés un input tenés que garantizar que lo que tenga la lambda adentro \textbf{ya sea una forma normal} y sabés que el proceso va a terminar bien. \\
+Si usás $\lambda x: \sigma . M$ tenés el problema de que si le ponés cualquier cosa a M podés llegar a algo que no es reducible y capaz se cuelga? 
 \section*{Anexo}
 \subsection*{Recordando Haskell}
 Para ejecutar un archivo hay que instalar GHCI. Una vez instalado, nos paramos en la terminal en el directorio donde está el archivo que queremos ejecutar. 
