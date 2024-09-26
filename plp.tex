@@ -1518,24 +1518,34 @@ Podemos notar que una función que haga esto, sería la composición: $\lambda f
 El sistema de tipos nos indica cómo se construyen los programos pero además queremos darles \textbf{significado} (semántica).
 Existen tres formas de dar semántica formal 
 \begin{itemize}
-    \item \textbf{Semántica Operacional}: Indica cómo se ejecuta el programa hasta llegar a un resultado. 
+    \item \textbf{Semántica Operacional}: Indica cómo se ejecuta el programa hasta llegar a un resultado.
     \begin{itemize}
+        \item Es la que vamos a usar en la materia.
+        \item Trabaja en base a reglas de reducción $\rightarrow$ entre términos. Cuando tenemos $M\rightarrow N$, M reduce. 
+        \item La idea es llegar a formas normales, es decir, expresiones irreducibles que no existe ninguna regla que las pueda deducir.
         \item small-step: ejecución paso a paso.
         \item big-step: evaluación directa al resultado.
     \end{itemize}
     \item \textbf{Semántica Denotacional}:  Interpreta los programas como objetos matemáticos.
     \item \textbf{Semántica Axiomática}: Establece relaciones lógicas entre el estado del programa antes y después de la ejecución.
 \end{itemize}
+\textbf{Importante}: Nosotros vamos a usar la estrategia de reducción call by value, y nos va a interesar mantener el determinismo de las reglas de reducción.
+\subsection{Semántica Operacional}
 \subsubsection{Small-Step}
 La semántica operacional predica sobre \textbf{juicios de evaluación}: $M \rightarrow N$ donde M y N son programas. 
 \subsubsection{Valores}
 Los valores son los posibles resultados de evaluar programas: $V::=true \ |\ false \ | \ \lambda x: \tau.M$ 
-\subsection{Semántica Operacional small-step}
-\[\begin{minipage}[b]{0.7\textwidth}
-    \includegraphics[width=\linewidth]{assets/evaluacion_expresiones_booleanas.png}
+\subsection{Semántica Operacional}
+\[\begin{minipage}[b]{0.9\textwidth}
+    \includegraphics[width=\linewidth]{assets/reglas_congruencia_computo.png}
 \end{minipage}\]
-\[\begin{minipage}[b]{0.8\textwidth}
-    \includegraphics[width=\linewidth]{assets/evaluacion_funciones.png}
+\textbf{Importante}: $\mu$, $v$, $if_{c}$ son reglas de congruencia, es decir, nos permiten ``ingresar a la expresión para luego aplicar las reglas de cómputo`` las cuales, las reglas de compúto son $\beta, (if_{t}), (if_{f})$ \\
+\textbf{Importante 2}: Aplicar la regla $\beta$ NO cuenta como regla de redudcción. \\
+\textbf{Importante 3}: $\beta$ se utiliza \textbf{SOLO} con valores. \\
+\textbf{Importante 4}: Recordar que $\rightarrow$ indica a qué reduce, por ejemplo, en el caso del if false, tiene sentido que si el else es N, la operación te devuelva N. \\
+Veamos a continuación unos ejemplos 
+\[\begin{minipage}[b]{0.9\textwidth}
+    \includegraphics[width=\linewidth]{assets/semantica-operacional-ej.jpg}
 \end{minipage}\]
 \subsubsection{Sustitución}
 La operación de sustitución $M\{x:=N\}$ nos devuelve un nuevo término tal que resulta de reemplazar todas las ocurrencias libres de x en M por N. \\
@@ -1545,7 +1555,8 @@ La operación de sustitución $M\{x:=N\}$ nos devuelve un nuevo término tal que
 \end{minipage}\]
 \subsection{Propiedades de la Evaluación}
 \subsubsection{Teorema (Determinismo)}
-Si $M \rightarrow N_{1}$ y $M \rightarrow N_{2}$ entonces $N_{1} = N_{2}$
+Si $M \rightarrow N_{1}$ y $M \rightarrow N_{2}$ entonces $N_{1} = N_{2}$ \\
+\textbf{En criollo}: No hay más de una forma de reducir algo. 
 \subsubsection{Teorema (Preservación de Tipos o Subject Reduction)}
 Si $\Gamma \vdash M : \tau$ y $M \rightarrow N$ entonces $\Gamma \vdash N:\tau$ \\
 Si deducimos el tipo $\tau$ para un término sin ejecutar el programa, y luego ejecutamos el programa obteniendo N, entonces el término N tiene el mismo tipo. 
@@ -1562,6 +1573,22 @@ Si $\vdash M:\tau$ entonces no hay una cadena infinita de pasos: $M \rightarrow 
     \item Si $\vdash M:bool$ es derivable, entonces la evaluación de M termina y el resultado es true o false.
     \item Si $\vdash M:\tau \rightarrow \sigma$ es derivable, entonces la evaluación de M termina y el resultado es una abstracción. 
 \end{itemize}
+\subsubsection{Extensión con Números Naturales}
+Sintaxis:
+\[\begin{minipage}[b]{0.8\textwidth}
+    \includegraphics[width=\linewidth]{assets/extension_naturales.png}
+\end{minipage}\]
+Semántica:
+\[\begin{minipage}[b]{0.8\textwidth}
+    \includegraphics[width=\linewidth]{assets/extension_naturales_semantica.png}
+\end{minipage}\]
+\textbf{Ultra Importante}: Cada vez que extendmos tipos o sintaxis hay que chequear que siga valiendo el progreso, el determinismo y la preservación de tipos. \\
+\textbf{¿Es segura esta extensión?}: No, porque con estas reglas se rompe el progreso pues pred(0) es forma normal pero no es un valor válido. \\
+Si quisieramos que siga valiendo el progreso podemos extender la semántica y agregar un caso \textbf{$pred(zero) \rightarrow zero$ ($pred_{0}$)}
+\subsubsection{Macros}
+\[\begin{minipage}[b]{0.8\textwidth}
+    \includegraphics[width=\linewidth]{assets/macros.png}
+\end{minipage}\]
 \section*{Anexo}
 \subsection*{Recordando Haskell}
 Para ejecutar un archivo hay que instalar GHCI. Una vez instalado, nos paramos en la terminal en el directorio donde está el archivo que queremos ejecutar. 
