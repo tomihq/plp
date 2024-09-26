@@ -1413,7 +1413,10 @@ Ej.: $\lambda x:Bool \rightarrow Bool.x$ es la identidad sobre las funciones de 
 
 La gramática de cálculo lambda con booleanos tipado la definimos con una \textbf{gramática de tipos} y una de \textbf{términos} de la siguiente manera
 \begin{itemize}
-    \item $\tau :: = Bool | \tau \rightarrow \tau$
+    \item $\tau :: = Bool \ | \ \tau \rightarrow \tau$
+    \begin{itemize}
+        \item Nota: $\tau \rightarrow \tau$ representa una función.
+    \end{itemize}
     \item $M ::= x \ | \ \lambda x: \tau . M \ | \ M M \ | \ tt \ | \ ff \ | \ if \ M \ then \ M \ else \ M$
 \end{itemize}
 Donde $M$ representa un término y $\tau$ el tipo. \\
@@ -1427,7 +1430,11 @@ Es un conjunto finito de pares $(x_{i}:\tau_{i})$
 \[\{x_{1}:\tau_{1}, \dots, x_{n}:\tau_{n}\}\]
 \textbf{Nota}: Lo notamos con letras griegas mayúsculas $(\Gamma, \triangle)$ y \textbf{sin variables repetidas}, es decir, $(i \neq j \implies x_{i} \neq x_{j})$
 \subsubsection{Juicios de Tipado}
-El sistema de tipos predica sobre \textbf{juicios de tipado} de la forma: $\Gamma \vdash M:\tau$
+El sistema de tipos predica sobre \textbf{juicios de tipado} de la forma: $\Gamma \vdash M:\tau$ \\
+Se lee como ``en el contexto $\Gamma$, $M$ es de tipo $\tau$``
+\[\begin{minipage}[b]{1\textwidth}
+    \includegraphics[width=\linewidth]{assets/tipado.jpg}
+\end{minipage}\]
 \subsection{Sistema de tipos}
 La relación de tipado $\Gamma \vdash M:\tau$ se define inductivamente por: 
 \[\begin{minipage}[b]{1\textwidth}
@@ -1446,8 +1453,35 @@ donde
 \[\begin{minipage}[b]{0.7\textwidth}
     \includegraphics[width=\linewidth]{assets/tipado_operaciones2.png}
 \end{minipage}\]
+\subsubsection{Árbol Sintático}
+Es muy útil hacerlo. \\ 
+Véase \hyperref[subsec:arbol_sintatico]{\textbf{\underline{anexo}}} para ver ejemplos para reducir expresiones y verificar si son términos. 
 \subsubsection{Término Bueno}
 Decimos que un término es bueno si existe un contexto del que puedo derivarlo. 
+\subsubsection{Término Válido}
+Está atado a como está sintácticamente formado. Es importante que solo tengan tipos válidos.
+\begin{itemize}
+    \item $x M$: No es válido. No podemos usar genéricos como M.
+    \item $\lambda x:Bool$: No es válido. Las funciones toman algo y devuelven algo. Esta lambda no es $\tau \rightarrow \tau$.
+    \item $\lambda x.x$: No es válido. No sabemos el tipo de x.
+    \item if $x$ then $\lambda x:Bool x$: No es válido, los condicionales tienen una rama else.
+    \item $\lambda x: Bool \rightarrow Bool . xy \ \lambda y: Bool . x$
+    \begin{itemize}
+        \item Si colocamos los paréntesis de la asociación queda así: $((\lambda x: Bool \rightarrow Bool . x \textbf{y}) \ (\lambda y: Bool . \textbf{x}))$
+        \item Por un lado se resuelve $(\lambda x: Bool \rightarrow Bool . xy)$ y por otro $(\lambda y: Bool . x)$.
+        \item Finalmente, cuando reduce, se realiza la aplicación. En negrita, están marcadas las variables libres.
+        \item Este término es válido.
+    \end{itemize}
+    \item $\lambda y:\sigma . y$: No es válido, no existe el tipo $\sigma$. Solo existe $Bool \ | \ \tau \implies \tau$
+    \item $xy \ \lambda x: Bool \rightarrow Bool . xy$
+    \begin{itemize}
+        \item Asociemos hacia la izquierda entonces queda $(xy) \ (\lambda x: Bool \rightarrow Bool . xy)$
+        \item Cada lado se resuelve por separado y luego se componen.
+    \end{itemize}
+\end{itemize}
+Para ver ejemplos de esto utilizando árboles sintáticos véase \hyperref[subsec:arbol_sintatico]{\textbf{\underline{anexo}}}
+\subsubsection{Término Cerrado}
+Decimos que un término es cerrado sí y solo sí no tiene variables libres.
 \subsubsection{Contexto Vacio}
 Un contexto está vacío si no existe ninguna variable libre.
 \subsubsection{Tipando operaciones}
@@ -1476,6 +1510,10 @@ Si $\Gamma \vdash M:\tau$ es derivable y $fv(M) \subseteq \Gamma \cap \Gamma'$ e
 Veamos un ejemplo de Strengthening: $x:Bool \vdash True:Bool$ \\
 Hagámosnos una pregunta ¿utilizamos en algún lado la x? No, entonces tenemos que preguntarnos ¿realmente la necesitamos en el contexto? No. Entonces podemos quitarla y la afirmación será aún más fuerte. \\
 Entonces $\emptyset \vdash True:Bool$
+\subsection{Tipos Habitados}
+Un tipo está habitado si existe una función de ejemplo que use ese tipo. \\
+Por ejemplo, si nos piden algo que cumpla $\vdash M:(\tau \rightarrow \rho) \rightarrow (\sigma \rightarrow \tau) \rightarrow (\sigma \rightarrow \rho)$. \\
+Podemos notar que una función que haga esto, sería la composición: $\lambda f:\tau \rightarrow e . \lambda g :\sigma \rightarrow \tau . \lambda x:\sigma . f (gx)$ o mejor escrita $(\lambda f:\tau \rightarrow e) (\lambda g :\sigma \rightarrow \tau)(\lambda x:\sigma) (f (gx))$
 \subsection{Semántica Formal}
 El sistema de tipos nos indica cómo se construyen los programos pero además queremos darles \textbf{significado} (semántica).
 Existen tres formas de dar semántica formal 
@@ -1787,6 +1825,13 @@ Por último podemos definir la potencia reutilizando la multiplicación
     potencia :: Integer -> Integer -> Integer 
     potencia n m = foldNat 1 (multiplicacion n m) m
 \end{lstlisting}
-Es importante notar que la potencia requiere hacer foldNat nuevamente porque tenemos que hacer el proceso de multiplicación m veces. \\
-\subsection*{}
+Es importante notar que la potencia requiere hacer foldNat nuevamente porque tenemos que hacer el proceso de multiplicación m veces. 
+\subsection*{¿Son términos válidos?}
+\label{subsec:arbol_sintatico}
+Recordemos que asocia a la derecha las implicaciones y hacia izquierda la aplicación. \\
+Lo que hay que revisar bien siempre son todos los tipos. 
+\[\begin{minipage}[b]{0.6\textwidth}
+    \includegraphics[width=\linewidth]{assets/arbol_sintatico.jpg}
+\end{minipage}\] 
+La idea es ir aplicando como Haskell la asociación, separar en varios pasos la ejecución y luego aplicarlo. 
 \end{document} 

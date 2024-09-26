@@ -470,6 +470,13 @@ INPUT C:\Users\Tom\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmsy10.tfm
 INPUT C:\Users\Tom\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmex10.tfm
 INPUT C:\Users\Tom\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam10.tfm
 INPUT C:\Users\Tom\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
+INPUT .\assets\tipado.jpg
+INPUT .\assets\tipado.jpg
+INPUT .\assets\tipado.jpg
+INPUT .\assets\tipado.jpg
+INPUT .\assets\tipado.jpg
+INPUT .\assets\tipado.jpg
+INPUT .\assets\tipado.jpg
 INPUT .\assets\sistema_tipos.png
 INPUT .\assets\sistema_tipos.png
 INPUT .\assets\sistema_tipos.png
@@ -484,6 +491,8 @@ INPUT .\assets\tipado_operaciones2.png
 INPUT .\assets\tipado_operaciones2.png
 INPUT .\assets\tipado_operaciones2.png
 INPUT .\assets\tipado_operaciones2.png
+INPUT C:\Users\Tom\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmbx7.tfm
+INPUT C:\Users\Tom\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmbx5.tfm
 INPUT .\assets\tipado_operaciones.jpg
 INPUT .\assets\tipado_operaciones.jpg
 INPUT .\assets\tipado_operaciones.jpg
@@ -540,6 +549,13 @@ INPUT .\assets\armar_pares_2.jpg
 INPUT .\assets\armar_pares_2.jpg
 INPUT .\assets\armar_pares_2.jpg
 INPUT .\assets\armar_pares_2.jpg
+INPUT .\assets\arbol_sintatico.jpg
+INPUT .\assets\arbol_sintatico.jpg
+INPUT .\assets\arbol_sintatico.jpg
+INPUT .\assets\arbol_sintatico.jpg
+INPUT .\assets\arbol_sintatico.jpg
+INPUT .\assets\arbol_sintatico.jpg
+INPUT .\assets\arbol_sintatico.jpg
 INPUT plp.aux
 INPUT .\plp.out
 INPUT .\plp.out

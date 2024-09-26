@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1727148396.8175 "g:/YO/UBA/EXACTAS/Paradigmas de Lenguajes de Programacion/plp/plp.tex" "plp.pdf" "plp" 1727148400.08651 0
+["pdflatex"] 1727373212.61629 "g:/YO/UBA/EXACTAS/Paradigmas de Lenguajes de Programacion/plp/plp.tex" "plp.pdf" "plp" 1727373215.97119 0
   "AEDmacros.tex" 1712525433 5225 a29b5124b00f3f425c63e9a9999700f1 ""
   "C:/Users/Tom/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1726412527 81068 299f700eb05b1217173e62b88b513bd0 ""
   "C:/Users/Tom/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/tcbx1440.pk" 1724516033 18748 78c630fb1bdd95518dc6c3d83451067d ""
@@ -17,6 +17,8 @@
   "C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/tfm/public/amsfonts/symbols/msbm7.tfm" 1233951854 940 228d6584342e91276bf566bcf9716b83 ""
   "C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmbx10.tfm" 1136765053 1328 c834bbb027764024c09d3d2bf908b5f0 ""
   "C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmbx12.tfm" 1136765053 1324 c910af8c371558dc20f2d7822f66fe64 ""
+  "C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmbx5.tfm" 1136765053 1332 f817c21a1ba54560425663374f1b651a ""
+  "C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmbx7.tfm" 1136765053 1336 3125ccb448c1a09074e3aa4a9832f130 ""
   "C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmex10.tfm" 1136765053 992 662f679a0b3d2d53c1b94050fdaa3f50 ""
   "C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmmi12.tfm" 1136765053 1524 4414a8315f39513458b80dfc63bff03a ""
   "C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmmi6.tfm" 1136765053 1512 f21f83efb36853c0b70002322c1ab3ad ""
@@ -208,6 +210,7 @@
   "C:/Users/Tom/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.sty" 1700127522 55487 80a65caedd3722f4c20a14a69e785d8f ""
   "assets/abb_haskell.jpg" 1723911213 43490 64ca52ecc78eda935a1bf5d53ba124e6 ""
   "assets/alfa_reduccion.jpg" 1727147068 64421 1cba8f857d519347fda17a0f9937fea2 ""
+  "assets/arbol_sintatico.jpg" 1727367921 106277 f18c9cae52645ccbdfa319f0d04d4303 ""
   "assets/armar_pares_2.jpg" 1725490421 74225 45407ac82a4057fa7908fa672a91a937 ""
   "assets/bin2dec_foldl.png" 1725290297 34672 874d693a3648d989c9560d26fe13c1e9 ""
   "assets/def_sustitucion.png" 1727147882 66523 3d161c6a47e6827743da8787d2c9562e ""
@@ -228,14 +231,15 @@
   "assets/principio_reemplazo_dibujo.jpg" 1725579490 111338 c658657a88bb7e3015cc870b529feafa ""
   "assets/sistema_tipos.png" 1727141280 20929 b21bf3330ca6ce4a7e22993d298042eb ""
   "assets/suma_foldr.png" 1725289831 18886 0fb05428398fd62f3b0a83ddeae47faa ""
+  "assets/tipado.jpg" 1727371884 87288 ff259bf958cd841293096aee66a8c71c ""
   "assets/tipado_condicional.jpg" 1727144665 46764 d81075b1841b8ac5df4ad9c400fc6f03 ""
   "assets/tipado_operaciones.jpg" 1727142318 73235 0992d1a32a62de5e6978e2714f81df2e ""
   "assets/tipado_operaciones2.png" 1727147389 29341 2c8222796cb81aa7f6a0ece2c53322a8 ""
-  "g:/YO/UBA/EXACTAS/Paradigmas de Lenguajes de Programacion/plp/plp.tex" 1727148392 105867 42a852e2ce42b11ad6f8ddac7569bf9a ""
+  "g:/YO/UBA/EXACTAS/Paradigmas de Lenguajes de Programacion/plp/plp.tex" 1727373211 109070 87fd97d6d3502131c47e9ebc7f96f365 ""
   "logo_uba.jpg" 1712525433 229119 10f3a63be47e1e95e44f30008ec3af50 ""
-  "plp.aux" 1727148399 4725 17e49e23f573c74c9958246ad0baf7ff "pdflatex"
-  "plp.out" 1727148399 4709 3d16ad13aa47d9feff953294ed5e4ea4 "pdflatex"
-  "plp.tex" 1727148392 105867 42a852e2ce42b11ad6f8ddac7569bf9a ""
+  "plp.aux" 1727373215 5343 cca768219a808f0f9def8b5421a0bf6c "pdflatex"
+  "plp.out" 1727373215 5285 e2e5e3da3b81d5952c4cbdb2608cbc71 "pdflatex"
+  "plp.tex" 1727373211 109070 87fd97d6d3502131c47e9ebc7f96f365 ""
   (generated)
   "plp.aux"
   "plp.log"
