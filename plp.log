@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.3.31) (preloaded format=pdflatex 2024.4.13)  26 SEP 2024 16:13
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.3.31) (preloaded format=pdflatex 2024.4.13)  26 SEP 2024 20:06
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -696,7 +696,7 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 56.
  (C:\Users\Tom\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-<logo_uba.jpg, id=142, 225.4824pt x 231.7458pt>
+<logo_uba.jpg, id=146, 225.4824pt x 231.7458pt>
 File: logo_uba.jpg Graphic file (type jpg)
 <use logo_uba.jpg>
 Package pdftex.def Info: logo_uba.jpg  used on input line 62.
@@ -751,12 +751,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 380--381
 
  []
 
-<assets/foldr_grafico.png, id=302, 466.74374pt x 217.5628pt>
+<assets/foldr_grafico.png, id=306, 466.74374pt x 217.5628pt>
 File: assets/foldr_grafico.png Graphic file (type png)
 <use assets/foldr_grafico.png>
 Package pdftex.def Info: assets/foldr_grafico.png  used on input line 439.
 (pdftex.def)             Requested size: 270.3012pt x 126.00061pt.
-<assets/suma_foldr.png, id=303, 456.20438pt x 166.37157pt>
+<assets/suma_foldr.png, id=307, 456.20438pt x 166.37157pt>
 File: assets/suma_foldr.png Graphic file (type png)
 <use assets/suma_foldr.png>
 Package pdftex.def Info: assets/suma_foldr.png  used on input line 443.
@@ -773,12 +773,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 478--481
 
  []
 
-<assets/foldl_grafico.png, id=348, 519.44063pt x 239.39438pt>
+<assets/foldl_grafico.png, id=352, 519.44063pt x 239.39438pt>
 File: assets/foldl_grafico.png Graphic file (type png)
 <use assets/foldl_grafico.png>
 Package pdftex.def Info: assets/foldl_grafico.png  used on input line 494.
 (pdftex.def)             Requested size: 270.3012pt x 124.57346pt.
-<assets/bin2dec_foldl.png, id=349, 484.05844pt x 251.43938pt>
+<assets/bin2dec_foldl.png, id=353, 484.05844pt x 251.43938pt>
 File: assets/bin2dec_foldl.png Graphic file (type png)
 <use assets/bin2dec_foldl.png>
 Package pdftex.def Info: assets/bin2dec_foldl.png  used on input line 498.
@@ -797,40 +797,40 @@ Underfull \hbox (badness 10000) in paragraph at lines 578--580
  []
 
 [11] [12]
-<assets/principio_reemplazo_dibujo.jpg, id=443, 1170.3725pt x 1284.8pt>
+<assets/principio_reemplazo_dibujo.jpg, id=447, 1170.3725pt x 1284.8pt>
 File: assets/principio_reemplazo_dibujo.jpg Graphic file (type jpg)
 <use assets/principio_reemplazo_dibujo.jpg>
 Package pdftex.def Info: assets/principio_reemplazo_dibujo.jpg  used on input line 665.
 (pdftex.def)             Requested size: 486.53883pt x 534.10349pt.
  [13 <./assets/principio_reemplazo_dibujo.jpg>]
-<assets/induccion_booleanos_dibujo.jpg, id=451, 790.955pt x 1056.94875pt>
+<assets/induccion_booleanos_dibujo.jpg, id=455, 790.955pt x 1056.94875pt>
 File: assets/induccion_booleanos_dibujo.jpg Graphic file (type jpg)
 <use assets/induccion_booleanos_dibujo.jpg>
 Package pdftex.def Info: assets/induccion_booleanos_dibujo.jpg  used on input line 673.
 (pdftex.def)             Requested size: 378.42001pt x 505.68462pt.
-<assets/induccion_pares.png, id=452, 576.65437pt x 253.69781pt>
+<assets/induccion_pares.png, id=456, 576.65437pt x 253.69781pt>
 File: assets/induccion_pares.png Graphic file (type png)
 <use assets/induccion_pares.png>
 Package pdftex.def Info: assets/induccion_pares.png  used on input line 678.
 (pdftex.def)             Requested size: 378.42001pt x 166.49265pt.
  [14 <./assets/induccion_booleanos_dibujo.jpg>]
-<assets/induccion_pares_dibujo.jpg, id=459, 1045.9075pt x 760.8425pt>
+<assets/induccion_pares_dibujo.jpg, id=463, 1045.9075pt x 760.8425pt>
 File: assets/induccion_pares_dibujo.jpg Graphic file (type jpg)
 <use assets/induccion_pares_dibujo.jpg>
 Package pdftex.def Info: assets/induccion_pares_dibujo.jpg  used on input line 681.
 (pdftex.def)             Requested size: 378.42001pt x 275.28462pt.
-<assets/induccion_naturales.png, id=460, 642.90187pt x 452.4403pt>
+<assets/induccion_naturales.png, id=464, 642.90187pt x 452.4403pt>
 File: assets/induccion_naturales.png Graphic file (type png)
 <use assets/induccion_naturales.png>
 Package pdftex.def Info: assets/induccion_naturales.png  used on input line 690.
 (pdftex.def)             Requested size: 378.42001pt x 266.31613pt.
  [15 <./assets/induccion_pares.png> <./assets/induccion_pares_dibujo.jpg>]
-<assets/induccion_naturales_dibujo.jpg, id=467, 1129.21875pt x 1137.24875pt>
+<assets/induccion_naturales_dibujo.jpg, id=471, 1129.21875pt x 1137.24875pt>
 File: assets/induccion_naturales_dibujo.jpg Graphic file (type jpg)
 <use assets/induccion_naturales_dibujo.jpg>
 Package pdftex.def Info: assets/induccion_naturales_dibujo.jpg  used on input line 693.
 (pdftex.def)             Requested size: 378.42001pt x 381.1065pt.
-<assets/induccion_listas_dibujo.jpg, id=468, 999.735pt x 1606.0pt>
+<assets/induccion_listas_dibujo.jpg, id=472, 999.735pt x 1606.0pt>
 File: assets/induccion_listas_dibujo.jpg Graphic file (type jpg)
 <use assets/induccion_listas_dibujo.jpg>
 Package pdftex.def Info: assets/induccion_listas_dibujo.jpg  used on input line 704.
@@ -839,12 +839,12 @@ Package pdftex.def Info: assets/induccion_listas_dibujo.jpg  used on input line 
 Overfull \vbox (56.3499pt too high) has occurred while \output is active []
 
  [17 <./assets/induccion_listas_dibujo.jpg>]
-<assets/principio_induccion_ab.png, id=479, 645.91313pt x 365.86688pt>
+<assets/principio_induccion_ab.png, id=483, 645.91313pt x 365.86688pt>
 File: assets/principio_induccion_ab.png Graphic file (type png)
 <use assets/principio_induccion_ab.png>
 Package pdftex.def Info: assets/principio_induccion_ab.png  used on input line 708.
 (pdftex.def)             Requested size: 378.42001pt x 214.34668pt.
-<assets/principio_induccion_polinomios.png, id=480, 620.3175pt x 479.54156pt>
+<assets/principio_induccion_polinomios.png, id=484, 620.3175pt x 479.54156pt>
 File: assets/principio_induccion_polinomios.png Graphic file (type png)
 <use assets/principio_induccion_polinomios.png>
 Package pdftex.def Info: assets/principio_induccion_polinomios.png  used on input line 712.
@@ -870,12 +870,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 1054--1056
  []
 
 [24] [25] [26] [27] [28]
-<assets/logica_1.png, id=824, 713.66624pt x 352.31625pt>
+<assets/logica_1.png, id=828, 713.66624pt x 352.31625pt>
 File: assets/logica_1.png Graphic file (type png)
 <use assets/logica_1.png>
 Package pdftex.def Info: assets/logica_1.png  used on input line 1311.
 (pdftex.def)             Requested size: 270.3012pt x 133.44073pt.
-<assets/logica_2.png, id=825, 424.58624pt x 219.82124pt>
+<assets/logica_2.png, id=829, 424.58624pt x 219.82124pt>
 File: assets/logica_2.png Graphic file (type png)
 <use assets/logica_2.png>
 Package pdftex.def Info: assets/logica_2.png  used on input line 1314.
@@ -906,142 +906,148 @@ Underfull \hbox (badness 10000) in paragraph at lines 1422--1423
  []
 
 [31]
-<assets/tipado.jpg, id=851, 1606.0pt x 617.30624pt>
+<assets/tipado.jpg, id=855, 1606.0pt x 617.30624pt>
 File: assets/tipado.jpg Graphic file (type jpg)
 <use assets/tipado.jpg>
 Package pdftex.def Info: assets/tipado.jpg  used on input line 1436.
 (pdftex.def)             Requested size: 540.60239pt x 207.79967pt.
-<assets/sistema_tipos.png, id=852, 807.015pt x 144.54pt>
+<assets/sistema_tipos.png, id=856, 807.015pt x 144.54pt>
 File: assets/sistema_tipos.png Graphic file (type png)
 <use assets/sistema_tipos.png>
 Package pdftex.def Info: assets/sistema_tipos.png  used on input line 1441.
 (pdftex.def)             Requested size: 540.60239pt x 96.82584pt.
-<assets/tipado_operaciones2.png, id=853, 497.60907pt x 300.3722pt>
+<assets/tipado_operaciones2.png, id=857, 497.60907pt x 300.3722pt>
 File: assets/tipado_operaciones2.png Graphic file (type png)
 <use assets/tipado_operaciones2.png>
 Package pdftex.def Info: assets/tipado_operaciones2.png  used on input line 1454.
 (pdftex.def)             Requested size: 378.42001pt x 228.43188pt.
  [32 <./assets/tipado.jpg> <./assets/sistema_tipos.png>]
-<assets/tipado_operaciones.jpg, id=860, 1167.36125pt x 933.4875pt>
+<assets/tipado_operaciones.jpg, id=864, 1167.36125pt x 933.4875pt>
 File: assets/tipado_operaciones.jpg Graphic file (type jpg)
 <use assets/tipado_operaciones.jpg>
 Package pdftex.def Info: assets/tipado_operaciones.jpg  used on input line 1489.
 (pdftex.def)             Requested size: 432.48355pt x 345.84077pt.
  [33 <./assets/tipado_operaciones2.png>]
-<assets/tipado_condicional.jpg, id=866, 1284.8pt x 444.66125pt>
+<assets/tipado_condicional.jpg, id=870, 1284.8pt x 444.66125pt>
 File: assets/tipado_condicional.jpg Graphic file (type jpg)
 <use assets/tipado_condicional.jpg>
 Package pdftex.def Info: assets/tipado_condicional.jpg  used on input line 1492.
 (pdftex.def)             Requested size: 432.48355pt x 149.67656pt.
-<assets/alfa_reduccion.jpg, id=867, 1284.8pt x 956.57375pt>
+<assets/alfa_reduccion.jpg, id=871, 1284.8pt x 956.57375pt>
 File: assets/alfa_reduccion.jpg Graphic file (type jpg)
 <use assets/alfa_reduccion.jpg>
 Package pdftex.def Info: assets/alfa_reduccion.jpg  used on input line 1499.
 (pdftex.def)             Requested size: 486.53883pt x 362.24654pt.
  [34 <./assets/tipado_operaciones.jpg> <./assets/tipado_condicional.jpg>] [35 <./assets/alfa_reduccion.jpg>]
-<assets/reglas_congruencia_computo.png, id=877, 977.90344pt x 350.05782pt>
+<assets/reglas_congruencia_computo.png, id=881, 977.90344pt x 350.05782pt>
 File: assets/reglas_congruencia_computo.png Graphic file (type png)
 <use assets/reglas_congruencia_computo.png>
 Package pdftex.def Info: assets/reglas_congruencia_computo.png  used on input line 1540.
 (pdftex.def)             Requested size: 486.53883pt x 174.16849pt.
-<assets/semantica-operacional-ej.jpg, id=878, 1204.5pt x 1427.3325pt>
+<assets/semantica-operacional-ej.jpg, id=882, 1204.5pt x 1427.3325pt>
 File: assets/semantica-operacional-ej.jpg Graphic file (type jpg)
 <use assets/semantica-operacional-ej.jpg>
 Package pdftex.def Info: assets/semantica-operacional-ej.jpg  used on input line 1548.
 (pdftex.def)             Requested size: 486.53883pt x 576.54195pt.
  [36 <./assets/reglas_congruencia_computo.png>]
-<assets/def_sustitucion.png, id=883, 667.74469pt x 408.77719pt>
+<assets/def_sustitucion.png, id=887, 667.74469pt x 408.77719pt>
 File: assets/def_sustitucion.png Graphic file (type png)
 <use assets/def_sustitucion.png>
 Package pdftex.def Info: assets/def_sustitucion.png  used on input line 1554.
 (pdftex.def)             Requested size: 432.48355pt x 264.76016pt.
  [37 <./assets/semantica-operacional-ej.jpg>]
-<assets/extension_naturales.png, id=889, 830.35219pt x 365.86688pt>
+<assets/extension_naturales.png, id=893, 830.35219pt x 365.86688pt>
 File: assets/extension_naturales.png Graphic file (type png)
 <use assets/extension_naturales.png>
 Package pdftex.def Info: assets/extension_naturales.png  used on input line 1579.
 (pdftex.def)             Requested size: 432.48355pt x 190.55891pt.
  [38 <./assets/def_sustitucion.png>]
-<assets/extension_naturales_semantica.png, id=894, 797.98125pt x 447.92343pt>
+<assets/extension_naturales_semantica.png, id=898, 797.98125pt x 447.92343pt>
 File: assets/extension_naturales_semantica.png Graphic file (type png)
 <use assets/extension_naturales_semantica.png>
 Package pdftex.def Info: assets/extension_naturales_semantica.png  used on input line 1583.
 (pdftex.def)             Requested size: 432.48355pt x 242.76357pt.
-<assets/macros.png, id=895, 903.375pt x 123.46124pt>
+<assets/macros.png, id=899, 903.375pt x 123.46124pt>
 File: assets/macros.png Graphic file (type png)
 <use assets/macros.png>
 Package pdftex.def Info: assets/macros.png  used on input line 1590.
 (pdftex.def)             Requested size: 432.48355pt x 59.10623pt.
+<assets/forma_normal.png, id=900, 892.08281pt x 487.8225pt>
+File: assets/forma_normal.png Graphic file (type png)
+<use assets/forma_normal.png>
+Package pdftex.def Info: assets/forma_normal.png  used on input line 1594.
+(pdftex.def)             Requested size: 432.48355pt x 236.49686pt.
  [39 <./assets/extension_naturales.png> <./assets/extension_naturales_semantica.png> <./assets/macros.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 1603--1604
+Underfull \hbox (badness 10000) in paragraph at lines 1608--1609
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1605--1606
+Underfull \hbox (badness 10000) in paragraph at lines 1610--1611
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1607--1608
+Underfull \hbox (badness 10000) in paragraph at lines 1612--1613
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1612--1614
+Underfull \hbox (badness 10000) in paragraph at lines 1617--1619
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1615--1616
+Underfull \hbox (badness 10000) in paragraph at lines 1620--1621
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1617--1618
+Underfull \hbox (badness 10000) in paragraph at lines 1622--1623
 
  []
 
-<assets/abb_haskell.jpg, id=902, 1133.23375pt x 842.14626pt>
+[40 <./assets/forma_normal.png>]
+<assets/abb_haskell.jpg, id=913, 1133.23375pt x 842.14626pt>
 File: assets/abb_haskell.jpg Graphic file (type jpg)
 <use assets/abb_haskell.jpg>
-Package pdftex.def Info: assets/abb_haskell.jpg  used on input line 1636.
+Package pdftex.def Info: assets/abb_haskell.jpg  used on input line 1641.
 (pdftex.def)             Requested size: 270.3012pt x 200.85992pt.
-[40]
-Overfull \hbox (0.33644pt too wide) in paragraph at lines 1640--1644
+
+Overfull \hbox (0.33644pt too wide) in paragraph at lines 1645--1649
 []\OT1/cmr/m/n/10 Digamos que ne-ce-si-ta-mos cu-rri-fi-car una fun-ci^^Son que re-ci-be una tu-pla de ele-men-tos. Es de-cir, al-go as^^S^^P: $\OML/cmm/m/it/10 suma \OT1/cmr/m/n/10 :: (\OML/cmm/m/it/10 Int; Int\OT1/cmr/m/n/10 )\OMS/cmsy/m/n/10 ^^@ \OML/cmm/m/it/10 >
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1657--1658
+Underfull \hbox (badness 10000) in paragraph at lines 1662--1663
 
  []
 
 [41 <./assets/abb_haskell.jpg>]
-<assets/armar_pares_2.jpg, id=930, 1284.8pt x 806.01125pt>
+<assets/armar_pares_2.jpg, id=935, 1284.8pt x 806.01125pt>
 File: assets/armar_pares_2.jpg Graphic file (type jpg)
 <use assets/armar_pares_2.jpg>
-Package pdftex.def Info: assets/armar_pares_2.jpg  used on input line 1700.
+Package pdftex.def Info: assets/armar_pares_2.jpg  used on input line 1705.
 (pdftex.def)             Requested size: 486.53883pt x 305.22977pt.
  [42 <./assets/armar_pares_2.jpg>]
-Overfull \hbox (25.57738pt too wide) in paragraph at lines 1736--1737
+Overfull \hbox (25.57738pt too wide) in paragraph at lines 1741--1742
 []\OT1/cmr/m/n/10 ?`Puede ha-cer-se al-go me-jor? No. Es-to es el equi-va-len-te a un len-gua-je im-pe-ra-ti-vo ha-cer do-bla-rE-le-men-tos(filtrarPares(lista)) 
  []
 
 [43]
-Overfull \hbox (8.3642pt too wide) in paragraph at lines 1798--1799
+Overfull \hbox (8.3642pt too wide) in paragraph at lines 1803--1804
 []\OT1/cmr/m/n/10 3. Por ^^Sulti-mo, pa-ra apli-car a to-dos los ele-men-tos de la lis-ta po-de-mos usar map de la si-guien-te for-ma: $\OML/cmm/m/it/10 map \OT1/cmr/m/n/10 (\OML/cmm/m/it/10 uncurryf\OT1/cmr/m/n/10 )(\OML/cmm/m/it/10 lista\OT1/cmr/m/n/10 )$ 
  []
 
 [44]
-Underfull \hbox (badness 10000) in paragraph at lines 1823--1824
+Underfull \hbox (badness 10000) in paragraph at lines 1828--1829
 
  []
 
-<assets/arbol_sintatico.jpg, id=997, 871.255pt x 1606.0pt>
+<assets/arbol_sintatico.jpg, id=1002, 871.255pt x 1606.0pt>
 File: assets/arbol_sintatico.jpg Graphic file (type jpg)
 <use assets/arbol_sintatico.jpg>
-Package pdftex.def Info: assets/arbol_sintatico.jpg  used on input line 1861.
+Package pdftex.def Info: assets/arbol_sintatico.jpg  used on input line 1866.
 (pdftex.def)             Requested size: 324.36473pt x 597.88655pt.
 [45]
 
@@ -1061,20 +1067,20 @@ L3 programming layer <2024-03-14>
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `plp.out' has not changed.
-(rerunfilecheck)             Checksum: DCEE04117486D43472D38796552EAE47;5738.
+(rerunfilecheck)             Checksum: C3458612E7A675F6CEEFD40143198EE9;6015.
  ) 
 Here is how much of TeX's memory you used:
- 44104 strings out of 474423
- 1006334 string characters out of 5742662
- 2314496 words of memory out of 5000000
- 65265 multiletter control sequences out of 15000+600000
+ 44114 strings out of 474423
+ 1006600 string characters out of 5742662
+ 2299496 words of memory out of 5000000
+ 65274 multiletter control sequences out of 15000+600000
  568820 words of font info for 77 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,10n,93p,617b,1951s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,10n,93p,649b,1946s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\Tom\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcbx1440.pk> <C:\Users\Tom\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1000.pk><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msam10.pfb><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on plp.pdf (46 pages, 2405305 bytes).
+Output written on plp.pdf (46 pages, 2496992 bytes).
 PDF statistics:
- 1247 PDF objects out of 1440 (max. 8388607)
- 716 named destinations out of 1000 (max. 500000)
- 440 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1252 PDF objects out of 1440 (max. 8388607)
+ 717 named destinations out of 1000 (max. 500000)
+ 453 words of extra memory for PDF output out of 10000 (max. 10000000)
 
