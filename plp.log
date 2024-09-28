@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.3.31) (preloaded format=pdflatex 2024.4.13)  26 SEP 2024 20:18
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.3.31) (preloaded format=pdflatex 2024.4.13)  26 SEP 2024 21:26
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -891,17 +891,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 1325--1326
  []
 
 [30]
-Underfull \hbox (badness 10000) in paragraph at lines 1385--1388
+Underfull \hbox (badness 10000) in paragraph at lines 1386--1389
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1408--1413
+Underfull \hbox (badness 10000) in paragraph at lines 1409--1414
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1422--1423
+Underfull \hbox (badness 10000) in paragraph at lines 1423--1424
 
  []
 
@@ -909,101 +909,101 @@ Underfull \hbox (badness 10000) in paragraph at lines 1422--1423
 <assets/tipado.jpg, id=855, 1606.0pt x 617.30624pt>
 File: assets/tipado.jpg Graphic file (type jpg)
 <use assets/tipado.jpg>
-Package pdftex.def Info: assets/tipado.jpg  used on input line 1436.
+Package pdftex.def Info: assets/tipado.jpg  used on input line 1437.
 (pdftex.def)             Requested size: 540.60239pt x 207.79967pt.
 <assets/sistema_tipos.png, id=856, 807.015pt x 144.54pt>
 File: assets/sistema_tipos.png Graphic file (type png)
 <use assets/sistema_tipos.png>
-Package pdftex.def Info: assets/sistema_tipos.png  used on input line 1441.
+Package pdftex.def Info: assets/sistema_tipos.png  used on input line 1442.
 (pdftex.def)             Requested size: 540.60239pt x 96.82584pt.
 <assets/tipado_operaciones2.png, id=857, 497.60907pt x 300.3722pt>
 File: assets/tipado_operaciones2.png Graphic file (type png)
 <use assets/tipado_operaciones2.png>
-Package pdftex.def Info: assets/tipado_operaciones2.png  used on input line 1454.
+Package pdftex.def Info: assets/tipado_operaciones2.png  used on input line 1455.
 (pdftex.def)             Requested size: 378.42001pt x 228.43188pt.
  [32 <./assets/tipado.jpg> <./assets/sistema_tipos.png>]
 <assets/tipado_operaciones.jpg, id=864, 1167.36125pt x 933.4875pt>
 File: assets/tipado_operaciones.jpg Graphic file (type jpg)
 <use assets/tipado_operaciones.jpg>
-Package pdftex.def Info: assets/tipado_operaciones.jpg  used on input line 1489.
+Package pdftex.def Info: assets/tipado_operaciones.jpg  used on input line 1490.
 (pdftex.def)             Requested size: 432.48355pt x 345.84077pt.
  [33 <./assets/tipado_operaciones2.png>]
 <assets/tipado_condicional.jpg, id=870, 1284.8pt x 444.66125pt>
 File: assets/tipado_condicional.jpg Graphic file (type jpg)
 <use assets/tipado_condicional.jpg>
-Package pdftex.def Info: assets/tipado_condicional.jpg  used on input line 1492.
+Package pdftex.def Info: assets/tipado_condicional.jpg  used on input line 1493.
 (pdftex.def)             Requested size: 432.48355pt x 149.67656pt.
 <assets/alfa_reduccion.jpg, id=871, 1284.8pt x 956.57375pt>
 File: assets/alfa_reduccion.jpg Graphic file (type jpg)
 <use assets/alfa_reduccion.jpg>
-Package pdftex.def Info: assets/alfa_reduccion.jpg  used on input line 1499.
+Package pdftex.def Info: assets/alfa_reduccion.jpg  used on input line 1500.
 (pdftex.def)             Requested size: 486.53883pt x 362.24654pt.
  [34 <./assets/tipado_operaciones.jpg> <./assets/tipado_condicional.jpg>] [35 <./assets/alfa_reduccion.jpg>]
 <assets/reglas_congruencia_computo.png, id=881, 977.90344pt x 350.05782pt>
 File: assets/reglas_congruencia_computo.png Graphic file (type png)
 <use assets/reglas_congruencia_computo.png>
-Package pdftex.def Info: assets/reglas_congruencia_computo.png  used on input line 1540.
+Package pdftex.def Info: assets/reglas_congruencia_computo.png  used on input line 1541.
 (pdftex.def)             Requested size: 486.53883pt x 174.16849pt.
 <assets/semantica-operacional-ej.jpg, id=882, 1204.5pt x 1427.3325pt>
 File: assets/semantica-operacional-ej.jpg Graphic file (type jpg)
 <use assets/semantica-operacional-ej.jpg>
-Package pdftex.def Info: assets/semantica-operacional-ej.jpg  used on input line 1548.
+Package pdftex.def Info: assets/semantica-operacional-ej.jpg  used on input line 1549.
 (pdftex.def)             Requested size: 486.53883pt x 576.54195pt.
  [36 <./assets/reglas_congruencia_computo.png>]
 <assets/def_sustitucion.png, id=887, 667.74469pt x 408.77719pt>
 File: assets/def_sustitucion.png Graphic file (type png)
 <use assets/def_sustitucion.png>
-Package pdftex.def Info: assets/def_sustitucion.png  used on input line 1554.
+Package pdftex.def Info: assets/def_sustitucion.png  used on input line 1555.
 (pdftex.def)             Requested size: 432.48355pt x 264.76016pt.
  [37 <./assets/semantica-operacional-ej.jpg>]
 <assets/extension_naturales.png, id=893, 830.35219pt x 365.86688pt>
 File: assets/extension_naturales.png Graphic file (type png)
 <use assets/extension_naturales.png>
-Package pdftex.def Info: assets/extension_naturales.png  used on input line 1579.
+Package pdftex.def Info: assets/extension_naturales.png  used on input line 1580.
 (pdftex.def)             Requested size: 432.48355pt x 190.55891pt.
  [38 <./assets/def_sustitucion.png>]
 <assets/extension_naturales_semantica.png, id=898, 797.98125pt x 447.92343pt>
 File: assets/extension_naturales_semantica.png Graphic file (type png)
 <use assets/extension_naturales_semantica.png>
-Package pdftex.def Info: assets/extension_naturales_semantica.png  used on input line 1583.
+Package pdftex.def Info: assets/extension_naturales_semantica.png  used on input line 1584.
 (pdftex.def)             Requested size: 432.48355pt x 242.76357pt.
 <assets/macros.png, id=899, 903.375pt x 123.46124pt>
 File: assets/macros.png Graphic file (type png)
 <use assets/macros.png>
-Package pdftex.def Info: assets/macros.png  used on input line 1590.
+Package pdftex.def Info: assets/macros.png  used on input line 1591.
 (pdftex.def)             Requested size: 432.48355pt x 59.10623pt.
 <assets/forma_normal.png, id=900, 892.08281pt x 487.8225pt>
 File: assets/forma_normal.png Graphic file (type png)
 <use assets/forma_normal.png>
-Package pdftex.def Info: assets/forma_normal.png  used on input line 1594.
+Package pdftex.def Info: assets/forma_normal.png  used on input line 1595.
 (pdftex.def)             Requested size: 432.48355pt x 236.49686pt.
  [39 <./assets/extension_naturales.png> <./assets/extension_naturales_semantica.png> <./assets/macros.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 1610--1611
+Underfull \hbox (badness 10000) in paragraph at lines 1611--1612
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1612--1613
+Underfull \hbox (badness 10000) in paragraph at lines 1613--1614
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1614--1615
+Underfull \hbox (badness 10000) in paragraph at lines 1615--1616
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1619--1621
+Underfull \hbox (badness 10000) in paragraph at lines 1620--1622
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1622--1623
+Underfull \hbox (badness 10000) in paragraph at lines 1623--1624
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1624--1625
+Underfull \hbox (badness 10000) in paragraph at lines 1625--1626
 
  []
 
@@ -1011,15 +1011,15 @@ Underfull \hbox (badness 10000) in paragraph at lines 1624--1625
 <assets/abb_haskell.jpg, id=913, 1133.23375pt x 842.14626pt>
 File: assets/abb_haskell.jpg Graphic file (type jpg)
 <use assets/abb_haskell.jpg>
-Package pdftex.def Info: assets/abb_haskell.jpg  used on input line 1643.
+Package pdftex.def Info: assets/abb_haskell.jpg  used on input line 1644.
 (pdftex.def)             Requested size: 270.3012pt x 200.85992pt.
 
-Overfull \hbox (0.33644pt too wide) in paragraph at lines 1647--1651
+Overfull \hbox (0.33644pt too wide) in paragraph at lines 1648--1652
 []\OT1/cmr/m/n/10 Digamos que ne-ce-si-ta-mos cu-rri-fi-car una fun-ci^^Son que re-ci-be una tu-pla de ele-men-tos. Es de-cir, al-go as^^S^^P: $\OML/cmm/m/it/10 suma \OT1/cmr/m/n/10 :: (\OML/cmm/m/it/10 Int; Int\OT1/cmr/m/n/10 )\OMS/cmsy/m/n/10 ^^@ \OML/cmm/m/it/10 >
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1664--1665
+Underfull \hbox (badness 10000) in paragraph at lines 1665--1666
 
  []
 
@@ -1027,27 +1027,27 @@ Underfull \hbox (badness 10000) in paragraph at lines 1664--1665
 <assets/armar_pares_2.jpg, id=929, 1284.8pt x 806.01125pt>
 File: assets/armar_pares_2.jpg Graphic file (type jpg)
 <use assets/armar_pares_2.jpg>
-Package pdftex.def Info: assets/armar_pares_2.jpg  used on input line 1707.
+Package pdftex.def Info: assets/armar_pares_2.jpg  used on input line 1708.
 (pdftex.def)             Requested size: 486.53883pt x 305.22977pt.
  [42 <./assets/armar_pares_2.jpg>]
-Overfull \hbox (25.57738pt too wide) in paragraph at lines 1743--1744
+Overfull \hbox (25.57738pt too wide) in paragraph at lines 1744--1745
 []\OT1/cmr/m/n/10 ?`Puede ha-cer-se al-go me-jor? No. Es-to es el equi-va-len-te a un len-gua-je im-pe-ra-ti-vo ha-cer do-bla-rE-le-men-tos(filtrarPares(lista)) 
  []
 
 [43]
-Overfull \hbox (8.3642pt too wide) in paragraph at lines 1805--1806
+Overfull \hbox (8.3642pt too wide) in paragraph at lines 1806--1807
 []\OT1/cmr/m/n/10 3. Por ^^Sulti-mo, pa-ra apli-car a to-dos los ele-men-tos de la lis-ta po-de-mos usar map de la si-guien-te for-ma: $\OML/cmm/m/it/10 map \OT1/cmr/m/n/10 (\OML/cmm/m/it/10 uncurryf\OT1/cmr/m/n/10 )(\OML/cmm/m/it/10 lista\OT1/cmr/m/n/10 )$ 
  []
 
 [44]
-Underfull \hbox (badness 10000) in paragraph at lines 1830--1831
+Underfull \hbox (badness 10000) in paragraph at lines 1831--1832
 
  []
 
 <assets/arbol_sintatico.jpg, id=997, 871.255pt x 1606.0pt>
 File: assets/arbol_sintatico.jpg Graphic file (type jpg)
 <use assets/arbol_sintatico.jpg>
-Package pdftex.def Info: assets/arbol_sintatico.jpg  used on input line 1868.
+Package pdftex.def Info: assets/arbol_sintatico.jpg  used on input line 1869.
 (pdftex.def)             Requested size: 324.36473pt x 597.88655pt.
 [45]
 
@@ -1078,7 +1078,7 @@ Here is how much of TeX's memory you used:
  1141 hyphenation exceptions out of 8191
  84i,10n,93p,617b,1946s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\Tom\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcbx1440.pk> <C:\Users\Tom\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1000.pk><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msam10.pfb><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on plp.pdf (46 pages, 2497276 bytes).
+Output written on plp.pdf (46 pages, 2497361 bytes).
 PDF statistics:
  1252 PDF objects out of 1440 (max. 8388607)
  717 named destinations out of 1000 (max. 500000)
