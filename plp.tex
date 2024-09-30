@@ -1597,6 +1597,93 @@ Si quisieramos que siga valiendo el progreso podemos extender la semántica y ag
 (No entendí qué caso es el conflictivo si tuvimos que cambiar de $\lambda x: \sigma . M$ a $\lambda x:\sigma . F$) ¿qué no podíamos hacer antes? \\
 Entiendo que diciendo que tengas $\lambda x:\sigma . F$ estas diciendo que si le metés un input tenés que garantizar que lo que tenga la lambda adentro \textbf{ya sea una forma normal} y sabés que el proceso va a terminar bien. \\
 Si usás $\lambda x: \sigma . M$ tenés el problema de que si le ponés cualquier cosa a M podés llegar a algo que no es reducible y capaz se cuelga? 
+\subsection*{Sistema de Tipos para el Cálculo Lambda}
+\textbf{Aclaración Importante}: En deducción natural hablabamos de $\tau, \sigma$ como hipótesis o proposiciones. Acá en cálculo lambda, esos son tipos. \\
+Ej.: $\tau \rightarrow \sigma$ era una conclusión en deducción natural, acá es el tipo de una lambda. \\
+Entonces ahora sí, veamos el sistema de tipos para el cálculo Lambda omitiendo los booleanos porque son exactamente igual que en deducción natural. \\
+\sd{\Gamma, x:\tau \vdash M:\sigma}{\Gamma \vdash \lambda x: \tau.M: \tau \rightarrow \sigma}{T-ABS ($\rightarrow i$)}
+\sd{}{\Gamma, x: \tau \vdash x:\tau}{T-VAR (ax)}
+\sd{\Gamma \vdash M:\tau \rightarrow \sigma r \vdash N:\tau}{\Gamma \vdash MN:\tau}{T-APP ($\rightarrow$ e)}
+\subsubsection{Lógica Combinatoria}
+Es una variante del calculo $\lambda$. \\
+Si a $\sigma \rightarrow \tau$ lo leemos como $\sigma \implies \tau$ luego, la regla de tipadod e aplicación de una función es la regla Modus Ponens. \\
+\subsection*{Pruebas y Programas}
+En la \textbf{Deducción Natural} hablamos en base a proposiciones, en cálculo lambda, las proposiciones son tipos. \\
+En la \textbf{Deducción Natural} hablamos en base a pruebas, en cálculo lambda, las pruebas son términos. 
+\subsubsection{Juicios Derivables}
+Un juicio $\vdash \tau$ es derivable sí y solo sí, el tipo $\tau$ está habitado, es decir, existe algun camino que nos lleva a demostrar $\tau$. \\
+Como también podemos probar estas cosas en deducción natural, lo hacemos también en cálculo lambda. \\
+\[\begin{minipage}[b]{0.8\textwidth}
+    \includegraphics[width=\linewidth]{assets/juicio_tipado_lambda.jpg}
+\end{minipage}\]
+\textbf{Importante}: Como esto son fórmulas, puede haber muchas pruebas distintas para una misma fórmula. Mirá esta forma de probar lo mismo de antes pero más complicado.
+\[\begin{minipage}[b]{0.8\textwidth}
+    \includegraphics[width=\linewidth]{assets/juicio_tipado_lambda_2.jpg}
+\end{minipage}\]
+\subsubsection{Simplificación de Pruebas}
+Corte: Un corte es un lema que probamos a pesar que \textbf{no es una subfórmula de la afirmación final}. Es decir, no es algo que queramos demostrar en la conclusión pero nos ayuda a seguir adelante. \\
+Se caracteriza por tener pasos como $\implies_{i}$ y luego $\implies_{e}$ o también, $\land_{i}$ y $\land e_{1}$ o $\land e_{2}$. \\
+Básicamente cuando veas una introducción y una eliminación, ahí estás haciendo un corte. \\
+La variable que hacés aparecer aparte es el corte. \\
+En la computación, un paso de reducción $\beta$ (E-APP ABS) se corresponde con una eliminación de corte. 
+\subsubsection{Prueba en Forma Normal}
+Es aquella prueba que no posee ningún tipo de corte. 
+\subsubsection{Normalización de Pruebas}
+Se realiza mediante la eliminación de cortes, es decir, tratar de quitar esos cortes para llevarlo a forma normal. 
+\subsubsection{Conjunción (Producto) en Lambda}
+\[\begin{minipage}[b]{0.6\textwidth}
+    \includegraphics[width=\linewidth]{assets/conjuncion_lambda.jpg}
+\end{minipage}\]
+Veamos ahora como hacer reducciones con productos. 
+\[\begin{minipage}[b]{0.6\textwidth}
+    \includegraphics[width=\linewidth]{assets/producto_corte.jpg}
+\end{minipage}\]
+Nótese que la idea desde un primer momento era quedarse con M $\sigma$. Por lo tanto, el corte es añadir $\tau$.
+\subsubsection{Disyunción (Suma) en Lambda} 
+El corte característico acá es $\lor_{e}$ y luego $\lor_{i}$ mirando desde abajo hacia arriba. 
+\[\begin{minipage}[b]{0.74\textwidth}
+    \includegraphics[width=\linewidth]{assets/disyuncion.jpg}
+\end{minipage}\]
+\subsubsection{Absurdo}
+No existe \textbf{ningún constructor} para el tipo $\bot$ (vacío). 
+\[\begin{minipage}[b]{0.7\textwidth}
+    \includegraphics[width=\linewidth]{assets/absurdo_lambda.jpg}
+\end{minipage}\]
+\subsection*{Correspondencia de Curry-Howard}
+$A_{1},...A_{n} \vdash \sigma$ es derivable en NJ (Logica Intusionista) si $\exists$ término $M$ donde $Fv(M) \subseteq \{x_{1}, ..., x_{n}\}$ tal que $x_{1}:A_{1}, ..., x_{n}:A_{n} \vdash M:\sigma$ \\
+\textbf{En criollo}: Si en Cálculo Lambda tenes términos $x_{1}, ..., x_{n}$ que correspondan a $A_{1}, ..., A_{n}$ uno a uno entonces, lo podés considerar como válido. \\
+Ej.: $P, Q \vdash P \land Q \equiv x:P, y:Q \vdash <x, y>: P \land Q$ donde 
+\begin{itemize}
+    \item $A_{1} = P \ A_{2} = Q$
+    \item $x_{1}:P$ es decir, $x_{1}:A_{1}$
+    \item $x_{2}:Q$ es decir, $x_{2}:A_{2}$
+    \item $\sigma = P \land Q$ pero en cálculo lambda, nuestro término M, es de tipo sigma. $<x,y>:P \land Q$
+\end{itemize}
+\subsubsection{Corolario de Logica Intusionista}
+$\nvdash \bot$: No puedo concluir que hay contradicción, lo que sugiere que mis premisas son consistentes. 
+\subsubsection{Codificación de la Negación}
+$\neg \sigma \equiv \sigma \rightarrow \bot$ \\
+\textbf{Nota}: $\neg_{i} \equiv \implies i $ y $\neg_{e} \equiv \implies e$ \\
+\subsubsection{Tipo Unit}
+También conocida como Fórmula T, es una fórmula válida que siempre es verdadera y es un tipo algebraico con un único constructor T. \\
+En el cálculo $\lambda$ extendemos la sintaxis con el tipo T que tiene un único elemento. 
+\[\begin{minipage}[b]{0.3\textwidth}
+    \includegraphics[width=\linewidth]{assets/extension_lambda_t.png}
+\end{minipage}\]
+Consideramos a la Logica Intusionista extendida con la siguiente regla \\
+\sd{}{\Gamma \vdash T}{$T_{i}$} 
+Y tiene la siguiente regla de tipado en Cálculo $\lambda$ \\
+\sd{}{\Gamma \vdash T:T}{T-UNIT} 
+\subsubsection{Recursión}
+Se utiliza el operador fix: $M ::= ... \ | \ fix \ M$\\
+No se precisa ningún tipo nuevo pero sí una regla de tipado. \\
+\sd{\Gamma \vdash M : \sigma \rightarrow \sigma}{\Gamma \vdash fix \ M : \sigma}{T-FIX} \\
+También extendemos la semántica para poder ir resolviendo las operaciones. 
+\[\begin{minipage}[b]{0.6\textwidth}
+    \includegraphics[width=\linewidth]{assets/fix_recursion.png}
+\end{minipage}\]
+Gracias a fix ahora podemos definir funciones parciales $fix \ (\lambda x: \sigma . x)$ donde $\vdash \ fix \ (\lambda x:\sigma.x):\sigma$ para cualquier $\sigma$. En particular, vale para $\sigma = \bot$ \\
+\textbf{Importante}: No podemos extender la Lógica Intusionista (NJ) con un operador fix pues la lógica sería inconsistente. Ej.: $\vdash \bot$ sería derivable.
 \section*{Anexo}
 \subsection*{Recordando Haskell}
 Para ejecutar un archivo hay que instalar GHCI. Una vez instalado, nos paramos en la terminal en el directorio donde está el archivo que queremos ejecutar. 
