@@ -1578,11 +1578,20 @@ Lo que hay que meterse en la cabeza es que: si no reducimos completamente todo e
     \item Reducir N de M::N
     \item Reducir M del FOLDR. h NO se reduce porque es un valor (cabeza de la lista) y r tampoco, porque r al ser un caso recursivo tiene variables libres. 
 \end{itemize}
+\subsubsection*{¿Cuando reducir y cuando no?}
+\begin{itemize}
+    \item Si tiene variables libres no se reduce. 
+    \item Si es un caso condicional, no se reduce, porque de antemano no sabés en qué casos necesitás reducirlo. Por ejemplo, los CASE, IF o FOLDR no se suelen reducir sus términos (sí las guardas), porque no es necesario gastar cómputo en algo que no se sabe si vamos a usar.
+\end{itemize}
 \subsubsection*{Cantidad de Reglas de Cómputo}
 Todos los valores posibles tienen una regla de Cómputo, usualmente, cada valor va a estar asociada a las posibles operaciones de las reglas de Congruencia. \\
 Siguiendo el ej. anterior, defina los posibles valores del sistema y dé las reglas de cómputo. \\
 Bueno, los posibles valores con listas hay dos: $V::=[]_{\sigma} \ | \ V::V$ \\
 ¿Qué operaciones deberíamos poder realizar con estos valores?: FOLDR con lista vacía, y FOLDR sin una lista vacía. 
+\begin{itemize}
+    \item Si el FOLDR tiene lista vacía entonces devuelve simplemente N.
+    \item Si el FOLDR NO tiene lista vacía, entonces, debo sustituir las variables h y r con la información para el paso recursivo.
+\end{itemize}
 \subsection{Semántica Operacional}
 \[\begin{minipage}[b]{0.9\textwidth}
     \includegraphics[width=\linewidth]{assets/reglas_congruencia_computo.png}

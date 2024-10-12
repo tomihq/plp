@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.7.15)  12 OCT 2024 17:43
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.7.15)  12 OCT 2024 17:47
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1017,208 +1017,208 @@ Package pdftex.def Info: assets/alfa_reduccion.jpg  used on input line 1528.
 <assets/reglas_congruencia_computo.png, id=943, 977.90344pt x 350.05782pt>
 File: assets/reglas_congruencia_computo.png Graphic file (type png)
 <use assets/reglas_congruencia_computo.png>
-Package pdftex.def Info: assets/reglas_congruencia_computo.png  used on input line 1588.
+Package pdftex.def Info: assets/reglas_congruencia_computo.png  used on input line 1597.
 (pdftex.def)             Requested size: 486.53883pt x 174.16849pt.
 <assets/semantica-operacional-ej.jpg, id=944, 1204.5pt x 1427.3325pt>
 File: assets/semantica-operacional-ej.jpg Graphic file (type jpg)
 <use assets/semantica-operacional-ej.jpg>
-Package pdftex.def Info: assets/semantica-operacional-ej.jpg  used on input line 1596.
+Package pdftex.def Info: assets/semantica-operacional-ej.jpg  used on input line 1605.
 (pdftex.def)             Requested size: 486.53883pt x 576.54195pt.
 
 
 [38 <./assets/reglas_congruencia_computo.png>]
 
 [39 <./assets/semantica-operacional-ej.jpg>]
-<assets/def_sustitucion.png, id=955, 667.74469pt x 408.77719pt>
+<assets/def_sustitucion.png, id=956, 667.74469pt x 408.77719pt>
 File: assets/def_sustitucion.png Graphic file (type png)
 <use assets/def_sustitucion.png>
-Package pdftex.def Info: assets/def_sustitucion.png  used on input line 1608.
+Package pdftex.def Info: assets/def_sustitucion.png  used on input line 1617.
 (pdftex.def)             Requested size: 432.48355pt x 264.76016pt.
-<assets/extension_naturales.png, id=956, 830.35219pt x 365.86688pt>
+<assets/extension_naturales.png, id=957, 830.35219pt x 365.86688pt>
 File: assets/extension_naturales.png Graphic file (type png)
 <use assets/extension_naturales.png>
-Package pdftex.def Info: assets/extension_naturales.png  used on input line 1634.
+Package pdftex.def Info: assets/extension_naturales.png  used on input line 1643.
 (pdftex.def)             Requested size: 432.48355pt x 190.55891pt.
 
 
 [40 <./assets/def_sustitucion.png>]
-<assets/extension_naturales_semantica.png, id=961, 797.98125pt x 447.92343pt>
+<assets/extension_naturales_semantica.png, id=962, 797.98125pt x 447.92343pt>
 File: assets/extension_naturales_semantica.png Graphic file (type png)
 <use assets/extension_naturales_semantica.png>
-Package pdftex.def Info: assets/extension_naturales_semantica.png  used on input line 1638.
+Package pdftex.def Info: assets/extension_naturales_semantica.png  used on input line 1647.
 (pdftex.def)             Requested size: 432.48355pt x 242.76357pt.
-<assets/macros.png, id=962, 903.375pt x 123.46124pt>
+<assets/macros.png, id=963, 903.375pt x 123.46124pt>
 File: assets/macros.png Graphic file (type png)
 <use assets/macros.png>
-Package pdftex.def Info: assets/macros.png  used on input line 1645.
+Package pdftex.def Info: assets/macros.png  used on input line 1654.
 (pdftex.def)             Requested size: 432.48355pt x 59.10623pt.
-<assets/forma_normal.png, id=963, 892.08281pt x 487.8225pt>
+<assets/forma_normal.png, id=964, 892.08281pt x 487.8225pt>
 File: assets/forma_normal.png Graphic file (type png)
 <use assets/forma_normal.png>
-Package pdftex.def Info: assets/forma_normal.png  used on input line 1649.
+Package pdftex.def Info: assets/forma_normal.png  used on input line 1658.
 (pdftex.def)             Requested size: 432.48355pt x 236.49686pt.
 
 
 [41 <./assets/extension_naturales.png> <./assets/extension_naturales_semantica.png> <./assets/macros.png>]
-Overfull \hbox (24.81166pt too wide) in paragraph at lines 1655--1661
+Overfull \hbox (24.81166pt too wide) in paragraph at lines 1664--1670
 []   []   []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1655--1661
+Underfull \hbox (badness 10000) in paragraph at lines 1664--1670
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1662--1664
+Underfull \hbox (badness 10000) in paragraph at lines 1671--1673
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1668--1670
+Underfull \hbox (badness 10000) in paragraph at lines 1677--1679
 
  []
 
-<assets/juicio_tipado_lambda.jpg, id=968, 1049.9225pt x 552.0625pt>
+<assets/juicio_tipado_lambda.jpg, id=969, 1049.9225pt x 552.0625pt>
 File: assets/juicio_tipado_lambda.jpg Graphic file (type jpg)
 <use assets/juicio_tipado_lambda.jpg>
-Package pdftex.def Info: assets/juicio_tipado_lambda.jpg  used on input line 1671.
+Package pdftex.def Info: assets/juicio_tipado_lambda.jpg  used on input line 1680.
 (pdftex.def)             Requested size: 432.48355pt x 227.40005pt.
 
 
 [42 <./assets/forma_normal.png>]
-<assets/juicio_tipado_lambda_2.jpg, id=975, 839.135pt x 539.01375pt>
+<assets/juicio_tipado_lambda_2.jpg, id=976, 839.135pt x 539.01375pt>
 File: assets/juicio_tipado_lambda_2.jpg Graphic file (type jpg)
 <use assets/juicio_tipado_lambda_2.jpg>
-Package pdftex.def Info: assets/juicio_tipado_lambda_2.jpg  used on input line 1675.
+Package pdftex.def Info: assets/juicio_tipado_lambda_2.jpg  used on input line 1684.
 (pdftex.def)             Requested size: 432.48355pt x 277.8049pt.
-<assets/conjuncion_lambda.jpg, id=976, 663.47874pt x 610.28pt>
+<assets/conjuncion_lambda.jpg, id=977, 663.47874pt x 610.28pt>
 File: assets/conjuncion_lambda.jpg Graphic file (type jpg)
 <use assets/conjuncion_lambda.jpg>
-Package pdftex.def Info: assets/conjuncion_lambda.jpg  used on input line 1689.
+Package pdftex.def Info: assets/conjuncion_lambda.jpg  used on input line 1698.
 (pdftex.def)             Requested size: 324.36473pt x 298.36003pt.
 
 
 [43 <./assets/juicio_tipado_lambda.jpg> <./assets/juicio_tipado_lambda_2.jpg>]
-<assets/producto_corte.jpg, id=982, 892.33376pt x 318.18875pt>
+<assets/producto_corte.jpg, id=983, 892.33376pt x 318.18875pt>
 File: assets/producto_corte.jpg Graphic file (type jpg)
 <use assets/producto_corte.jpg>
-Package pdftex.def Info: assets/producto_corte.jpg  used on input line 1693.
+Package pdftex.def Info: assets/producto_corte.jpg  used on input line 1702.
 (pdftex.def)             Requested size: 324.36473pt x 115.66454pt.
-<assets/disyuncion.jpg, id=983, 758.835pt x 1284.8pt>
+<assets/disyuncion.jpg, id=984, 758.835pt x 1284.8pt>
 File: assets/disyuncion.jpg Graphic file (type jpg)
 <use assets/disyuncion.jpg>
-Package pdftex.def Info: assets/disyuncion.jpg  used on input line 1699.
+Package pdftex.def Info: assets/disyuncion.jpg  used on input line 1708.
 (pdftex.def)             Requested size: 400.04872pt x 677.33356pt.
 
 
 [44 <./assets/conjuncion_lambda.jpg> <./assets/producto_corte.jpg>]
-<assets/absurdo_lambda.jpg, id=988, 581.17125pt x 285.065pt>
+<assets/absurdo_lambda.jpg, id=989, 581.17125pt x 285.065pt>
 File: assets/absurdo_lambda.jpg Graphic file (type jpg)
 <use assets/absurdo_lambda.jpg>
-Package pdftex.def Info: assets/absurdo_lambda.jpg  used on input line 1704.
+Package pdftex.def Info: assets/absurdo_lambda.jpg  used on input line 1713.
 (pdftex.def)             Requested size: 378.42001pt x 185.61627pt.
 
 
 [45 <./assets/disyuncion.jpg>]
-Underfull \hbox (badness 10000) in paragraph at lines 1719--1721
+Underfull \hbox (badness 10000) in paragraph at lines 1728--1730
 
  []
 
-<assets/extension_lambda_t.png, id=993, 277.035pt x 67.0003pt>
+<assets/extension_lambda_t.png, id=994, 277.035pt x 67.0003pt>
 File: assets/extension_lambda_t.png Graphic file (type png)
 <use assets/extension_lambda_t.png>
-Package pdftex.def Info: assets/extension_lambda_t.png  used on input line 1725.
+Package pdftex.def Info: assets/extension_lambda_t.png  used on input line 1734.
 (pdftex.def)             Requested size: 162.18236pt x 39.22311pt.
 
 
 [46 <./assets/absurdo_lambda.jpg> <./assets/extension_lambda_t.png>]
-<assets/fix_recursion.png, id=999, 523.9575pt x 179.92218pt>
+<assets/fix_recursion.png, id=1000, 523.9575pt x 179.92218pt>
 File: assets/fix_recursion.png Graphic file (type png)
 <use assets/fix_recursion.png>
-Package pdftex.def Info: assets/fix_recursion.png  used on input line 1737.
+Package pdftex.def Info: assets/fix_recursion.png  used on input line 1746.
 (pdftex.def)             Requested size: 324.36473pt x 111.38586pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 1752--1753
+Underfull \hbox (badness 10000) in paragraph at lines 1761--1762
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1754--1755
+Underfull \hbox (badness 10000) in paragraph at lines 1763--1764
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1756--1757
+Underfull \hbox (badness 10000) in paragraph at lines 1765--1766
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1761--1763
+Underfull \hbox (badness 10000) in paragraph at lines 1770--1772
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1764--1765
+Underfull \hbox (badness 10000) in paragraph at lines 1773--1774
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1766--1767
+Underfull \hbox (badness 10000) in paragraph at lines 1775--1776
 
  []
 
 
 
 [47 <./assets/fix_recursion.png>]
-<assets/abb_haskell.jpg, id=1008, 1133.23375pt x 842.14626pt>
+<assets/abb_haskell.jpg, id=1009, 1133.23375pt x 842.14626pt>
 File: assets/abb_haskell.jpg Graphic file (type jpg)
 <use assets/abb_haskell.jpg>
-Package pdftex.def Info: assets/abb_haskell.jpg  used on input line 1785.
+Package pdftex.def Info: assets/abb_haskell.jpg  used on input line 1794.
 (pdftex.def)             Requested size: 270.3012pt x 200.85992pt.
 
-Overfull \hbox (0.33644pt too wide) in paragraph at lines 1789--1793
+Overfull \hbox (0.33644pt too wide) in paragraph at lines 1798--1802
 []\OT1/cmr/m/n/10 Digamos que ne-ce-si-ta-mos cu-rri-fi-car una fun-ci^^Son que re-ci-be una tu-pla de ele-men-tos. Es de-cir, al-go as^^S^^P: $\OML/cmm/m/it/10 suma \OT1/cmr/m/n/10 :: (\OML/cmm/m/it/10 Int; Int\OT1/cmr/m/n/10 )\OMS/cmsy/m/n/10 ^^@ \OML/cmm/m/it/10 >
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1806--1807
+Underfull \hbox (badness 10000) in paragraph at lines 1815--1816
 
  []
 
 
 
 [48 <./assets/abb_haskell.jpg>]
-<assets/armar_pares_2.jpg, id=1030, 1284.8pt x 806.01125pt>
+<assets/armar_pares_2.jpg, id=1031, 1284.8pt x 806.01125pt>
 File: assets/armar_pares_2.jpg Graphic file (type jpg)
 <use assets/armar_pares_2.jpg>
-Package pdftex.def Info: assets/armar_pares_2.jpg  used on input line 1849.
+Package pdftex.def Info: assets/armar_pares_2.jpg  used on input line 1858.
 (pdftex.def)             Requested size: 486.53883pt x 305.22977pt.
 
 
 [49 <./assets/armar_pares_2.jpg>]
-Overfull \hbox (25.57738pt too wide) in paragraph at lines 1885--1886
+Overfull \hbox (25.57738pt too wide) in paragraph at lines 1894--1895
 []\OT1/cmr/m/n/10 ?`Puede ha-cer-se al-go me-jor? No. Es-to es el equi-va-len-te a un len-gua-je im-pe-ra-ti-vo ha-cer do-bla-rE-le-men-tos(filtrarPares(lista)) 
  []
 
 
 
 [50]
-Overfull \hbox (8.3642pt too wide) in paragraph at lines 1947--1948
+Overfull \hbox (8.3642pt too wide) in paragraph at lines 1956--1957
 []\OT1/cmr/m/n/10 3. Por ^^Sulti-mo, pa-ra apli-car a to-dos los ele-men-tos de la lis-ta po-de-mos usar map de la si-guien-te for-ma: $\OML/cmm/m/it/10 map \OT1/cmr/m/n/10 (\OML/cmm/m/it/10 uncurryf\OT1/cmr/m/n/10 )(\OML/cmm/m/it/10 lista\OT1/cmr/m/n/10 )$ 
  []
 
 
 
 [51]
-Underfull \hbox (badness 10000) in paragraph at lines 1972--1973
+Underfull \hbox (badness 10000) in paragraph at lines 1981--1982
 
  []
 
-<assets/arbol_sintatico.jpg, id=1097, 871.255pt x 1606.0pt>
+<assets/arbol_sintatico.jpg, id=1098, 871.255pt x 1606.0pt>
 File: assets/arbol_sintatico.jpg Graphic file (type jpg)
 <use assets/arbol_sintatico.jpg>
-Package pdftex.def Info: assets/arbol_sintatico.jpg  used on input line 2010.
+Package pdftex.def Info: assets/arbol_sintatico.jpg  used on input line 2019.
 (pdftex.def)             Requested size: 324.36473pt x 597.88655pt.
 
 
@@ -1245,17 +1245,17 @@ Package rerunfilecheck Info: File `plp.out' has not changed.
 (rerunfilecheck)             Checksum: 827A61C755CACB52A8BADA17DA87A51B;8218.
  ) 
 Here is how much of TeX's memory you used:
- 44640 strings out of 473904
- 1020159 string characters out of 5726600
+ 44641 strings out of 473904
+ 1020171 string characters out of 5726600
  2347908 words of memory out of 5000000
  66290 multiletter control sequences out of 15000+600000
  568820 words of font info for 77 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  84i,10n,93p,624b,1945s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\tomas\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcbx1440.pk> <C:\Users\tomas\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1000.pk><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msam10.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on plp.pdf (53 pages, 2794805 bytes).
+Output written on plp.pdf (53 pages, 2795437 bytes).
 PDF statistics:
- 1353 PDF objects out of 1440 (max. 8388607)
- 746 named destinations out of 1000 (max. 500000)
+ 1354 PDF objects out of 1440 (max. 8388607)
+ 747 named destinations out of 1000 (max. 500000)
  589 words of extra memory for PDF output out of 10000 (max. 10000000)
 
