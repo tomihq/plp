@@ -17,12 +17,14 @@ predecesor = substract 1
 {- Aplicacion: evaluarEnCero (\x -> x+2 == 0) -}
 evaluarEnCero :: (Float -> b) -> b
 evaluarEnCero = \f -> f 0
-{- \f es basicamente (\x -> x+2 == 0). El parámetro x que recibe es el 0 que se envía a f en evaluarCero. -}
+{- \f es basicamente (\x -> x+2 == 0). El parámetro x que recibe 
+es el 0 que se envía a f en evaluarCero. -}
 
 {- dosVeces :: (a -> a) -> (a->a)
 dosVeces f = \x -> f (f x)  -}
 
-{-Pto B: Las no currificadas las paso a curry. Yo entiendo como que las funciones currificadas te dejan mas libertad de aplicarla parcialmente. -}
+{-Pto B: Las no currificadas las paso a curry. Yo entiendo como que 
+las funciones currificadas te dejan mas libertad de aplicarla parcialmente. -}
 max2Curry :: Float -> Float -> Float 
 max2Curry x y | x >= y = x
               | otherwise = y
@@ -124,7 +126,8 @@ sumaAltDer = foldl (flip (-)) 0
 
 {-5. La segunda es recursion estructural-}
 entrelazar :: [a] -> [a] -> [a]
-entrelazar = foldr(\x rec -> (\ys -> if null ys then x:rec [] else x:head ys: rec (tail ys))) id {-importantisimo el caso base: acá no es vacío sino la funcion id si es vacio.-}
+entrelazar = foldr(\x rec -> (\ys -> if null ys then x:rec [] else x:head ys: rec (tail ys))) id 
+{-importantisimo el caso base: acá no es vacío sino la funcion id si es vacio.-}
 
 recr :: (a -> [a] -> b -> b) -> b -> [a] -> b
 recr _ z [] = z
@@ -132,28 +135,40 @@ recr f z (x : xs) = f x xs (recr f z xs)
 
 {- 6a -}
 sacarUna :: (Eq a) => a -> [a] -> [a]
-sacarUna n = recr(\x xs rec  -> if x==n then xs else x:rec) [] {- recordar que siempre armo una nueva lista, entonces sacarlo seria no ponerlo-}
-{- Sacar una no se puede implementar con recursión estructural pues acá necesito utilizar la cola de la lista en un lugar que no es el propio llamado recursivo. -}
+sacarUna n = recr(\x xs rec  -> if x==n then xs else x:rec) [] 
+{- recordar que siempre armo una nueva lista, entonces sacarlo seria no ponerlo-}
+{- Sacar una no se puede implementar con recursión estructural pues acá 
+necesito utilizar la cola de la lista 
+en un lugar que no es el propio llamado recursivo. -}
 
 sacarTodos :: (Eq a) => a -> [a] -> [a]
 sacarTodos n = foldr(\x rec -> if x /= n then x:rec else rec) []
 
 insertarOrdenado :: (Ord a) => a -> [a] -> [a]
-insertarOrdenado n = foldr(\x rec -> if n<=x then n:x:rec else x:rec) [] {-recordar que siempre armo una nueva lista, si encuentro el valor primero pongo el menor, luego el del paso recursivo y luego la cola -}
+insertarOrdenado n = foldr(\x rec -> if n<=x then n:x:rec else x:rec) [] 
+{-recordar que siempre armo una 
+nueva lista, si encuentro el valor primero pongo el menor, luego el del paso 
+recursivo y luego la cola -}
 
 genLista :: a -> (a->a) -> Integer -> [a]
-genLista i f n = take (fromIntegral n) (iterate f i) {- iterate f i empieza una lista desde i y le aplica f: iterate (\x -> x+2) [1, 3, 5, 7] take hace un prevent de infinity. -}
+genLista i f n = take (fromIntegral n) (iterate f i) {- iterate f i empieza una 
+lista desde i y le 
+aplica f: iterate (\x -> x+2) [1, 3, 5, 7] take hace un prevent de infinity. -}
 
 desdeHasta ::  Integer -> Integer -> [Integer]
 desdeHasta n m = genLista n succ (m - n + 1) 
 
 {-mapPares:
-    Necesito una funcion map que tome dos argumentos (pueden ser o no el mismo tipo a b y lo transforma en un tipo c)
-    Luego necesito tomar una lista de pares del tipo que recibira el map (a, b) y luego devuelvo transformados en el tipo c.
+    Necesito una funcion map que tome dos argumentos (pueden ser o no el mismo tipo 
+    a b y lo transforma en un tipo c)
+    Luego necesito tomar una lista de pares del tipo que recibira el map (a, b) y 
+    luego devuelvo transformados en el tipo c.
 
 -}
 mapPares :: (a -> b -> c) -> [(a, b)] -> [c]
-mapPares f = map (uncurry f) {-mapPares (\x y -> (x+1, y+2)) [(1, 2), (3, 4)]. Nota: usamos uncurry adentro del map porque los argumentos que vamos a aplicar estan como tuplas. -}
+mapPares f = map (uncurry f) {-mapPares (\x y -> (x+1, y+2)) [(1, 2), (3, 4)]. 
+Nota: usamos uncurry adentro del map porque los argumentos que vamos a aplicar 
+estan como tuplas. -}
 
 armarPares :: [a] -> [b] -> [(a, b)]
 armarPares _ [] = []
@@ -161,18 +176,27 @@ armarPares [] _ = []
 armarPares (x:xs) (y:ys) = (x, y) : armarPares xs ys 
 
 {-
-    Foldr: Solo puede recorrer una lista a la vez. Es importante saber que si nosotros mandamos más de un argumento que no entre dentro del foldr, esos argumentos tendrán que ir dentro del acumulador del caso recursivo.
+    Foldr: Solo puede recorrer una lista a la vez. Es importante saber que si 
+    nosotros mandamos más de un argumento que no entre dentro del foldr, esos argumentos 
+    tendrán que ir dentro del acumulador del caso recursivo.
     
 
-    Es decir, en este ejercicio tenemos [a] -> [b] -> [(a, b)]. El foldr hace recursion sobre [a] pero ¿qué pasa con [b]? En este caso el caso recursivo espera que se envie por parámetro una lista [b]. Por lo tanto el tipo de rec es [b] -> [(a, b)]
+    Es decir, en este ejercicio tenemos [a] -> [b] -> [(a, b)]. El foldr hace 
+    recursion sobre [a] pero ¿qué pasa con [b]? En este caso el caso recursivo 
+    espera que se envie por parámetro una lista [b]. Por lo tanto el tipo de rec es [b] -> [(a, b)]
 
-    Por lo tanto, en este caso podemos ir "recorriendo" ambas listas al mismo tiempo porque podemos manipular la cabeza de la segunda lista y la primera a la vez, y como tenemos garantizado que el foldr va recorriendo la primera lista, lo que podemos hacer para ir achicando la segunda es mandar la cola de la segunda lista por argumento de la recursión.
+    Por lo tanto, en este caso podemos ir "recorriendo" ambas listas al mismo 
+    tiempo porque podemos manipular la cabeza de la segunda lista y la primera a la vez, 
+    y como tenemos garantizado que el foldr va recorriendo la primera lista, lo que podemos
+     hacer para ir achicando la segunda es mandar la cola de la segunda lista por 
+    argumento de la recursión.
 -}
 armarParesEst :: [a] -> [b] -> [(a, b)]
 armarParesEst = foldr (\x rec l2 -> if null l2 then [] else (x, head l2) : rec (tail l2))(const [])
 
 armarTriplasEst :: [a] -> [b] -> [c] -> [(a, b, c)]
-armarTriplasEst = foldr(\x rec l2 l3 -> if null l2 then [] else (if null l3 then [] else (x, head l2, head l3):rec (tail l2) (tail l3))) (const (const []))
+armarTriplasEst = foldr(\x rec l2 l3 -> if null l2 then [] else (if null l3 then [] 
+else (x, head l2, head l3):rec (tail l2) (tail l3))) (const (const []))
 
 mapDoble :: (a -> b -> c) -> [a] -> [b] -> [c]
 mapDoble f l r = mapPares f (armarParesEst l r)
@@ -192,7 +216,8 @@ sumaMatCorta f = mapDoble(mapDoble(f))
         1 3  
         2 4 
 
-    Necesito recorrer cada lista, tomando primero el primer elemento hasta la ultima sublista.
+    Necesito recorrer cada lista, tomando primero el primer elemento hasta la 
+    ultima sublista.
     1:[]
     3:[1] = [3, 1] luego reverse [3, 1] = [1, 3]
 
@@ -200,12 +225,14 @@ sumaMatCorta f = mapDoble(mapDoble(f))
     2:[]
     4:[2] = [4, 2] luego reverse [4, 2] = [2, 4]
 -}
-{-Definir y dar el tipo del esquema de recursión foldNat sobre los naturales. Utilizar el tipo Integer de
+{-Definir y dar el tipo del esquema de recursión foldNat sobre los naturales. 
+Utilizar el tipo Integer de
  Haskell
 
  Recordemos la estructura de foldr: (a -> b -> b) -> b -> t a -> b 
  Donde b es el caso base y a es la lista de elementos.
- En este caso yo voy a obtener un numero natural (una función) y otro natural. Esta funcion se aplica entre los dos naturales.
+ En este caso yo voy a obtener un numero natural (una función) y otro natural. 
+ Esta funcion se aplica entre los dos naturales.
  -}
 data Nat = Zero | Succ Nat
 
@@ -223,7 +250,8 @@ potencia n m = foldNat 1 (multiplicacion n) m
 
 data Polinomio a = X | Cte a | Suma (Polinomio a) (Polinomio a) | Prod (Polinomio a) (Polinomio a)
 {-
-Importante: Como tengo 4 constructores del tipo tengo 4 casos que considerar en la recursión. Lo mismo a la hora de probar.
+Importante: Como tengo 4 constructores del tipo tengo 4 casos que 
+considerar en la recursión. Lo mismo a la hora de probar.
 x^2 + 5x + 1 
 (Prod X X)
 (Prod (Cte 5) X)
@@ -234,7 +262,8 @@ x^2 + 5x + 1 = Suma (Suma (Prod X X) (Prod (Cte 5) X)) (Cte 1)
 
 -}
 
-{-foldPoli (1) id (devuelve el mismo valor que tiene en ese lugar) (+) (*) ((Suma (Prod X X) (Prod (Cte 5) X)))-}
+{-foldPoli (1) id (devuelve el mismo valor que tiene en ese lugar) 
+(+) (*) ((Suma (Prod X X) (Prod (Cte 5) X)))-}
 foldPoli :: (b) -> (a -> b) -> (b -> b -> b) -> (b->b->b) -> Polinomio a -> b
 foldPoli fx fcte fsuma fprod pol = case pol of 
                                    x -> fx 
@@ -268,11 +297,16 @@ altura = foldAB(\ri r rd -> 1 + max ri rd) 0
 cantNodos :: AB a -> Integer 
 cantNodos = foldAB (\ri r rd -> 1 + ri + rd) 0
 
-{-Aca uso recursion primitiva porque me basta solamente con hacer un fold de ambos lados e ir comparando con la raiz. Es decir, me voy para un lado u otro segun corresponda. Si tengo que buscar el mayor voy hacia la derecha, si tengo que buscar el min voy hacia la izquierda-}
+{-Aca uso recursion primitiva porque me basta solamente con hacer un fold de ambos lados 
+e ir comparando con la raiz. Es decir, me voy para un lado u otro segun corresponda. 
+Si tengo que buscar el mayor voy hacia la derecha, si tengo que buscar el min voy hacia 
+la izquierda-}
 mejorSegunAB :: (a -> a -> Bool) -> AB a -> a 
 mejorSegunAB f (Bin izq r der) = foldAB(\ri r rd -> if f r ri && f r rd then r else if f ri rd then ri else rd) r (Bin izq r der)
 
-{- En este ejercicio necesito recursion primitiva porque necesito los subarboles izquierdo y derecho con sus valores respectivos para poder comparar con la raiz. -} 
+{- En este ejercicio necesito recursion primitiva porque necesito los subarboles 
+izquierdo 
+y derecho con sus valores respectivos para poder comparar con la raiz. -} 
 esABB :: Ord a => AB a -> Bool 
 esABB = recAB True (\r recIzq recDer ri rd -> menor r recDer && mayor r recIzq && ri && rd) 
     where mayor _ Nil = True 
