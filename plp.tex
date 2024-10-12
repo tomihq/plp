@@ -1566,7 +1566,7 @@ La semántica operacional predica sobre \textbf{juicios de evaluación}: $M \rig
 \subsubsection{Valores}
 Los valores son los posibles resultados de evaluar programas: $V::=true \ |\ false \ | \ \lambda x: \tau.M$ \\
 Los valores ya tienen todos sus parámetros completamente reducidos, de lo contrario, no serían valores. \\
-\textbf{Ej.}: $V::= \dots | Nil | Bin(V, V, V)$ corresponde a los valores de trabajar con un árbol binario. 
+\textbf{Ej.}: $V ::= \ \dots \ | \ Nil \ | \ Bin(V, V, V)$ corresponde a los valores de trabajar con un árbol binario. 
 \subsubsection*{Cantidad de Reglas de Congruencia}
 Suele ser una de reducción por cada término, pero es importante recalcar que si un término tiene más de un parámetro (sin variables libres) entonces ese término tiene más de una regla de reducción. \\
 A su vez, hay que hacer hincapié en por qué resalté el \textbf{sin variables libres}. Esto es porque los términos que tienen variables libres no se reducen, sino que solamente se sustituyen porque no son términos cerrados. \\
