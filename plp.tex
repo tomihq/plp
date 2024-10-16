@@ -666,7 +666,19 @@ Sea $e1 = e2$ una ecuación del programa. Las siguientes operaciones preservan l
 \end{minipage}\]
 \section*{Inducción Estructural}
 Cada tipo de datos tiene su propio principio de inducción. \\
-\textbf{Importante}: El . acá cumple el rol del () en el $\forall$ es decir $\forall x :: Bool . \mathcal{P} \equiv (\forall x :: Bool)(\mathcal{P}) $ y el $::$ cumple el rol de \textbf{es del tipo...}
+\textbf{Importante}: El . acá cumple el rol del () en el $\forall$ es decir $\forall x :: Bool . \mathcal{P} \equiv (\forall x :: Bool)(\mathcal{P}) $ y el $::$ cumple el rol de \textbf{es del tipo...} \\
+Los constructores de tipo NO recursivos serán los casos base mientras que aquellos constructores recursivos serán las hipótesis inductivas.
+\subsection*{Formas de demostrar}
+Existen 3 formas conocidas de demostrar cosas, por lo menos en la materia lo hacemos de maneras determinadas. Cuando usar una o la otra depende de la experiencia, y no es tan intuitivo saber cuando usar una opción u otra. 
+\begin{itemize}
+    \item Forma Álgebra: Arrancás desarrollando el lado izquierdo de tu TI. Aplicás la HI y tratás de llegar al lado derecho del TI.
+    \item Forma Intermedia: Llegar de ambos lados de la TI a aplicar la HI. Solo funciona si estamos probando \textbf{igualdades}.
+    \item Desarrollando lado derecho en base a contexto: Esta suele ser la opción más coherente en muchos casos. Consiste en desarrollar el TI del lado izquierdo, aplicar la HI y cuando llegamos a algo trivial o que no podemos seguir reduciendo, empezamos a desarrollar el lado derecho de la TI pero asumiendo las hipótesis del lado izquierdo. 
+    \begin{itemize}
+        \item Digamos que del lado izquierdo para aplicar la HI tuvimos que entrar a varios casos, por ejemplo: xs = (z:zs), e == z. Si llegamos a una respuesta trivial del lado izquierdo entonces desarrollamos el lado derecho asumiendo que xs tiene la pinta (z:zs) y efectivamente e == z. Esto nos hará todo mucho más corto.  
+    \end{itemize}
+\end{itemize}
+Estas estrategias, las dejaré en el anexo para que claramente se note su diferencia y ventajas en cada caso. 
 \subsection*{Inducción sobre booleanos}
 Si $\mathcal{P}(True)$ y $\mathcal{P}(False)$ entonces $\forall x :: Bool \ \mathcal{P} (x)$ 
 \[\begin{minipage}[b]{0.7\textwidth}
@@ -726,6 +738,22 @@ Entonces mergesort = insertionSort desde el lado extensional, porque hacen lo mi
 Sean $f, \ g :: a \rightarrow b$. \\
 \textbf{Principio de extensionalidad funcional}: Si $(\forall x :: a)(f \ x  =  g \ x) $ entonces $f=g$ \\
 El ppio. de extensionalidad funcional nos dice que si son funciones son iguales entonces son iguales punto a punto donde las evaluemos.
+\section*{Principio de Extensionalidad}
+Nos permite predicar sobre la forma de algo particular y nos da la ventaja de poder seguir estudiando algo particular y poder sacar ciertas conclusiones. \\
+\textbf{Importante}: Es súper común tener que aplicar este tipo de estrategias durante una demostración varias veces.   
+\subsection*{Principio de Extensionalidad de Booleanos}
+Dada una condición booleana, difurcamos en dos casos: o es verdadero, o es falso. \\
+Ej.: $e == x$ se separa en dos casos 
+\begin{itemize}
+    \item e == x = true 
+    \item e == x = false
+\end{itemize}
+\subsection*{Principio de Extensionalidad sobre Listas}
+Dada una lista, que no sabemos que pinta tiene, podemos predicar sobre ella diciendo que tenemos dos casos 
+\begin{itemize}
+    \item xs = []
+    \item $\exists z::a, z::[a] \ / \ xs = (z:zs)$
+\end{itemize}
 \subsection*{Demostración de Desigualdades}
 ¿Cómo demostramos que no vale una igualdad e1 = e2 :: A? \\
 Entiendo que básicamente hay que encontrar hacer \textbf{ALGO} para demostrar que no son iguales. Este \textbf{ALGO} es una funcionalidad que devuelva algo con uno, y otra cosa con otro. Por lo tanto debería ser del tipo $obs \ a :: A \rightarrow Bool$. \\
@@ -1531,11 +1559,39 @@ Existen tres formas de dar semántica formal
     \item \textbf{Semántica Axiomática}: Establece relaciones lógicas entre el estado del programa antes y después de la ejecución.
 \end{itemize}
 \textbf{Importante}: Nosotros vamos a usar la estrategia de reducción call by value, y nos va a interesar mantener el determinismo de las reglas de reducción.
+\textbf{IMPORTANTÍSIMO}: Cada término \textbf{debe reducirse} a un paso a la vez y con \textbf{una sola elección} de regla semántica. Si existe más de una regla semántica para un paso dado, no es determinista. 
 \subsection{Semántica Operacional}
 \subsubsection{Small-Step}
 La semántica operacional predica sobre \textbf{juicios de evaluación}: $M \rightarrow N$ donde M y N son programas. 
 \subsubsection{Valores}
-Los valores son los posibles resultados de evaluar programas: $V::=true \ |\ false \ | \ \lambda x: \tau.M$ 
+Los valores son los posibles resultados de evaluar programas: $V::=true \ |\ false \ | \ \lambda x: \tau.M$ \\
+Los valores ya tienen todos sus parámetros completamente reducidos, de lo contrario, no serían valores. \\
+\textbf{Ej.}: $V ::= \ \dots \ | \ Nil \ | \ Bin(V, V, V)$ corresponde a los valores de trabajar con un árbol binario. 
+\subsubsection*{Cantidad de Reglas de Congruencia}
+Suele ser una de reducción por cada término, pero es importante recalcar que si un término tiene más de un parámetro (sin variables libres) entonces ese término tiene más de una regla de reducción. \\
+A su vez, hay que hacer hincapié en por qué resalté el \textbf{sin variables libres}. Esto es porque los términos que tienen variables libres no se reducen, sino que solamente se sustituyen porque no son términos cerrados. \\
+Lo que hay que meterse en la cabeza es que: si no reducimos completamente todo en las reglas de congruencia es: porque o nos falta algo, o se van a sustituir en las reglas de cómputo. TODO debe finalizar siendo un valor. \\
+\textbf{Ej.}: Sean $M,N,O :: = \dots \ | \ []_{\sigma} \ | \ M::N \ | \ FOLDR \ M \ BASE \rightarrow N; REC(h,r) \rightarrow O$ \\
+¿Qué reglas de Congruencia existen para estos términos? bueno, tenemos aparentemente 3.
+\begin{itemize}
+    \item Reducir M de M::N
+    \item Reducir N de M::N
+    \item Reducir M del FOLDR. h NO se reduce porque es un valor (cabeza de la lista) y r tampoco, porque r al ser un caso recursivo tiene variables libres. 
+\end{itemize}
+\subsubsection*{¿Cuando reducir y cuando no?}
+\begin{itemize}
+    \item Si tiene variables libres no se reduce. 
+    \item Si es un caso condicional, no se reduce, porque de antemano no sabés en qué casos necesitás reducirlo. Por ejemplo, los CASE, IF o FOLDR no se suelen reducir sus términos (sí las guardas), porque no es necesario gastar cómputo en algo que no se sabe si vamos a usar.
+\end{itemize}
+\subsubsection*{Cantidad de Reglas de Cómputo}
+Todos los valores posibles tienen una regla de Cómputo, usualmente, cada valor va a estar asociada a las posibles operaciones de las reglas de Congruencia. \\
+Siguiendo el ej. anterior, defina los posibles valores del sistema y dé las reglas de cómputo. \\
+Bueno, los posibles valores con listas hay dos: $V::=[]_{\sigma} \ | \ V::V$ \\
+¿Qué operaciones deberíamos poder realizar con estos valores?: FOLDR con lista vacía, y FOLDR sin una lista vacía. 
+\begin{itemize}
+    \item Si el FOLDR tiene lista vacía entonces devuelve simplemente N.
+    \item Si el FOLDR NO tiene lista vacía, entonces, debo sustituir las variables h y r con la información para el paso recursivo.
+\end{itemize}
 \subsection{Semántica Operacional}
 \[\begin{minipage}[b]{0.9\textwidth}
     \includegraphics[width=\linewidth]{assets/reglas_congruencia_computo.png}
@@ -1548,12 +1604,19 @@ Veamos a continuación unos ejemplos
 \[\begin{minipage}[b]{0.9\textwidth}
     \includegraphics[width=\linewidth]{assets/semantica-operacional-ej.jpg}
 \end{minipage}\]
+\subsubsection*{Reglas de Tipado vs Reglas de Semántica}
+\textbf{1}. En las Reglas de Tipado \textbf{existe} el contexto mientras que en las Reglas de Semántica \textbf{no existe}. \\
+La excepción de usar un contexto en las reglas de semántica se da cuando tenemos alguna especie de guarda o un caso donde tenemos que devolver cosas de algún tipo específico, pero sin contexto no tenemos esa información. \\
+\sd{\emptyset \vdash V_{1}:\sigma}{FROM \ V_{1} \ UNTIL_{x} N \ BY \ V_{2} \rightarrow IF \ N \{x:=V_{1}\} \ THEN \ []_{\sigma} \ ELSE \ V_{1}::(FROM \ V_{2}V_{1} \ UNTIL_{x} \ N \ BY \ V_{2})}{} \\
+En este ejemplo podemos ver que como estamos en un lenguaje con \textbf{tipado estricto}, necesitamos que tanto el THEN como el ELSE devuelvan el mismo tipo. Entonces no podemos devolver una lista vacía sin especificar el tipo de sus elementos.  \\
+\textbf{2}. En las Reglas de Semántica no se coloca el tipo de retorno en cada una de las reglas. 
 \subsubsection{Sustitución}
 La operación de sustitución $M\{x:=N\}$ nos devuelve un nuevo término tal que resulta de reemplazar todas las ocurrencias libres de x en M por N. \\
 \textbf{Nota}: Se implementa por pattern matching porque es un constructor recursivo. 
 \[\begin{minipage}[b]{0.8\textwidth}
     \includegraphics[width=\linewidth]{assets/def_sustitucion.png}
 \end{minipage}\]
+\textbf{3.} No existen los axiomas como tal en las Reglas de Semántica. Los valores siempre están ligados ante una operación dada que los utiliza. 
 \subsection{Propiedades de la Evaluación}
 \subsubsection{Teorema (Determinismo)}
 Si $M \rightarrow N_{1}$ y $M \rightarrow N_{2}$ entonces $N_{1} = N_{2}$ \\
