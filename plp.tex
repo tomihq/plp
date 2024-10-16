@@ -1684,6 +1684,45 @@ También extendemos la semántica para poder ir resolviendo las operaciones.
 \end{minipage}\]
 Gracias a fix ahora podemos definir funciones parciales $fix \ (\lambda x: \sigma . x)$ donde $\vdash \ fix \ (\lambda x:\sigma.x):\sigma$ para cualquier $\sigma$. En particular, vale para $\sigma = \bot$ \\
 \textbf{Importante}: No podemos extender la Lógica Intusionista (NJ) con un operador fix pues la lógica sería inconsistente. Ej.: $\vdash \bot$ sería derivable.
+\section*{Inferencia de Tipos}
+\textbf{Términos \textcolor{red}{sin} anotaciones de tipos}: U :: = x | $\textcolor{red}{\lambda x.U}$ | U U | True | False | if U then U else U \\
+\textbf{Términos \textcolor{blue}{con} anotaciones de tipos}: U :: = x | $\textcolor{blue}{\lambda x.M}$ | M M | True | False | if U then U else U
+\subsection*{erase(M)}
+Es el término sin anotaciones de tipos que resulta de borrarlos del término M. El resultado es U. \\
+Ej.: $erase((\lambda x:Bool . x) \ True) = ((\lambda x . x) \ True)$ \\
+Esto nos quiere decir que, si tenemos un término M es fácil conseguir U pero no al revés. 
+\subsection*{¿Cuándo podemos tipar un término U?}
+Un término U sin anotaciones de tipos es tipable sí y solo sí existen: 
+\begin{itemize}
+    \item Un contexto de tipado $\Gamma$
+    \item Un término con anotaciones de tipos M 
+    \item Un tipo $\tau$
+    tales que erase(M) = U y $\Gamma \vdash M:\tau$
+\end{itemize}
+Entonces, el problema de \textbf{inferencia de tipos} consiste en: 
+\begin{itemize}
+    \item Dado un término U determinar si es tipable.
+    \item En caso de que U sea tipable, entonces
+    \begin{itemize}
+        \item Hallar un contexto $\Gamma$, un término $M$ y un tipo $\tau$ tales que cuando hagamos erase(M) = U y $\Gamma \vdash M:\tau$
+    \end{itemize}
+\end{itemize}
+\textbf{En criollo}: Si tengo un U, entonces buscate un M, que tenga contexto, un $\tau$ y que si le mando ese M me da U. \\
+Ej.: $\lambda x . x$ es la función identidad. ¿Cómo podemos tiparla?. De antemano, x podría ser cualquier cosa, una función, un valor, lo que realmente quiera. \\
+Entonces para poder tiparla, necesitamos de antemano, saber en el contexto de qué tipo es x, por lo tanto, podemos decir que $\Gamma \vdash \{x: \alpha\}$. \\
+Ya tenemos entonces $\Gamma$ y $U$. Nos falta conseguir $\tau$ que sería lo que nos falta para poder concluir $\Gamma \vdash M:\tau$. Como es una Lambda que recibe un x, y devuelve un x, entonces el tipo es $\tau:\alpha \rightarrow \alpha$. \\
+Entonces, armamos el término M: $\lambda(x:\alpha) . x$ y podemos chequear ambas condiciones.
+\begin{itemize}
+    \item erase($\lambda(x:\alpha) . x$) = $\lambda x . x$ y esto es verdadero.
+    \item $\Gamma \vdash (\lambda(x:\alpha) . x):\alpha \rightarrow \alpha$
+\end{itemize}
+
+\sd{\Gamma ,x:\alpha \vdash x:\alpha}{\Gamma \vdash (\lambda(x:\alpha) . x):\alpha \rightarrow \alpha}{T-ABS} y es justamente lo que queríamos derivar. \\
+\textbf{Importante}: Solo tipo en M si $\exists$ una lambda. Ej.: $U = x \ True \equiv M = x \ True $ pues no existe ninguna lambda en U. 
+\subsection*{Incorporando incógnitas a los tipos}
+El algoritmo de inferencia de tipos se basa en manipualr tipos \textbf{parcialmente conocidos}. \\
+Ej.: $x \ True$, ¿cómo podemos tiparlo?. Bueno, recordemos que asociamos a la izquierda, por lo tanto sería algo así: $x(True)$ por lo tanto, x debería de ser una función que recibe obligatoriamente un booleano y devuelve un tipo desconocido. Ese tipo desconocido lo denotamos con una variable. \\
+Por lo tanto, el tipo sería: (x: $Bool \rightarrow X_{1}$)
 \section*{Anexo}
 \subsection*{Recordando Haskell}
 Para ejecutar un archivo hay que instalar GHCI. Una vez instalado, nos paramos en la terminal en el directorio donde está el archivo que queremos ejecutar. 

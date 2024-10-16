@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.3.31) (preloaded format=pdflatex 2024.4.13)  30 SEP 2024 00:56
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.3.31) (preloaded format=pdflatex 2024.4.13)  16 OCT 2024 19:49
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1046,84 +1046,84 @@ File: assets/fix_recursion.png Graphic file (type png)
 <use assets/fix_recursion.png>
 Package pdftex.def Info: assets/fix_recursion.png  used on input line 1683.
 (pdftex.def)             Requested size: 324.36473pt x 111.38586pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 1698--1699
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1700--1701
+ [45 <./assets/fix_recursion.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 1737--1738
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1702--1703
+Underfull \hbox (badness 10000) in paragraph at lines 1739--1740
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1707--1709
+Underfull \hbox (badness 10000) in paragraph at lines 1741--1742
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1710--1711
+Underfull \hbox (badness 10000) in paragraph at lines 1746--1748
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1712--1713
+Underfull \hbox (badness 10000) in paragraph at lines 1749--1750
 
  []
 
-[45 <./assets/fix_recursion.png>]
-<assets/abb_haskell.jpg, id=993, 1133.23375pt x 842.14626pt>
+
+Underfull \hbox (badness 10000) in paragraph at lines 1751--1752
+
+ []
+
+[46]
+<assets/abb_haskell.jpg, id=1003, 1133.23375pt x 842.14626pt>
 File: assets/abb_haskell.jpg Graphic file (type jpg)
 <use assets/abb_haskell.jpg>
-Package pdftex.def Info: assets/abb_haskell.jpg  used on input line 1731.
+Package pdftex.def Info: assets/abb_haskell.jpg  used on input line 1770.
 (pdftex.def)             Requested size: 270.3012pt x 200.85992pt.
 
-Overfull \hbox (0.33644pt too wide) in paragraph at lines 1735--1739
+Overfull \hbox (0.33644pt too wide) in paragraph at lines 1774--1778
 []\OT1/cmr/m/n/10 Digamos que ne-ce-si-ta-mos cu-rri-fi-car una fun-ci^^Son que re-ci-be una tu-pla de ele-men-tos. Es de-cir, al-go as^^S^^P: $\OML/cmm/m/it/10 suma \OT1/cmr/m/n/10 :: (\OML/cmm/m/it/10 Int; Int\OT1/cmr/m/n/10 )\OMS/cmsy/m/n/10 ^^@ \OML/cmm/m/it/10 >
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1752--1753
+Underfull \hbox (badness 10000) in paragraph at lines 1791--1792
 
  []
 
-[46 <./assets/abb_haskell.jpg>]
-<assets/armar_pares_2.jpg, id=1015, 1284.8pt x 806.01125pt>
+[47 <./assets/abb_haskell.jpg>]
+<assets/armar_pares_2.jpg, id=1023, 1284.8pt x 806.01125pt>
 File: assets/armar_pares_2.jpg Graphic file (type jpg)
 <use assets/armar_pares_2.jpg>
-Package pdftex.def Info: assets/armar_pares_2.jpg  used on input line 1795.
+Package pdftex.def Info: assets/armar_pares_2.jpg  used on input line 1834.
 (pdftex.def)             Requested size: 486.53883pt x 305.22977pt.
- [47 <./assets/armar_pares_2.jpg>]
-Overfull \hbox (25.57738pt too wide) in paragraph at lines 1831--1832
+ [48 <./assets/armar_pares_2.jpg>]
+Overfull \hbox (25.57738pt too wide) in paragraph at lines 1870--1871
 []\OT1/cmr/m/n/10 ?`Puede ha-cer-se al-go me-jor? No. Es-to es el equi-va-len-te a un len-gua-je im-pe-ra-ti-vo ha-cer do-bla-rE-le-men-tos(filtrarPares(lista)) 
  []
 
-[48]
-Overfull \hbox (8.3642pt too wide) in paragraph at lines 1893--1894
+[49]
+Overfull \hbox (8.3642pt too wide) in paragraph at lines 1932--1933
 []\OT1/cmr/m/n/10 3. Por ^^Sulti-mo, pa-ra apli-car a to-dos los ele-men-tos de la lis-ta po-de-mos usar map de la si-guien-te for-ma: $\OML/cmm/m/it/10 map \OT1/cmr/m/n/10 (\OML/cmm/m/it/10 uncurryf\OT1/cmr/m/n/10 )(\OML/cmm/m/it/10 lista\OT1/cmr/m/n/10 )$ 
  []
 
-[49]
-Underfull \hbox (badness 10000) in paragraph at lines 1918--1919
+[50]
+Underfull \hbox (badness 10000) in paragraph at lines 1957--1958
 
  []
 
-<assets/arbol_sintatico.jpg, id=1082, 871.255pt x 1606.0pt>
+<assets/arbol_sintatico.jpg, id=1090, 871.255pt x 1606.0pt>
 File: assets/arbol_sintatico.jpg Graphic file (type jpg)
 <use assets/arbol_sintatico.jpg>
-Package pdftex.def Info: assets/arbol_sintatico.jpg  used on input line 1956.
+Package pdftex.def Info: assets/arbol_sintatico.jpg  used on input line 1995.
 (pdftex.def)             Requested size: 324.36473pt x 597.88655pt.
-[50]
+[51]
 
 Package caption Warning: Unused \captionsetup[sub] on input line 7.
 See the caption package documentation for explanation.
 
-[51 <./assets/arbol_sintatico.jpg>] (plp.aux
+[52 <./assets/arbol_sintatico.jpg>] (plp.aux
 LaTeX Info: Redefining \. on input line 12.
 LaTeX Info: Redefining \% on input line 12.
 )
@@ -1139,17 +1139,17 @@ Package rerunfilecheck Info: File `plp.out' has not changed.
 (rerunfilecheck)             Checksum: 827A61C755CACB52A8BADA17DA87A51B;8218.
  ) 
 Here is how much of TeX's memory you used:
- 44205 strings out of 474423
- 1009138 string characters out of 5742662
- 2299496 words of memory out of 5000000
- 65345 multiletter control sequences out of 15000+600000
+ 44211 strings out of 474423
+ 1009208 string characters out of 5742662
+ 2301496 words of memory out of 5000000
+ 65346 multiletter control sequences out of 15000+600000
  568820 words of font info for 77 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,10n,93p,649b,1946s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,10n,93p,617b,1946s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\Tom\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcbx1440.pk> <C:\Users\Tom\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1000.pk><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msam10.pfb><C:/Users/Tom/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on plp.pdf (51 pages, 2785796 bytes).
+Output written on plp.pdf (52 pages, 2789745 bytes).
 PDF statistics:
- 1336 PDF objects out of 1440 (max. 8388607)
- 737 named destinations out of 1000 (max. 500000)
+ 1345 PDF objects out of 1440 (max. 8388607)
+ 742 named destinations out of 1000 (max. 500000)
  589 words of extra memory for PDF output out of 10000 (max. 10000000)
 
