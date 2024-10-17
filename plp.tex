@@ -1873,12 +1873,12 @@ Al igual que el Algoritmo M-M hay dos opciones
 \end{itemize}
 Se denota $W(U) \rightsquigarrow \Gamma \vdash M:\tau$ para indicar que el algoritmo de inferencia tiene éxito cuando se le pasa U como entrada y devuelve la tripla. \\
 
-\begin{minipage}[b]{0.5\textwidth}
+\begin{minipage}[b]{0.3\textwidth}
     \centering
     \includegraphics[width=\linewidth]{assets/inf_1.png}
 \end{minipage}
 \hfill
-\begin{minipage}[b]{0.5\textwidth}
+\begin{minipage}[b]{0.6\textwidth}
     \centering
     \includegraphics[width=\linewidth]{assets/inf_2.png}
 \end{minipage} \\
@@ -1891,6 +1891,7 @@ Se denota $W(U) \rightsquigarrow \Gamma \vdash M:\tau$ para indicar que el algor
     \centering
     \includegraphics[width=\linewidth]{assets/inf_4.png}
 \end{minipage}
+\textbf{Importante}: Recordemos que en los condicionales o cosas donde hay varios casos, cada tipo debe ser diferente aunque parezca obvio. Las restricciones se colocan luego. Nótese que en la segunda imagen, $U_{2}$ y $U_{3}$ son de tipos distintos $W(U_{2}) = \Gamma_{2} \vdash M_{2}:\tau_{2}$ y $W(U_{3}) = \Gamma_{3} \vdash M_{3}:\tau_{3}$ pero la restricción de como son se le da a la hora de hacer la sustitución $\{t_{2} = t_{3}\}$
 \subsubsection*{Incógnitas Frescas}
 Las Incógnitas Frescas son variables de tipo que se introducen durante el proceso de inferencia para representar tipos que aún no se conocen. Que sea fresca garantiza que es única y no ha sido utilizada antes en el contexto de inferencia actual. 
 \section*{Anexo}
