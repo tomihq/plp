@@ -1785,7 +1785,75 @@ Entonces, armamos el término M: $\lambda(x:\alpha) . x$ y podemos chequear amba
 \subsection*{Incorporando incógnitas a los tipos}
 El algoritmo de inferencia de tipos se basa en manipualr tipos \textbf{parcialmente conocidos}. \\
 Ej.: $x \ True$, ¿cómo podemos tiparlo?. Bueno, recordemos que asociamos a la izquierda, por lo tanto sería algo así: $x(True)$ por lo tanto, x debería de ser una función que recibe obligatoriamente un booleano y devuelve un tipo desconocido. Ese tipo desconocido lo denotamos con una variable. \\
-Por lo tanto, el tipo sería: (x: $Bool \rightarrow X_{1}$)
+Por lo tanto, el tipo sería: (x: $Bool \rightarrow X_{1}$) \\
+Ej. 2: $(X_{1} \rightarrow X_{1}) \stackrel{?}{=} ((Bool \rightarrow Bool) \rightarrow X_{2})$. \\
+En criollo lo que nos pide es: ¿cómo tiene que ser X1 y X2 para que ambos lados se verifiquen? bueno, si vemos la ecuación izquierda antes de $\rightarrow$ tiene $Bool \rightarrow Bool$ entonces no queda otra que $X_{1} = Bool \rightarrow Bool$ 
+Así mismo, entonces, del lado izquierdo nos queda $Bool \rightarrow Bool \rightarrow Bool \rightarrow Bool = (Bool \rightarrow Bool) X_{2}$ entonces la única forma que tiene $X_{2}$ es $Bool \rightarrow Bool$. \\
+Por lo tanto, $X_{1}: Bool \rightarrow Bool$ y $X_{2}: Bool \rightarrow Bool$ \\
+Ej. 3: if xy then y else true \\
+La estrategia en los condicionales, o lugares donde hay ramas es la siguiente: \textbf{considerar y tipar cada rama por separado, luego se hace puesta en común}. \\
+Entonces, en este caso tenemos que tipar tres ramas, una incógnita por cada variable: 
+\begin{itemize}
+    \item xy: $\Gamma_{c} = \{x: X_{1} \rightarrow X_{2}, y: X_{1}\}$
+    \item y: $\Gamma_{t} = \{t: X_{3}\}$
+    \item true: $\Gamma_{e} = \emptyset$
+\end{itemize}
+Entonces ahora planteamos un sistema de ecuaciones 
+\(
+\begin{cases} 
+    X_{3} \stackrel{?}{=} Bool \\
+    X_{1} \stackrel{?}{=} X_{3} \\
+    X_{2} \stackrel{?}{=} Bool
+\end{cases}
+\) \\
+Sustituimos ahora las incógnitas por los tipos y nos queda $X_{1} = Bool, X_{2} = Bool, X_{3} = Bool$. \\
+Resolver ecuaciones del tipo $X_{1} \stackrel{?}{=}X_{2} \rightarrow X_{3}$ se llama UNIFICACIÓN. Reemplazando las variables deberíamos llegar a una igualdad. 
+\subsection*{Unificación}
+Es el problema de resolver sistemas de ecuaciones entre tipos con incógnitas. Es muy importante pues luego lo usamos para dar un algoritmo de inferencia de tipos. \\
+Tenemos conjuntos finitos de constructores de tipos 
+\begin{itemize}
+    \item Tipos constantes (no tienen parámetros): Bool, Int, ...
+    \item Constructores Unarios (reciben un parámetro): (List $\bullet$), (Maybe $\bullet$), ...
+    \item Constructores Binarios (reciben dos parámetros): $(\bullet \rightarrow \bullet)$, ($\bullet \times \bullet$), ($Either \bullet \bullet$)
+\end{itemize}
+Los \textbf{tipos} se forman usando incógnitas y constructores: $\tau ::= X_{n} \ | \ C(\tau_{1}, \dots, \tau_{n})$ \\
+Antes de definir formalmente la Unificación, primero veamos la Sustitución, que es una de las herramientas que vamos a usar.
+\subsubsection*{Sustitución}
+Es una función que a cada incógnita le asocia un tipo. \\
+Notamos: $\{T_{1} \stackrel{?}{=} \sigma_{1}, \dots, T_{k}\stackrel{?}{=}\sigma_{k}\}$ a la sustitución S tal que $S(T_{1}) = S(\sigma_{1}) \land \dots \land S(T_{k}) = S(\sigma_{k})$ \\
+Si $\sigma$ es un tipo, escribimos $S(\sigma)$ para que cada incógnita de $\sigma$ sea reemplazada por lo que haya sido definido en S. \\
+
+Ej.: Si $S = \{X_{1} := Bool, X_{3} := (X_{2} \rightarrow X_{2})\}$ entonces S(($X_{1} \rightarrow Bool) \rightarrow X_{3}$) = $(Bool \rightarrow Bool) \rightarrow (X_{2} \rightarrow X_{2})$ 
+\subsubsection*{Unificación}
+Un problema de unificación es un conjunto finito E de ecuaciones entre tipos que pueden involucrar incógnitas. \\
+Un \textbf{unificador} para E es una sustitución \textbf{S} tal que 
+\begin{itemize}
+    \item $S(\tau_{1}) = S(\sigma_{1})$
+    \item ... 
+    \item $S(\tau_{n}) = S(\sigma_{n})$
+\end{itemize}
+Ej.: $\{X_{1} \stackrel{?}{=} X_{2}\}$ mientras que sea una igualdad, se puede decir cualquier cosa de $X_{1}$ y $X_{2}$. Todas serán solución pero si la solución tiene menos variables para solucionar el problema, es más general. 
+\subsubsection*{Sustitución más general}
+Una sustitución \textbf{$S_{A}$} es \textbf{más general} que una sustitución \textbf{$S_{B}$} si existe una sustitución \textbf{$S_{C}$} tal que: $S_{B} = S_{C} \bigcirc S_{A} $ \\
+\textbf{En Criollo}: Si $S_{B}$ nace de $S_{A}$ particularmente, entonces $S_{A}$ es más general.
+\subsection*{Algoritmo de unificación Martelli-Montanari (M-M)}
+Consiste en aplicar secuencialmente un conjunto de reglas las cuales hay dos chances: o falla, o sigue adelante reemplazando. Este algoritmo siempre termina. 
+\begin{itemize}
+    \item Mientras que $E \neq \emptyset$ se aplica sucesivamente alguna de las reglas.
+    \item La regla puede resultar en una falla.
+    \item De lo contrario, la regla es de la forma $E \rightarrow_{s} E'$
+\end{itemize}
+\subsubsection*{Reglas del Algoritmo (M-M)}
+\[\begin{minipage}[b]{0.7\textwidth}
+    \includegraphics[width=\linewidth]{assets/algoritmo_m_m.png}
+\end{minipage}\]
+¿Por qué los condicionales en las reglas?
+\begin{itemize}
+    \item Swap: $\tau$ no debe ser una variable. Debe ser un valor porque sino entramos en un loop infinito de hacer referencia a sí mismo. Ej.: $4 = x \equiv x = 4 $ pero x = y $\neq$ y = x NO es lo mismo porque NO son valores.
+    \item Elim: No podemos reemplazar un término que depende de sí mismo y reducirlo. Ej.: $X_{1} = X_{1} \rightarrow Bool$ no tiene sentido sustituir en este caso porque vamos a estar en prácticamente un loop infinito. 
+    \item Clash: Si no tienen la misma cantidad de elementos falla.
+    \item Occurs-Check: Solo podemos unificar si la incógnita no aparece en $\tau$. Ej.: $X_{1} = X_{1} \rightarrow Bool$ falla pero $X_{1} = Int$ funciona. 
+\end{itemize}
 \section*{Anexo}
 \subsection*{Recordando Haskell}
 Para ejecutar un archivo hay que instalar GHCI. Una vez instalado, nos paramos en la terminal en el directorio donde está el archivo que queremos ejecutar. 
