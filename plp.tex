@@ -1834,14 +1834,18 @@ Un \textbf{unificador} para E es una sustitución \textbf{S} tal que
 \end{itemize}
 Ej.: $\{X_{1} \stackrel{?}{=} X_{2}\}$ mientras que sea una igualdad, se puede decir cualquier cosa de $X_{1}$ y $X_{2}$. Todas serán solución pero si la solución tiene menos variables para solucionar el problema, es más general. 
 \subsubsection*{Sustitución más general}
-Una sustitución \textbf{$S_{A}$} es \textbf{más general} que una sustitución \textbf{$S_{B}$} si existe una sustitución \textbf{$S_{C}$} tal que: $S_{B} = S_{C} \bigcirc S_{A} $ \\
+Una sustitución \textbf{$S_{A}$} es \textbf{más general} que una sustitución \textbf{$S_{B}$} si existe una sustitución \textbf{$S_{C}$} tal que: $S_{B} = S_{C} \circ S_{A} $ \\
 \textbf{En Criollo}: Si $S_{B}$ nace de $S_{A}$ particularmente, entonces $S_{A}$ es más general.
-\subsection*{Algoritmo de unificación Martelli-Montanari (M-M)}
-Consiste en aplicar secuencialmente un conjunto de reglas las cuales hay dos chances: o falla, o sigue adelante reemplazando. Este algoritmo siempre termina. 
+\subsection*{Algoritmo de unificación Martelli-Montanari (M-M) y la Corrección del Algoritmo}
+Consiste en aplicar secuencialmente un conjunto de reglas las cuales hay dos chances: o falla, o sigue adelante reemplazando. Este algoritmo siempre termina para cualquier problema de unificación E.
 \begin{itemize}
     \item Mientras que $E \neq \emptyset$ se aplica sucesivamente alguna de las reglas.
-    \item La regla puede resultar en una falla.
-    \item De lo contrario, la regla es de la forma $E \rightarrow_{s} E'$
+    \item La regla puede resultar en una falla (si E no tiene solución)
+    \item De lo contrario, la regla es de la forma $E \rightarrow_{s} E'$ y al aplicarlo sucesivamente, si no hay falla, el algoritmo llega a $\emptyset$: 
+    \begin{itemize}
+        \item $E = E_{0} \rightarrow_{S_{1}} \ E_{1} \rightarrow_{S_{2}} E_{2} \dots \rightarrow_{S_{n}} E_{n} = \emptyset$
+        $S = S_{n} \circ S_{n-1} \dots \circ S_{2} \circ S_{1}$ es un unificador para E, es el más general posible y lo denotamos mgu(E).
+    \end{itemize}
 \end{itemize}
 \subsubsection*{Reglas del Algoritmo (M-M)}
 \[\begin{minipage}[b]{0.7\textwidth}
@@ -1854,6 +1858,41 @@ Consiste en aplicar secuencialmente un conjunto de reglas las cuales hay dos cha
     \item Clash: Si no tienen la misma cantidad de elementos falla.
     \item Occurs-Check: Solo podemos unificar si la incógnita no aparece en $\tau$. Ej.: $X_{1} = X_{1} \rightarrow Bool$ falla pero $X_{1} = Int$ funciona. 
 \end{itemize}
+La regla Decompose es muy útil para separar funciones. La Delete la hacemos cuando nos queda una igualdad trivial. La Elim la usamos dejando todo menos la igualdad que queremos quitar.
+\[\begin{minipage}[b]{0.9\textwidth}
+    \includegraphics[width=\linewidth]{assets/alg_m_m.jpg}
+\end{minipage}\]
+\textbf{Nota}: El MGU del primer ejercicio sería lo mínimo indispensable para cumplir la igualdad. En este caso sería $X_{1}: Bool \rightarrow Bool, \ X_{2}: Bool \rightarrow Bool$ \\
+\textbf{Importante}. El algoritmo de simplificación \textbf{no siempre} devuelve el mismo resultado si existe una solución.
+\subsection*{Algoritmo W (Inferencia de Tipos)}
+La idea es siempre empezar haciendo las reglas de tipado. La regla de tipado deriva el algoritmo de inferencia. \\
+Al igual que el Algoritmo M-M hay dos opciones
+\begin{itemize}
+    \item Puede fallar si U no es tipable.
+    \item Puede tener éxito y si lo tiene devuelve una tripla $(\Gamma, M, \tau)$ donde $erase(M) = U$ y $\Gamma \vdash M:\tau$ ¡sí! es lo mismo que vimos al principio sin ningún algoritmo
+\end{itemize}
+Se denota $W(U) \rightsquigarrow \Gamma \vdash M:\tau$ para indicar que el algoritmo de inferencia tiene éxito cuando se le pasa U como entrada y devuelve la tripla. \\
+
+\begin{minipage}[b]{0.5\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{assets/inf_1.png}
+\end{minipage}
+\hfill
+\begin{minipage}[b]{0.5\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{assets/inf_2.png}
+\end{minipage} \\
+\begin{minipage}[b]{0.5\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{assets/inf_3.png}
+\end{minipage}
+\hfill
+\begin{minipage}[b]{0.5\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{assets/inf_4.png}
+\end{minipage}
+\subsubsection*{Incógnitas Frescas}
+Las Incógnitas Frescas son variables de tipo que se introducen durante el proceso de inferencia para representar tipos que aún no se conocen. Que sea fresca garantiza que es única y no ha sido utilizada antes en el contexto de inferencia actual. 
 \section*{Anexo}
 \subsection*{Recordando Haskell}
 Para ejecutar un archivo hay que instalar GHCI. Una vez instalado, nos paramos en la terminal en el directorio donde está el archivo que queremos ejecutar. 
