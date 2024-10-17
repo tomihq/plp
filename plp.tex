@@ -1891,7 +1891,11 @@ Se denota $W(U) \rightsquigarrow \Gamma \vdash M:\tau$ para indicar que el algor
     \centering
     \includegraphics[width=\linewidth]{assets/inf_4.png}
 \end{minipage}
-\textbf{Importante}: Recordemos que en los condicionales o cosas donde hay varios casos, cada tipo debe ser diferente aunque parezca obvio. Las restricciones se colocan luego. Nótese que en la segunda imagen, $U_{2}$ y $U_{3}$ son de tipos distintos $W(U_{2}) = \Gamma_{2} \vdash M_{2}:\tau_{2}$ y $W(U_{3}) = \Gamma_{3} \vdash M_{3}:\tau_{3}$ pero la restricción de como son se le da a la hora de hacer la sustitución $\{t_{2} = t_{3}\}$
+\textbf{Importante}: Recordemos que en los condicionales o cosas donde hay varios casos, cada tipo debe ser diferente aunque parezca obvio. Las restricciones se colocan luego. Nótese que en la segunda imagen, $U_{2}$ y $U_{3}$ son de tipos distintos $W(U_{2}) = \Gamma_{2} \vdash M_{2}:\tau_{2}$ y $W(U_{3}) = \Gamma_{3} \vdash M_{3}:\tau_{3}$ pero la restricción de como son se le da a la hora de hacer la sustitución $\{t_{2} = t_{3}\}$ \\
+\textbf{Importante}: $\emptyset$ en el Algoritmo de W representa quitar una variable específica del contexto. Esto se ve fácil si de antemano vemos como es el juicio de tipado de la regla. 
+\[\begin{minipage}[b]{0.7\textwidth}
+    \includegraphics[width=\linewidth]{assets/abs_inf.jpg}
+\end{minipage}\]
 \subsubsection*{Incógnitas Frescas}
 Las Incógnitas Frescas son variables de tipo que se introducen durante el proceso de inferencia para representar tipos que aún no se conocen. Que sea fresca garantiza que es única y no ha sido utilizada antes en el contexto de inferencia actual. 
 \section*{Anexo}
