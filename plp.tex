@@ -1900,6 +1900,77 @@ Se denota $W(U) \rightsquigarrow \Gamma \vdash M:\tau$ para indicar que el algor
 
 \subsubsection*{Incógnitas Frescas}
 Las Incógnitas Frescas son variables de tipo que se introducen durante el proceso de inferencia para representar tipos que aún no se conocen. Que sea fresca garantiza que es única y no ha sido utilizada antes en el contexto de inferencia actual. 
+\section*{Lógica de Primer Orden (LPO)}
+Es prácticamente igual a la Lógica Proposicional pero acá se introducen los cuantificadores $\forall$ y $\exists$. En cuanto a tema de materia, es parecido a deduccion natural pero con cuantificadores. \\
+Necesitamos entender la Lógica de Primer Orden porque es en lo que se basa Prolog (Programación Lógica) 
+\subsection*{Lenguaje de Primer Orden $\mathcal{L}$}
+Está formado por 
+\begin{itemize}
+    \item Conjunto de Símbolos de Función $\mathcal{F} = \{f, g, h, \dots\}$. Cada Símbolo de función tiene asociada una aridad ($\ge 0$)
+    \begin{itemize}
+        \item Los Símbolos de Función con aridad 0 se llaman \textbf{constantes}
+    \end{itemize}
+    \item Conjunto de Símbolos de Predicado $\mathcal{P} = \{P, Q, R, \dots\}$. Cada Símbolo de predicado tiene asociada una aridad ($\ge 0$)
+    \item Conjunto Infinito de Numerable de Variables $ \mathcal{X} = \{X, Y, Z, \dots\}$
+\end{itemize}
+\subsubsection*{Términos de Primer Oren}
+Definimos el conjunto $\mathcal{T}$ de términos mediante la siguiente gramática $t :: = X \ | \ f(t_{1}, \dots, t_{n})$ donde \textbf{X} denota una variable y \textbf{f} un símbolo de función de aridad n.
+\subsubsection*{Diferencia entre Símbolo de Función y Símbolo de Predicado}
+Un Símbolo de Función me devuelve un elemento de mi Dominio o universo. Los predicados no. \\
+Ej.: $n, \ succ(n)$ son símbolos de función mientras que $\ge$ es un símbolo de predicado.
+\subsubsection*{Notación Infija, Prefija en LPO}
+Ej.: $+(0, succ(X)) \equiv 0 + succ(X)$. Nosotros usaremos la notación infija. 
+\subsubsection*{Fórmulas de Primer Orden}
+\[\begin{minipage}[b]{0.7\textwidth}
+    \includegraphics[width=\linewidth]{assets/formulas_lpo.png}
+\end{minipage}\]
+Al igual que en Cálculo Lambda, los cuantificadores ligan variables siempre y cuando esté definida en ese ámbito. En este caso, \textbf{X} está ligada; \textbf{P} denota un símbolo de predicado de aridad n. \\
+\textbf{Importante}: Dos fórmulas que solo difieren en los nombres de las \textbf{variables ligadas} se consideran iguales. Esto es por el isomorfismo de las variables ligadas, da igual qué nombre tengan.
+\subsubsection*{Sustitución}
+Hay que tener cuidado en sustituir en LPO, si vamos a sustituir una variable que depende de otra que está ligada a un cuantificador, antes hay que renombrar la variable ligada en cuantificador. \\
+Ej.: $\sigma := succ(X) = Y \implies \exists Z.X+Z = Y$\\
+¿Qué es lo que sucede si hacemos $\sigma \{X:=Z*Z\}$? Cuando querramos reemplazar en el cuantificador del existe, el existe \textbf{ya tiene una Z} pero esta Z que está en el cuantificador es diferente a la que está en nuestro $\{X:=Z*Z\}$ por lo tanto hay que renombrar la Z del cuantificador porque de lo contrario, parecerá que son la misma. \\
+El resultado de hacer esta operación quedaría como $\sigma := succ(Z*Z) = Y \implies \exists Z'.(Z*Z)+Z' = Y$
+\subsection*{Deducción Natural extendida a LPO}
+Todas las reglas de deducción natural proposicional siguen vigentes pero acá se agregan las reglas de introducción y eliminación para el $\forall$ y $\exists$. \\
+Igual que antes: 
+\begin{itemize}
+    \item Un contexto $\Gamma$ es un conjunto finito de fórmulas.
+    \item Un secuente es de la forma $\Gamma \vdash \sigma$
+\end{itemize}
+\[\begin{minipage}[b]{0.8\textwidth}
+    \includegraphics[width=\linewidth]{assets/reglas_deduccion_lpo.png}
+\end{minipage}\]
+\[\begin{minipage}[b]{0.8\textwidth}
+    \includegraphics[width=\linewidth]{assets/reglas_deduccion_lpo_forall.png}
+\end{minipage}\]
+\[\begin{minipage}[b]{0.8\textwidth}
+    \includegraphics[width=\linewidth]{assets/reglas_deduccion_lpo_exists.png}
+\end{minipage}\]
+\subsection*{Estructuras de Primer Orden}
+Nos ayuda a decir \textbf{cómo interpretamos} los elementos del universo (M, I). Definimos como \textbf{estructura de primer orden} como el par $\mathcal{M} = (M, I)$
+\begin{itemize}
+    \item $\mathcal{M}$: Conjunto \textbf{no vacío}, llamado universo.
+    \item $\mathcal{I}$: Es una función que le da una interpretación a cada símbolo. 
+    \item Para cada símbolo de función \textbf{f} de aridad n: $I(f): M^{n} \rightarrow M$
+    \item Para cada símbolo de predicado \textbf{P} de aridad n: $I(P) \subseteq M^{n}$
+\end{itemize}
+¿Por qué es necesario esto? Hasta este momento $\forall X . X$ no nos dice nada. Es solo sintáxis. \\
+Cuando hablamos de 0 podría significar falso en el ámbito o universo de los booleanos, podría significar 0 en los naturales. \\
+Para poder darle todo este significado a cada símbolo tenemos que usar la función de interpretación. La función de interpretación es re importante, porque algo que está escrito de la misma manera puede ser verdadero o falso según en donde habitemos. 
+\[\begin{minipage}[b]{0.8\textwidth}
+    \includegraphics[width=\linewidth]{assets/universo_interprete.png}
+\end{minipage}\]
+\subsubsection*{Asignación}
+Una asignación es una función que a cada variable le asigna un elemento del universo: $a: \mathcal{X} \rightarrow M$
+\subsubsection*{Interpretación de Términos}
+Cada término $t \in \mathcal{T}$ se interpreta como un elemento, extendiendo la definición de \textbf{a} a términos: $a(t) \in M$: $a(f(t_{1}, \dots, t_{n})) = I(f)(a(t_{1}), \dots, a(t_{n}))$
+\subsubsection*{Interpretación de Fórmulas}
+Suponemos fijada una estructura de primer orden $\mathcal{M} = (M, I)$. \\
+Definimos una relación de \textbf{satisfacción a} $\vDash_{\mathcal{M}}\sigma$ $"$La asignación \textbf{a} (bajo la estructura $\mathcal{M}$ satisface la fórmula $\sigma$)$"$
+\[\begin{minipage}[b]{0.8\textwidth}
+    \includegraphics[width=\linewidth]{assets/interpretacion_formulas_lpo_deduccion_natural.png}
+\end{minipage}\]
 \section*{Anexo}
 \subsection*{Recordando Haskell}
 Para ejecutar un archivo hay que instalar GHCI. Una vez instalado, nos paramos en la terminal en el directorio donde está el archivo que queremos ejecutar. 
