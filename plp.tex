@@ -1971,6 +1971,19 @@ Definimos una relación de \textbf{satisfacción a} $\vDash_{\mathcal{M}}\sigma$
 \[\begin{minipage}[b]{0.8\textwidth}
     \includegraphics[width=\linewidth]{assets/interpretacion_formulas_lpo_deduccion_natural.png}
 \end{minipage}\]
+\textbf{Importante}: $a[x \rightarrow m]$ representa el mapsTo y está definido de la siguiente forma: \\
+$a: V \rightarrow M$ \\
+$a[x \rightarrow m]: V \rightarrow M$ \\
+$a[x \rightarrow m](y) =
+\begin{cases}
+    m \ si \ x = y \\
+    a \ si \ x \neq y
+\end{cases}
+$
+\subsubsection*{Validez y Satisfactibilidad}
+\[\begin{minipage}[b]{0.8\textwidth}
+    \includegraphics[width=\linewidth]{assets/validez_satisfactibilidad.png}
+\end{minipage}\]
 \section*{Anexo}
 \subsection*{Recordando Haskell}
 Para ejecutar un archivo hay que instalar GHCI. Una vez instalado, nos paramos en la terminal en el directorio donde está el archivo que queremos ejecutar. 
