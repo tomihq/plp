@@ -1913,11 +1913,15 @@ Está formado por
     \item Conjunto de Símbolos de Predicado $\mathcal{P} = \{P, Q, R, \dots\}$. Cada Símbolo de predicado tiene asociada una aridad ($\ge 0$)
     \item Conjunto Infinito de Numerable de Variables $ \mathcal{X} = \{X, Y, Z, \dots\}$
 \end{itemize}
-\subsubsection*{Términos de Primer Oren}
-Definimos el conjunto $\mathcal{T}$ de términos mediante la siguiente gramática $t :: = X \ | \ f(t_{1}, \dots, t_{n})$ donde \textbf{X} denota una variable y \textbf{f} un símbolo de función de aridad n.
+\textbf{Importante}: Los predicados solamente definen una relación entre dos elementos de mi dominio (devuelven un valor de verdad). La idea es enviar como argumento cosas que ya son irreducibles o pueden reducirse hasta poder compararse. \\
+\textbf{Importante}: Las funciones solamente reciben como argumentos elementos de mi dominio y devuelven un elemento de mi dominio. Si se quisiese usar para una fórmula lógica ese valor, debería colocarse un predicado que nos arroje un valor de verdad para ese valor del dominio. 
+\subsubsection*{Términos de Primer Orden}
+Definimos el conjunto $\mathcal{T}$ de términos mediante la siguiente gramática $t :: = X \ | \ f(t_{1}, \dots, t_{n})$ donde \textbf{X} denota una variable y \textbf{f} un símbolo de función de aridad n. \\
+\textbf{Importante}: Si un símbolo de función, llamémosle g tiene aridad 3, se debe usar enviando los 3 parámetros. Acá no existe la opción de algo ser opcional. \\
+Véase \hyperref[subsec:terminos_lpo]{\textbf{\underline{anexo}}} para poder ver con más profundidad la justificación de qué es o no un término.
 \subsubsection*{Diferencia entre Símbolo de Función y Símbolo de Predicado}
 Un Símbolo de Función me devuelve un elemento de mi Dominio o universo. Los predicados no. \\
-Ej.: $n, \ succ(n)$ son símbolos de función mientras que $\ge$ es un símbolo de predicado.
+Ej.: $n, \ succ(n)$ son símbolos de función mientras que $\ge$ es un símbolo de predicado. 
 \subsubsection*{Notación Infija, Prefija en LPO}
 Ej.: $+(0, succ(X)) \equiv 0 + succ(X)$. Nosotros usaremos la notación infija. 
 \subsubsection*{Fórmulas de Primer Orden}
@@ -1930,7 +1934,8 @@ Al igual que en Cálculo Lambda, los cuantificadores ligan variables siempre y c
 Hay que tener cuidado en sustituir en LPO, si vamos a sustituir una variable que depende de otra que está ligada a un cuantificador, antes hay que renombrar la variable ligada en cuantificador. \\
 Ej.: $\sigma := succ(X) = Y \implies \exists Z.X+Z = Y$\\
 ¿Qué es lo que sucede si hacemos $\sigma \{X:=Z*Z\}$? Cuando querramos reemplazar en el cuantificador del existe, el existe \textbf{ya tiene una Z} pero esta Z que está en el cuantificador es diferente a la que está en nuestro $\{X:=Z*Z\}$ por lo tanto hay que renombrar la Z del cuantificador porque de lo contrario, parecerá que son la misma. \\
-El resultado de hacer esta operación quedaría como $\sigma := succ(Z*Z) = Y \implies \exists Z'.(Z*Z)+Z' = Y$
+El resultado de hacer esta operación quedaría como $\sigma := succ(Z*Z) = Y \implies \exists Z'.(Z*Z)+Z' = Y$ \\
+\textbf{Importante}: Recordar que solamente reemplazamos las ocurrencias libres de una variable, no la que está ligada a un cuantificador. 
 \subsection*{Deducción Natural extendida a LPO}
 Todas las reglas de deducción natural proposicional siguen vigentes pero acá se agregan las reglas de introducción y eliminación para el $\forall$ y $\exists$. \\
 Igual que antes: 
@@ -1979,7 +1984,8 @@ $a[x \rightarrow m](y) =
     m \ si \ x = y \\
     a \ si \ x \neq y
 \end{cases}
-$
+$ \\
+Véase \hyperref[subsec:lpo_formulas]{\textbf{\underline{anexo}}} para ver ejemplos de fórmulas válidas, aplicaciones de predicados y símbolos de función
 \subsubsection*{Validez y Satisfactibilidad}
 \[\begin{minipage}[b]{0.8\textwidth}
     \includegraphics[width=\linewidth]{assets/validez_satisfactibilidad.png}
@@ -2256,4 +2262,38 @@ Lo que hay que revisar bien siempre son todos los tipos.
     \includegraphics[width=\linewidth]{assets/arbol_sintatico.jpg}
 \end{minipage}\] 
 La idea es ir aplicando como Haskell la asociación, separar en varios pasos la ejecución y luego aplicarlo. 
+\subsection*{Términos LPO}
+\label{subsec:terminos_lpo}
+Sea $\mathcal = \{d, f, g\}$ donde d tiene aridad 0, f aridad 2 y g aridad 3. ¿Cuales de la siguientes cadenas son términos sobre $\mathcal{F}$? \\
+Recordemos definiciones: 
+\begin{itemize}
+    \item Si un Símbolo de Función tiene aridad 0: es constante.
+    \item Si f tiene una aridad n, cuando se utilice deben enviarse los n parámetros. 
+    \item Un término tiene la pinta: $t ::= X \ | \ f(t_{1}, \dots, t_{n})$
+\end{itemize}
+1. g(d,d): No es término. g es un símbolo de función pero de aridad 3 y acá se le están enviando solo dos. \\
+2. f(X, g(Y, Z), d): No es término. Mismo caso que arriba, f está mal aplicado y g también. Aridades incorrectas. \\
+3. g(X, f(d, Z), d): Es un término. f y g están aplicados con su aridad esperada, y los elementos que se envían por parámetro son términos irreducibles y/o constantes. \\
+4. g(X, h(Y, Z), d): h no está definido en nuestro conjunto de Símbolos de Funciones. \\
+\subsection*{Fórmulas Válidas, uso de Predicados y Funciones}
+\label{subsec:lpo_formulas}
+Sea c una constante, f un símbolo de función de aridad 1 y S y B dos símbolos de predicados binarios. ¿Cuales de las siguientes son fórmulas? \\
+Recordemos la teoría 
+\begin{itemize}
+    \item Una constante C es una función con aridad 0.
+    \item Las funciones o símbolo de función esperan siempre los n argumentos con los cuales se definieron. Devuelven un elemento del dominio.
+    \item Los predicados S y B, binarios (reciben dos argumentos) hacen una relación específica entre dos términos irreducibles y arrojan un valor de verdad.
+\end{itemize}
+1. S(c, X): Es una fórmula, estamos comparando una constante c con un valor irreducible X. Devuelve un valor de verdad. \\
+2. B(c, f(c)): Es una fórmula, estamos comparando una constante c con un valor irreducible que produce f(c). \\
+3. f(c): No es una fórmula. Es un valor del dominio, no reduce a un valor de verdad. \\
+4. B(B(c, X), Y): No es una fórmula, un predicado no puede recibir como parámetro un valor de verdad (B(c, X)). \\
+5. S(B(c), Z): Mismo caso que el anterior \\
+6. $(B(X,Y) \implies (\exists Z.S(Z,Y)))$: Es una fórmula. B(X,Y) es valor de verdad, $\implies$ define una fórmula y $(\exists Z.S(Z,Y))$ es una fórmula pues el Z que existe está en nuestro dominio, y $S(Z,Y)$ relaciona dos elementos de nuestro dominio y arroja un valor de verdad. \\
+7. $(S(X,Y) \implies S(Y, f(f(X))))$: Es una fórmula. S(X,Y) es una fórmula, $\implies$ es una fórmula, y $S(Y, f(f(X)))$ es una fórmula porque al aplicar dos veces f, nos termina devolviendo un elemento de nuestro dominio que luego es comparado con Y en el símbolo de predicado S. \\
+8. $B(X,Y) \implies f(X)$: No es una fórmula. f(X) es un término o valor de nuestro dominio, no es un valor de verdad. Se le debería aplicar un símbolo de predicado para que arroje un valor de verdad. \\
+9. $S(X, f(Y)) \land B(X,Y)$: Es una fórmula. 
+10. $\forall X. B(X, f(X))$: Es una fórmula. Para todo elemento posible de nuestro dominio X, al enviarlo a f nos devuelve un valor del dominio y se lo compara con el X. Luego, aplicar B devuelve un valor de verdad. \\
+11. $\exists X. B(Y, X(C))$: No es una fórmula, porque X es un elemento del dominio y acá se lo está usando como función de aridad 1 (creo)
+
 \end{document} 
