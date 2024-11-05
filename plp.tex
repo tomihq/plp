@@ -11,7 +11,7 @@
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{listings}
-
+\usepackage{comment} 
 \lstset{
     inputencoding=utf8,
     extendedchars=true,
@@ -1990,6 +1990,92 @@ Véase \hyperref[subsec:lpo_formulas]{\textbf{\underline{anexo}}} para ver ejemp
 \[\begin{minipage}[b]{0.8\textwidth}
     \includegraphics[width=\linewidth]{assets/validez_satisfactibilidad.png}
 \end{minipage}\]
+\section*{Programación Lógica en Prolog}
+\subsection*{Términos de Primer Orden}
+Prolog opera con ellos. Son de la pinta $X \ Y \ succ(succ(zero)) \ bin(I, R, D) \dots$
+\subsection*{Fórmulas Atómicas}
+En Prolog son de la forma $pred(t_{1}, ..., t_{n})$ \\
+Ej.: $padre(zeus, atenea)$
+\subsection*{Programa en Prolog}
+Es un conjunto de reglas: $\sigma :- \tau_{1}, \dots, \tau_{n}$. \\
+Cada $\sigma$ es una regla. \\
+Ej.: $abuelo(X,Y) :- padre(X,Z), \ padre(Z,Y)$. En este caso $\sigma := abuelo(X,Y)$, $\tau_{1} := padre(X,Z)$ y $\tau_{2} := padre(Z, Y)$.  
+\subsubsection*{Hechos}
+Son aquellas reglas en las cuales $n = 0$. Es lo que se considera verdadero o tautológico. \\
+¿A qué nos referimos con $n=0$? Bueno, que no dependen de nada. \\
+Ej.: $\sigma :- padre(zeus, ares)$ 
+\subsubsection*{Interpretación Lógica de las Reglas}
+Cada uno de los $\tau$ en conjunción deben implicar $\sigma$ \\
+Es decir, tienen la siguiente interpretación lógica $\forall X_{1}, \dots \forall X_{k}((\tau \land \dots \land \tau_{n}) \implies \sigma)$ donde $X_{1}, \dots, X_{k}$ son todas las variables libres de las fórmulas. \\
+Ej.: $\forall X . \forall Y . \forall Z . ((padre(X,Z) \land padre(Z,Y)) \implies abuelo(X,Y))$
+\subsubsection*{Consultas}
+Hablamos de Consultas en Prolog cuando aparece una incógnita X. \\
+Una consulta es de la forma: $?- \sigma_{1}, \dots, \sigma_{n}$ \\
+Ej.: $?-abuelo(X, ares)$ 
+\subsubsection*{Interpretación Lógica de las Consultas}
+El X hay que predicarlo en base a existenciales. \\
+Ej.: $\exists X_{1}, \dots, \exists X_{k} . (\sigma_{1} \land \dots \land \sigma_{n})$ donde $X_{1}, \dots, X_{k}$ son todas las variables libres de las fórmulas.
+\subsection*{Pasaje de LPO a Forma Clausal}
+Es prácticamente un algoritmo. \\
+La entrada es una \textbf{fórmula $\sigma$ de la lógica proposicional} y la salida es un booleano que indica si $\sigma$ es válida. 
+\begin{itemize}
+    \item Reescribimos $\implies$ usando $\neg$ y $\lor$.
+    \item Pasar a f.n negada, empujando $\neg$ hacia adentro.
+    \item Pasar a f.n extrayendo $\forall$ y $\exists$ hacia afuera.
+    \item Pasar a f.n de Skolem, Skolemizando los existenciales.
+    \item Pasar a f.n. conjuntiva, distribuyendo $\lor$ sobre $\land$.
+    \item Empujar los cuantificadores hacia adentro de las conjunciones.
+\end{itemize}
+Ej.: $\neg (((P \implies (Q \land R)) \land P) \implies Q)$ en forma Clausal es $(\neg P \lor Q) \land (\neg P \lor R) \land P \land \neg Q$ \\
+\subsubsection*{Claúsula y Literales}
+\textbf{Claúsula}: $(P \land Q)$. \\
+\textbf{Literal}: $P$
+\begin{comment}
+\subsubsection*{Método de Refutación (Logica Proposicional)}
+Se utiliza una vez que tenemos el conjunto de cláusulas de $\mathcal{C} = \{k_{1}, \dots, k_{n}\}$. La idea es buscar una refutación, es decir una demostración de $\mathcal{C} \vdash \bot$ \\
+Para poder hacer esto tenemos que hacer una conjunción de P con todos los literales y también ver la negación de P y todos los literales. La conclusión solamente posee los literales y esta conclusión se llama la resolvente de las premisas. \\
+TODO: añadir imagen. \\
+El algoritmo que se realiza es el siguiente:
+\begin{itemize}
+    \item Entrada: Un conjunto de claúsulas $\mathcal{C_{0}} = \{\mathcal{k}_{1}, \dots, \mathcal{k}_{n}\}$
+    \item Salida: SAT/INSAT indicando si $\mathcal{C_{0}}$ es insatisfactible($\mathcal{C_{0}} \vdash \bot$)
+    \item Algoritmo: 
+    \begin{itemize}
+        \item Sea $\mathcal{C}:= \mathcal{C}_{0}$. Repetir mientras sea posible.
+        \item Si $\{\} \in \mathcal{C}$ devolver INSAT.
+        \item Elegir dos claúsulas $\mathcal{K}, \mathcal{K'} \in \mathcal{C}$ tales que: 
+        \begin{itemize}
+            \item $\mathcal{K} = \{P, l_{1}, \dots, l_{n}\}$
+             \item $\mathcal{K}' = \{P, l^{'}_{1}, \dots, l^{'}_{n}\}$
+             \item La resolvente $\rho = \{l_{1}, \dots, l_{n}, l^{'}_{1}, \dots, l^{'}_{m}\}$
+        \end{itemize}
+        \item Tomar $\mathcal{C} := \mathcal{C} \cup \{\rho\}$ y volver al paso 1.
+    \end{itemize}
+\end{itemize}
+\subsubsection*{Correción del Método de Resolución Proposicional}
+\end{comment}
+\subsection*{Resolución para Lógica de Primer Orden}
+Hay que pasar por varias formas hasta llegar a la forma Clausal.
+\subsubsection*{Forma Normal Negada (NNF)}
+Solamente usa los conectivos $\{\neq, \lor, \land, \forall, \exists\}$ 
+\subsubsection*{Pasaje a forma clausal en Lógica de Primer Orden}
+\subsubsection*{Skolemización}
+La Skolemización es deshacerse de los cuantificadores existenciales. \\
+La idea es introducir testigos para los $\exists$ sin cambiar la satisfactibilidad. \\
+\begin{itemize}
+    \item Todo cuantificador existencial se instancia en una constante o función de skolem.
+    \item Ej.: $\exists X . P(x)$ se skolemiza a $P(c)$ donde c es una nueva constante que se agrega al lenguaje de primer orden. Estas funciones y constantes como parámetros.
+\end{itemize}
+\textbf{Importante}: La Skolemización \textbf{no es determinística}. \\
+\textbf{Importante 2}: Skolemizar de afuera hacia adentro. \\
+\textbf{Importante 3}: La Skolemización \textbf{preserva la satisfactibilidad} pero \textbf{no produce fórmulas equivalentes}, esto quiere decir que no preserva la validez. Ej.: $\exists X . (P(0) \implies P(X))$ es válida mientras que $P(0) \implies P(c)$ es inválida.
+\subsubsection*{Forma Normal de Skolem (NNF)}
+Sea A una sentencia rectificada en FNN. Una fórmula está rectificada si todos sus cuantificadores ligan variables distintas entre sí, y a la vez distintas de todas las variables libres. \\
+\textbf{En criollo}: Los cuantificadores tienen variables con nombres únicos y no se pisan con variables libres. \\
+Una fórmula en forma normal de Skolem tiene la siguiente pinta: $\sigma_{Sk} :: = \forall X_{1}X_{2} \dots \ X_{n} * \tau$
+\subsubsection*{Refutación en Lógica de Primer Orden}
+\subsubsection*{Corrección del método de resolución de Primer Orden}
+
 \section*{Anexo}
 \subsection*{Recordando Haskell}
 Para ejecutar un archivo hay que instalar GHCI. Una vez instalado, nos paramos en la terminal en el directorio donde está el archivo que queremos ejecutar. 
