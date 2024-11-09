@@ -6,22 +6,25 @@ padre(luis, pablo).
 padre(luis, manuel).
 padre(luis, ramiro).
 
-/* abuelo(?X, ?Y) */ 
+/* abuelo(+X, +Y) */ 
 abuelo(X,Y) :- padre(X, Z), padre(Z, Y).
 
-/* hijo(?X, ?Y) */
+/* hijo(+X, +) */
 hijo(X,Y) :- padre(Y, X).
 
-/* hermano(?X, ?Y) */ 
+/* hermano(+X, +Y) */ 
 hermano(X,Y) :- hijo(X, Z), hijo(Y, Z), X \= Y. 
 /* si X \= Y lo pongo al pricnipio no vale porque si Y no estaria instanciada - enviada por parametro fallaria porque ej: hermano(juan, Y) no unifica juan con Y */ 
 
-/* descendiente(?X, ?Y) */
+/* descendiente(+X, +Y) */
 descendiente(X, Y) :- hijo(X,Y).
 descendiente(X, Y) :- hijo(X, Z), descendiente(Z, Y). 
 
 /* nietos(?X, +Y) */
 nietos(X,Y) :- hijo(Z, Y), hijo(X, Z).
+
+/* hermanos(-X, +Y) hermanos(-X, pablo) respuesta va en X. z tiene el padre de Y. */
+hermanos(X,Y) :- padre(Z, Y), hijo(X, Z), hermano(X, Y).
 
 /*
 ii) X es descendiente de Y si y solo si: X es hijo de Y, o 
@@ -74,4 +77,8 @@ iv) Para conseguir los nietos de Juan, esto quiere decir que estamos buscando to
 nietos(X,juan) ¿qué X son nietos de Juan? 
 Primero se buscan los hijos de Juan. Luego, por cada hijo de Juan instanciado, se buscan sus hijos directos.
 En este caso, los nietos de juan son los hijos de carlos y luis, es decir: daniel, diego, pablo, manuel y ramiro.
+
+v) Conseguir todos los hermanos de Pablo.
+Primero debo buscar su padre, y en base a su padre directo, los hijos de ese padre. El tema es que acá no puede aparecer Pablo por lo tanto podemos hacer que todos los X sean hermanos de un Y particular.
+Ej.: Hermanos de Pablo -> Busco Padre -> Luis -> Busco hijos de Luis -> pablo, manuel y ramiro. 
 */
