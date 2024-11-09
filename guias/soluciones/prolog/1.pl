@@ -26,6 +26,16 @@ nietos(X,Y) :- hijo(Z, Y), hijo(X, Z).
 /* hermanos(-X, +Y) hermanos(-X, pablo) respuesta va en X. z tiene el padre de Y. */
 hermanos(X,Y) :- padre(Z, Y), hijo(X, Z), hermano(X, Y).
 
+/* implementacion fallida aproposito por el ejercicio vi) 
+ancestro(X, X).
+ancestro(X,Y) :- ancestro(Z,Y), padre(X, Z).
+
+*/
+
+ancestro(X, Y) :- padre(X, Y).
+ancestro(X,Y) :- ancestro(Z,Y), padre(X, Z).
+
+
 /*
 ii) X es descendiente de Y si y solo si: X es hijo de Y, o 
 descendiente: ¿Es Daniel descendiente de Juan? Sí.
@@ -80,5 +90,9 @@ En este caso, los nietos de juan son los hijos de carlos y luis, es decir: danie
 
 v) Conseguir todos los hermanos de Pablo.
 Primero debo buscar su padre, y en base a su padre directo, los hijos de ese padre. El tema es que acá no puede aparecer Pablo por lo tanto podemos hacer que todos los X sean hermanos de un Y particular.
-Ej.: Hermanos de Pablo -> Busco Padre -> Luis -> Busco hijos de Luis -> pablo, manuel y ramiro. 
+Ej.: Hermanos de Pablo -> Busco Padre -> Luis -> Busco hijos de Luis -> pablo, manuel y ramiro -> Filtro y dejo solo los hermanos
+
+vi) Explicar la respuesta que da cuando se ejecuta ancestro(juan, X) al pedir mas de un resultado.
+Se cuelga despues de ramiro y se rompe el stack.
+
 */
