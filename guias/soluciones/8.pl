@@ -30,8 +30,38 @@ Haciendo backtracking, sale de hijo(X,Z) y ahora va por la ecuacion de descendie
 A su vez, si solamente instanciamos la X con daniel, el resultado será carlos por padre directo, o juan por abuelo.
 
 iii) descendiente(Alguien, juan)
+Se asume que cada vez que se pide una respuesta se piden más.
 descendiente es un Predicado de Aridad 2. La variable Alguien no está instanciada, por lo tanto, lo que estará buscando esta consulta es todos los que le siguieron a Juan. Es decir, Juan padre de Manuel, Manuel padre de Lauti, y Lauti padre de Matias entonces si me piden descendiente(Alguien, juan) me devolvería Manuel (hijo directo de Juan), también Lauti y Matías.
 En este caso los resultados van a ser: carlos, luis, daniel, diego, pablo, manuel y ramiro. Que es la descendencia que tuvo juan.
-El árbol en sí es bastante extenso, pero lo voy a poner acá por pasos.
-Al llamar el procedimiento, hace match con la primera ecuación
+El árbol en sí es bastante extenso, pero lo voy a poner acá por pasos y cuando esté identado es porque estamos en la misma rama.
+Al llamar el procedimiento, hace match con la primera regla: descendiente(Alguien, juan).
+El siguiente paso es llamar hijo(Alguien, juan) -= padre(juan, Alguien) y acá hay 7 posibles hechos para tomar:
+    1. padre(juan, carlos): vale.
+    2. padre(juan, luis): vale
+    3, 4, 5, 6, 7 no valen. 
+
+Respuesta Intermedia: Entonces las primeras dos respuestas son carlos, luis.
+
+Hace BT, sale de todas las posibles combinaciones de la primera ecuación y va a la segunda.
+descendiente(Alguien, juan) :- hijo(Alguien, Z), descendiente(Z, juan)
+Acá se torna todo pesado, porque es una conjunción, donde cada condición (hijo, descendiente) implican descendiente(Alguien, juan).
+Como Prolog trabaja, toma la primera ecuación y prueba todos los posibles casos.
+hijo(Alguien, Z): Como ni Alguien ni Z están instanciadas, va a prácticamente traer todas las combinaciones posibles.
+Esto quiere decir que hijo(Alguien, Z) -= padre(Z, Alguien) traerá:
+    1. Z = juan, Alguien = carlos por primer hecho.
+    2. Z = carlos, Alguien = daniel
+    3. Z = carlos, Alguien = diego
+    4. Z = luis, Alguien = pablo
+    5. Z = luis, Alguien = manuel
+    6. Z = luis, Alguien = ramiro
+
+Ahora, como no tiene nada más que hacer, hace BT y prueba todos los casos para la segunda ecuación.
+    1.
+        1. descendiente(juan, juan) Z = juan, Y = juan
+            1. hijo(juan, juan) -= padre(juan, juan) - falla. no matchea.
+            2. hijo(juan, Z), descendiente(juan, juan) este llamado falla siempre porque descendiente(juan, juan) es siempre falso.
+        2. descendiente(carlos, juan) Z = carlos,  Y = juan
+            1. hijo(carlos, juan) -= padre(juan, carlos) este es VERDADERO. entonces acá ya guardamos una respuesta Z = carlos.
+            2. hijo(carlos, Z), descendiente(carlos, juan)
+
 */
