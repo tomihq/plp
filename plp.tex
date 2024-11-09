@@ -171,7 +171,7 @@ Sucede en aquellas expresiones que tienen más de un tipo.
     \item $cargarStringArray :: String -> [] \rightarrow [String]$. No es una expresión Polimórfica.
 \end{itemize}
 \textbf{Nota}: Es importante que si tenemos 2 parámetros de tipo a significa que los dos parámetros deben ser de ese tipo. Si tenemos 2 parámetros uno de tipo a y uno de b podría suceder que sean diferentes pero puede que sean el mismo. 
-\textbf{Importante}: Recordar que si usamos operadores, colocar las clases que correspondan. Ej.: $a>0$ a debe ser $(Num a, Ord a)$. \\
+\textbf{Importante}: Recordar que si usamos operadores, colocar las clases que correspondan. Ej.: $a>0$ a debe ser $(Num \ a, Ord \ a)$. \\
 Véase \hyperref[subsec:clases_tipos]{\underline{\textbf{anexo}}} para ver ejemplos de las clases de tipos.
 \section*{Polimorfismo con Clases (Type Classes)}
 Es posible limitar el polimorfismo a clases específicas. Es decir, si nos mandan un tipo $a$ podemos decir que ese tipo $a$ es genérico pero de una clase específica. \\
@@ -181,8 +181,8 @@ En este caso, $Num \ a $ es una Type Class.
 Dada una expresión, se computa su valor usando las ecuaciones siempre y cuando estén bien tipadas. \\
 \textbf{Importante}: Que una expresión se cumpla el tipado, no significa que devuelva un valor.
 \begin{itemize}
-    \item $sumarUno :: a -> a$: No falla nunca.
-    \item $division :: a -> b$: Falla si b = 0. Esto nos demuestra que aunque los parámetros estén bien tipados, podemos tener indefiniciones.
+    \item $sumarUno :: a -> a$: No falla nunca (función total)
+    \item $division :: a -> b$: Falla si b = 0. Esto nos demuestra que aunque los parámetros estén bien tipados, podemos tener indefiniciones (función parcial).
 \end{itemize}
 \subsection*{¿Cómo está dado un programa en Funcional?}
 Un programa funcional está dado por un conjunto de \textbf{ecuaciones orientadas}. Se les llama de esta forma pues del \textbf{lado izquierdo está lo que define y del lado derecho la definición} (o expresión que produce el valor)
@@ -312,9 +312,9 @@ Otra forma de definir la composición es usando Notación Lambda.
 Recordemos que esto es algo recordable pues $fog$ seria meter g adentro de f y para eso, la salida de g debe ser la entrada de f. Y luego se devuelve como salida el dominio de g y la salida de f.
 Nótese que la notación lambda es súper útil para definir funciones sin nombre, que solamente hagan algo. Esto es muy útil cuando queremos mandar una función por parámetro y que una función dada la llame a esta función.
 \subsection*{Llamados estándar vs llamados en composición}
-$not(null x) \equiv (not . null) x$ \\
-Esto quiere decir que si primero componemos todas las funciones que queremos aplicarle a un valor, es lo mismo que ir aplicando de una a una las funciones al argumento.
-\textbf{Importante}: La composición funciona \textbf{sí y solo sí} alguna de las funciones está parcialmente aplicada. Ej.: $(== 0) . mod n m$ no funciona, pero $(== 0) . mod n$ sí.
+$not(null \ x) \equiv (not \ . \ null) \ x$ \\
+Esto quiere decir que si primero componemos todas las funciones que queremos aplicarle a un valor, es lo mismo que ir aplicando de una a una las funciones al argumento. \\
+\textbf{Importante}: La composición funciona \textbf{sí y solo sí} alguna de las funciones está parcialmente aplicada. Ej.: $(== 0) . mod \ n \ m$ no funciona, pero $(== 0) . mod \ n$ sí.
 \subsection*{Funciones Lambda}
 Son funciones anónimas, es decir, no tienen nombre.  \\
 \textbf{($\backslash x \rightarrow x+1$)}: Es una función anónima que dado un x, te devuelve una función que le aplica x+1.
@@ -1783,7 +1783,7 @@ Entonces, armamos el término M: $\lambda(x:\alpha) . x$ y podemos chequear amba
 \sd{\Gamma ,x:\alpha \vdash x:\alpha}{\Gamma \vdash (\lambda(x:\alpha) . x):\alpha \rightarrow \alpha}{T-ABS} y es justamente lo que queríamos derivar. \\
 \textbf{Importante}: Solo tipo en M si $\exists$ una lambda. Ej.: $U = x \ True \equiv M = x \ True $ pues no existe ninguna lambda en U. 
 \subsection*{Incorporando incógnitas a los tipos}
-El algoritmo de inferencia de tipos se basa en manipualr tipos \textbf{parcialmente conocidos}. \\
+El algoritmo de inferencia de tipos se basa en manipular tipos \textbf{parcialmente conocidos}. \\
 Ej.: $x \ True$, ¿cómo podemos tiparlo?. Bueno, recordemos que asociamos a la izquierda, por lo tanto sería algo así: $x(True)$ por lo tanto, x debería de ser una función que recibe obligatoriamente un booleano y devuelve un tipo desconocido. Ese tipo desconocido lo denotamos con una variable. \\
 Por lo tanto, el tipo sería: (x: $Bool \rightarrow X_{1}$) \\
 Ej. 2: $(X_{1} \rightarrow X_{1}) \stackrel{?}{=} ((Bool \rightarrow Bool) \rightarrow X_{2})$. \\
@@ -1990,7 +1990,7 @@ Véase \hyperref[subsec:lpo_formulas]{\textbf{\underline{anexo}}} para ver ejemp
 \[\begin{minipage}[b]{0.8\textwidth}
     \includegraphics[width=\linewidth]{assets/validez_satisfactibilidad.png}
 \end{minipage}\]
-\section*{Programación Lógica en Prolog}
+\section*{Pre-Prolog}
 \subsection*{Términos de Primer Orden}
 Prolog opera con ellos. Son de la pinta $X \ Y \ succ(succ(zero)) \ bin(I, R, D) \dots$
 \subsection*{Fórmulas Atómicas}
@@ -2014,11 +2014,83 @@ Una consulta es de la forma: $?- \sigma_{1}, \dots, \sigma_{n}$ \\
 Ej.: $?-abuelo(X, ares)$ 
 \subsubsection*{Interpretación Lógica de las Consultas}
 El X hay que predicarlo en base a existenciales. \\
-Ej.: $\exists X_{1}, \dots, \exists X_{k} . (\sigma_{1} \land \dots \land \sigma_{n})$ donde $X_{1}, \dots, X_{k}$ son todas las variables libres de las fórmulas.
-\subsection*{Pasaje de LPO a Forma Clausal}
-Es prácticamente un algoritmo. \\
+Ej.: $\exists X_{1}, \dots, \exists X_{k} . (\sigma_{1} \land \dots \land \sigma_{n})$ donde $X_{1}, \dots, X_{k}$ son todas las variables libres de las fórmulas. \\
+\subsubsection*{Claúsula y Literales}
+\textbf{Claúsula}: $(P \land Q)$. \\
+\textbf{Literal}: $P$
+\subsection*{Lógica Proposicional}
+\subsubsection*{Pasaje de Logica Proposicional a Forma Clausal}
+Es un algoritmo. \\
 La entrada es una \textbf{fórmula $\sigma$ de la lógica proposicional} y la salida es un booleano que indica si $\sigma$ es válida. 
 \begin{itemize}
+    \item Reescribir los $\implies$: $a \implies b \equiv \neg a \lor b$
+    \item Pasar a Forma Normal (f.n) Negada: Empujar los $\neq$ hacia adentro (si hay).
+    \item Pasar a Forma Normal (f.n) Conjuntiva: Distrubuir $\lor$ sobre $\land$ (si hay).
+\end{itemize}
+Luego, la forma Clausal está formada por conjunciones de disyunciones. \\
+Ej.: $(p \lor q) \land (q \lor r)$ en Forma Clausal es $\mathcal{C} = \{\{p,q\}, \{q, r\}\}$. En este caso, esta Forma Clausal está dado por 2 Cláusulas, donde cada Claúsula tiene 2 literales.
+\subsubsection*{Prioridad de Formas Normales en Logica Proposicional}
+Hay tantas que puede ser un quilombo pero es así: $negada  \subseteq conjuntiva$
+\subsubsection*{Refutación (Método de Resolución) en Lógica Proposicional}
+Llamemos $\sigma$ a una fórmula de la lógica proposicional cualquiera. \\
+\textbf{Refutación de $\mathcal{C}$}: Derivación de $\mathcal{C} \vdash \bot$ \\
+Si encontramos una refutación de $\mathcal{C}$: 
+\begin{itemize}
+    \item Vale $\neg \sigma \vdash \bot$: Es decir, $\neg \sigma$ es insatisfactible o contradicción.
+    \item Luego, vale $\vdash \sigma$. Es decir, $\sigma$ es tautología.
+\end{itemize}
+Si NO encontramos una refutación de $\mathcal{C}$:
+\begin{itemize}
+    \item No vale $\neg \sigma \vdash \bot$. Es decir, $\sigma$ es satisfactible.
+    \item Luego, no vale $\vdash \sigma$. Es decir, $\sigma$ no es válida.
+\end{itemize}
+Es un algoritmo y tiene varios pasos pero veamos un ejemplo. \\
+Ej.: $(P \land Q) \implies P$ ¿Cuáles son tautologías?  Si nos está pidiendo cuales son tautologías tenemos que ver que $\neg \sigma$ sea insatisfactible o contradicción, si esto sucede entonces $\sigma$ es tautología. \\
+Lo primero que hacemos es pasar la fórmula $\neg \sigma$ a Forma Clausal, por el algoritmo descripto anteriormente nos queda
+\begin{itemize}
+    \item $\neg ((P \land Q) \implies P)$
+    \item Eliminación del $\implies$: $\neg (\neg(P \land Q) \lor P)$
+    \item Empujar $\neg$ interno: $\neg (\neg P \lor \neg Q \lor P)$
+    \item Empujar $\neg$ externo: $P \land Q \land \neg P$
+\end{itemize}
+Luego, la forma Clausal es $\mathcal{C} = \{\{P\}, \{Q\}, \{\neg P\}\}$ \\
+Ahora básicamente tenemos que ir eligiendo cláusulas \textbf{k} y \textbf{k'} hasta que lleguemos al vacío. \\
+Eligiendo $k=\{P\}$ y $k'=\{\neg P\}$ nos da $\emptyset$. Por lo tanto, se agrega $\emptyset$ a $\mathcal{C}$ pero en el paso recursivo, como $\emptyset$ pertenece a $\mathcal{C}$ llegamos a que $\neg \sigma$ es insatisfactible. Luego, $\sigma$ es tautología. \\
+\textbf{Importante}: Es útil ver que para llegar a vacío no siempre es necesario usar todas las cláusulas. Inclusive, va a haber veces que jamás se llegue a insatisfactible. Entonces eso indicaría que si vale $\neg \sigma$ entonces $\sigma$ es inválida. \\
+\textbf{Importante}: Este proceso siempre termina.
+\subsection*{Lógica de Primer Orden (LPO)}
+\subsubsection*{Pasaje de LPO a Forma Clausal}
+Es prácticamente un algoritmo. Es parecido al anterior en los primeros 2 pasos. La diferencia es que acá si $\sigma$ no es válida, el método puede no terminar. \\
+En la teórica les ponen los pasos de una, pero a mí no me gustó como lo ordenaron. Primero lean lo de abajo, y va a haber una sección que se llama igual que esta pero con un (2). 
+\subsection*{Resolución para Lógica de Primer Orden}
+Hay que pasar por varias formas hasta llegar a la forma Clausal.
+\subsubsection*{Pasaje a forma clausal en Lógica de Primer Orden}
+\subsubsection*{Skolemización}
+La Skolemización es deshacerse de los cuantificadores existenciales. \\
+La idea es introducir testigos para los $\exists$ sin cambiar la satisfactibilidad. 
+\begin{itemize}
+    \item Todo cuantificador existencial se instancia en una constante o función de skolem.
+    \begin{itemize}
+        \item Utilizamos una función cuando el cuantificador existencial está dentro al alcance de un cuantificador para todo (el más cercano). 
+        \item Utilizamos simplemente c cuando el cuantificador existencial no está al alcance de otro cuantificador.
+    \end{itemize}
+\end{itemize}
+\textbf{Importante}: La Skolemización \textbf{no es determinística}. \\
+\textbf{Importante 2}: Skolemizar de afuera hacia adentro. \\
+\textbf{Importante 3}: La Skolemización \textbf{preserva la satisfactibilidad} pero \textbf{no produce fórmulas equivalentes}, esto quiere decir que no preserva la validez. Ej.: $\exists X . (P(0) \implies P(X))$ es válida mientras que $P(0) \implies P(c)$ es inválida. \\
+Ejemplo de Skolemización con existenciales sin alcance de universales
+\[\begin{minipage}[b]{0.2\textwidth}
+    \includegraphics[width=\linewidth]{assets/skolem_1.jpg}
+\end{minipage}\]
+Ejemplo de Skolemización con existenciales al alcance de universales
+\[\begin{minipage}[b]{0.6\textwidth}
+    \includegraphics[width=\linewidth]{assets/skolem_2.jpg}
+\end{minipage}\]
+\subsubsection*{Forma Normal de Skolem (NNF)}
+Sea A una sentencia rectificada en FNN. Una fórmula está rectificada si todos sus cuantificadores ligan variables distintas entre sí, y a la vez distintas de todas las variables libres. \\
+\textbf{En criollo}: Los cuantificadores tienen variables con nombres únicos y no se pisan con variables libres. \\
+Una fórmula en forma normal de Skolem tiene la siguiente pinta: $\sigma_{Sk} :: = \forall X_{1}X_{2} \dots \ X_{n} * \tau$
+\subsection*{Pasaje de LPO a Forma Clausal (2)}\begin{itemize}
     \item Reescribimos $\implies$ usando $\neg$ y $\lor$.
     \item Pasar a f.n negada, empujando $\neg$ hacia adentro.
     \item Pasar a f.n extrayendo $\forall$ y $\exists$ hacia afuera.
@@ -2026,56 +2098,64 @@ La entrada es una \textbf{fórmula $\sigma$ de la lógica proposicional} y la sa
     \item Pasar a f.n. conjuntiva, distribuyendo $\lor$ sobre $\land$.
     \item Empujar los cuantificadores hacia adentro de las conjunciones.
 \end{itemize}
-Ej.: $\neg (((P \implies (Q \land R)) \land P) \implies Q)$ en forma Clausal es $(\neg P \lor Q) \land (\neg P \lor R) \land P \land \neg Q$ \\
-\subsubsection*{Claúsula y Literales}
-\textbf{Claúsula}: $(P \land Q)$. \\
-\textbf{Literal}: $P$
-\begin{comment}
-\subsubsection*{Método de Refutación (Logica Proposicional)}
-Se utiliza una vez que tenemos el conjunto de cláusulas de $\mathcal{C} = \{k_{1}, \dots, k_{n}\}$. La idea es buscar una refutación, es decir una demostración de $\mathcal{C} \vdash \bot$ \\
-Para poder hacer esto tenemos que hacer una conjunción de P con todos los literales y también ver la negación de P y todos los literales. La conclusión solamente posee los literales y esta conclusión se llama la resolvente de las premisas. \\
-TODO: añadir imagen. \\
-El algoritmo que se realiza es el siguiente:
+Acá dejo una imagen que hice por si es de utilidad, con las propiedades y todo (res: es lo que te devuelve al aplicar ese paso)
+\[\begin{minipage}[b]{1\textwidth}
+    \includegraphics[width=\linewidth]{assets/paso_paso_lpo_clausal.png}
+\end{minipage}\]
+Véase \hyperref[subsec:lpo_forma_clausal]{\textbf{\underline{anexo}}} para dos ejemplos
+\subsubsection*{Prioridad de Formas Normales en LPO}
+Hay tantas que puede ser un quilombo pero es así: $negada \subseteq prenexa \subseteq skolem \subseteq conjuntiva$
+\subsubsection*{Refutación (Método de Resolución) en LPO}
+Es exactamente igual que en Lógica Proposicional \textbf{excepto} que ahora como existen funciones P que tienen argumentos, hay que ver si los argumentos son unificables. \\
+Hasta ahora, esto vale $\forall X . P(X) \land \neg P(0)$, esto es porque las claúsulas que tenemos son $\mathcal{C} = \{\{P(X)\}, \{\neg P(0)\}\}$ y la regla propuesta no aplica porque las P son iguales pero sus argumentos no. \\
+Ej.: Sea $\neg \sigma$ con sus cláusulas, $\mathcal{C} = \{\{P(X,Y)\}, \{\neg P(f(z), Z)\}\}$
 \begin{itemize}
-    \item Entrada: Un conjunto de claúsulas $\mathcal{C_{0}} = \{\mathcal{k}_{1}, \dots, \mathcal{k}_{n}\}$
-    \item Salida: SAT/INSAT indicando si $\mathcal{C_{0}}$ es insatisfactible($\mathcal{C_{0}} \vdash \bot$)
-    \item Algoritmo: 
+    \item Para cancelar los términos opuestos $P$ y $\neg P$, unificamos.
+    \item $mgu(P(X,Y) \stackrel{?}{=}P(f(Z), Z))$. Para que estos sean iguales en argumento vemos que unificamos como $\{X := f(z), Y := Z\}$.
+    \item Luego, k = $P(f(z), Z)$ y k' = $\neg P(f(z), Z)$ nos da como resultado $\{\}$ o $\emptyset$.
+    \item Por lo tanto como $\neg \sigma$ es insatisfactible, $\sigma$ es tautología.
+\end{itemize}
+\section*{Prolog}
+El algoritmo que vimos antes para ver si una fórmula de primer orden $\sigma$ es válida funciona, pero es costosa. Esto es porque a nivel computacional implica hacer
+\begin{itemize}
+    \item Búsqueda: Elegir dos claúsulas
+    \item Selección: Elegir un subconjunto de literales de cada claúsula
+\end{itemize}
+Además en cada paso se agrega una claúsula, resolverse ecauciones de unificación y se usa BFS.\\
+¿Cómo soluciona este problema Prolog? Usando \textbf{resolución SLD}.
+\subsection*{Resolución SLD}
+La resolución SLD se aplica solamente sobre cláusulas de Horn. 
+\subsection*{Cláusulas de Horn}
+Recordemos que una claúsula es un conjunto de literales 
+\[\{l_{1}, \dots, l_{n}\}\]
+Los literales son de la forma 
+\[l::= P(t_{1}, \dots, t_{n})\ |\ \neg P(t_{1}, \dots, t_{n})\]
+En SLD cada cláusula tiene como máximo un literal positivo. \\
+Por ejemplo, en SLD no es posible resolver esto: $\mathcal{C} = \{\{P(X), Q(Y)\}, \{\neg Q(Y)\}\}$ porque la primera claúsula tiene dos positivos. 
+\subsubsection*{Grupos en Claúsulas de Horn}
+\begin{itemize}
+    \item Las que tienen un literal positivo y ningún negativo se llaman hechos o axiomas.
     \begin{itemize}
-        \item Sea $\mathcal{C}:= \mathcal{C}_{0}$. Repetir mientras sea posible.
-        \item Si $\{\} \in \mathcal{C}$ devolver INSAT.
-        \item Elegir dos claúsulas $\mathcal{K}, \mathcal{K'} \in \mathcal{C}$ tales que: 
-        \begin{itemize}
-            \item $\mathcal{K} = \{P, l_{1}, \dots, l_{n}\}$
-             \item $\mathcal{K}' = \{P, l^{'}_{1}, \dots, l^{'}_{n}\}$
-             \item La resolvente $\rho = \{l_{1}, \dots, l_{n}, l^{'}_{1}, \dots, l^{'}_{m}\}$
-        \end{itemize}
-        \item Tomar $\mathcal{C} := \mathcal{C} \cup \{\rho\}$ y volver al paso 1.
+        \item En LPO: $\{P(X)\}$
+        \item padre(m, t): Es un axioma que dice que m es padre de t.
+        \item madre(k, t): Es un axioma que dice que k es madre de t.
+    \end{itemize}
+    \item Las que tienen un literal positivo y una/varias negativas se llaman reglas.
+    \begin{itemize}
+        \item En LPO: $\{P(X), \neg Q(X,Y)\}$
+        \item En Prolog: padres(x) :- madre(m, x), padre(p, x).
+        \item Esta regla define que x tiene 'padres' cuando existe una madre m de x y un padre p de x.
+    \end{itemize}
+    \item Las que NO tienen literal positivo y una/varias negativas se llaman cláusulas objetivo.
+    \begin{itemize}
+        \item En LPO: $\{\neg P(X)\}$
+        \item padres(t).
+        \item Cuando esto le llega a Prolog, se conforma una claúsula objetivo que se compone de literales negativos.
     \end{itemize}
 \end{itemize}
-\subsubsection*{Correción del Método de Resolución Proposicional}
-\end{comment}
-\subsection*{Resolución para Lógica de Primer Orden}
-Hay que pasar por varias formas hasta llegar a la forma Clausal.
-\subsubsection*{Forma Normal Negada (NNF)}
-Solamente usa los conectivos $\{\neq, \lor, \land, \forall, \exists\}$ 
-\subsubsection*{Pasaje a forma clausal en Lógica de Primer Orden}
-\subsubsection*{Skolemización}
-La Skolemización es deshacerse de los cuantificadores existenciales. \\
-La idea es introducir testigos para los $\exists$ sin cambiar la satisfactibilidad. \\
-\begin{itemize}
-    \item Todo cuantificador existencial se instancia en una constante o función de skolem.
-    \item Ej.: $\exists X . P(x)$ se skolemiza a $P(c)$ donde c es una nueva constante que se agrega al lenguaje de primer orden. Estas funciones y constantes como parámetros.
-\end{itemize}
-\textbf{Importante}: La Skolemización \textbf{no es determinística}. \\
-\textbf{Importante 2}: Skolemizar de afuera hacia adentro. \\
-\textbf{Importante 3}: La Skolemización \textbf{preserva la satisfactibilidad} pero \textbf{no produce fórmulas equivalentes}, esto quiere decir que no preserva la validez. Ej.: $\exists X . (P(0) \implies P(X))$ es válida mientras que $P(0) \implies P(c)$ es inválida.
-\subsubsection*{Forma Normal de Skolem (NNF)}
-Sea A una sentencia rectificada en FNN. Una fórmula está rectificada si todos sus cuantificadores ligan variables distintas entre sí, y a la vez distintas de todas las variables libres. \\
-\textbf{En criollo}: Los cuantificadores tienen variables con nombres únicos y no se pisan con variables libres. \\
-Una fórmula en forma normal de Skolem tiene la siguiente pinta: $\sigma_{Sk} :: = \forall X_{1}X_{2} \dots \ X_{n} * \tau$
-\subsubsection*{Refutación en Lógica de Primer Orden}
-\subsubsection*{Corrección del método de resolución de Primer Orden}
-
+\textbf{Nota}: Los axiomas + reglas en Prolog se llaman \textbf{cláusulas de definición (PGM)} y estas nunca llegan a ser insatisfactibles. 
+\subsubsection*{Derivación SLD}
+En cada paso, Prolog siempre toma una \textbf{claúsula de definición (PGM)} y una \textbf{claúsula objetivo (Goal)}
 \section*{Anexo}
 \subsection*{Recordando Haskell}
 Para ejecutar un archivo hay que instalar GHCI. Una vez instalado, nos paramos en la terminal en el directorio donde está el archivo que queremos ejecutar. 
@@ -2380,6 +2460,18 @@ Recordemos la teoría
 8. $B(X,Y) \implies f(X)$: No es una fórmula. f(X) es un término o valor de nuestro dominio, no es un valor de verdad. Se le debería aplicar un símbolo de predicado para que arroje un valor de verdad. \\
 9. $S(X, f(Y)) \land B(X,Y)$: Es una fórmula. 
 10. $\forall X. B(X, f(X))$: Es una fórmula. Para todo elemento posible de nuestro dominio X, al enviarlo a f nos devuelve un valor del dominio y se lo compara con el X. Luego, aplicar B devuelve un valor de verdad. \\
-11. $\exists X. B(Y, X(C))$: No es una fórmula, porque X es un elemento del dominio y acá se lo está usando como función de aridad 1 (creo)
+11. $\exists X. B(Y, X(C))$: No es una fórmula, porque X es un elemento del dominio y acá se lo está usando como función de aridad 1 (creo) 
+\subsection*{Pasaje de LPO a Forma Clausal}
+\label{subsec:lpo_forma_clausal}
+1. Sea $\sigma = \exists X . \forall Y . (P(X,Y) \land Q(X) \land \neg R(Y))$
+\begin{itemize}
+    \item Reemplazamos todas las ocurrencias de implicaciones por su equivalente. Como acá no hay, no hacemos nada.
+    \item Reemplazamos todas las ocurrencias de las negaciones exteriores hacia adentro, como acá están todas dentro, no hacemos nada.
+    \item Movemos todos los cuantificadores hacia afuera. Como acá no hay adentro, no hacemos nada.
+    \item Pasamos los cuantificadores existenciales a función o constante, en este caso como el existencial está fuera de todo (no depende de ningun cuantificador universal), entonces nuestra hipotética x, será una constante. Por lo tanto $= \forall Y . (P(C, Y) \land Q(C) \land \neg R(Y))$
+    \item Distribuimos los $\lor$ sobre $\land$. Como acá no hay, no hacemos nada.
+    \item Por último, los cuantificadores universales por cada $\land$ distribuimos. Por lo tanto $= \forall Y . P(C,Y) \land \forall Y . Q(C) \land \forall Y . \neg R(Y)$
+    \item Entonces la forma clausal es: $\mathcal{C} = \{\{P(C,Y)\}, \{Q(C)\}, \{\neg R(Y)\}\}$
+\end{itemize}
 
 \end{document} 
