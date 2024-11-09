@@ -13,13 +13,17 @@ abuelo(X,Y) :- padre(X, Z), padre(Z, Y).
 hijo(X,Y) :- padre(Y, X).
 
 /* hermano(?X, ?Y) */ 
-hermano(X,Y) :- hijo(X, Z), hijo(Y, Z), X \= Y. /* si X \= Y lo pongo al pricnipio no vale porque si Y no estaria instanciada - enviada por parametro fallaria porque ej: hermano(juan, Y) no unifica juan con Y */ 
+hermano(X,Y) :- hijo(X, Z), hijo(Y, Z), X \= Y. 
+/* si X \= Y lo pongo al pricnipio no vale porque si Y no estaria instanciada - enviada por parametro fallaria porque ej: hermano(juan, Y) no unifica juan con Y */ 
 
 /* descendiente(?X, ?Y) */
 descendiente(X, Y) :- hijo(X,Y).
-descendiente(X, Y) :- hijo(X, Z), descendiente(Z, Y).    
+descendiente(X, Y) :- hijo(X, Z), descendiente(Z, Y). 
 
-/* 
+/* nietos(?X, +Y) */
+nietos(X,Y) :- hijo(Z, Y), hijo(X, Z).
+
+/*
 ii) X es descendiente de Y si y solo si: X es hijo de Y, o 
 descendiente: ¿Es Daniel descendiente de Juan? Sí.
 descendiente(daniel, juan) espero true.
@@ -56,12 +60,18 @@ Esto quiere decir que hijo(Alguien, Z) -= padre(Z, Alguien) traerá:
     6. Z = luis, Alguien = ramiro
 
 Ahora, como no tiene nada más que hacer, hace BT y prueba todos los casos para la segunda ecuación.
-    1.
-        1. descendiente(juan, juan) Z = juan, Y = juan
-            1. hijo(juan, juan) -= padre(juan, juan) - falla. no matchea.
-            2. hijo(juan, Z), descendiente(juan, juan) este llamado falla siempre porque descendiente(juan, juan) es siempre falso.
         2. descendiente(carlos, juan) Z = carlos,  Y = juan
-            1. hijo(carlos, juan) -= padre(juan, carlos) este es VERDADERO. entonces acá ya guardamos una respuesta Z = carlos.
+            1. hijo(carlos, juan) -= padre(juan, carlos) esto es Falso.
             2. hijo(carlos, Z), descendiente(carlos, juan)
+                1. De la primera de las condiciones nos trae: X = daniel, X = diego
+                2. De la segunda condicion descendiente(carlos, juan) y esta se cumple porque carlos es hijo directo de juan.
+                Entonces la respuesta intermedia añade: daniel y diego
 
+        Luego lo mismo con luis.
+
+
+iv) Para conseguir los nietos de Juan, esto quiere decir que estamos buscando todos los posibles descendientes de Juan EXCEPTO sus hijos directos.
+nietos(X,juan) ¿qué X son nietos de Juan? 
+Primero se buscan los hijos de Juan. Luego, por cada hijo de Juan instanciado, se buscan sus hijos directos.
+En este caso, los nietos de juan son los hijos de carlos y luis, es decir: daniel, diego, pablo, manuel y ramiro.
 */
