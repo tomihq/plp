@@ -57,3 +57,35 @@ kills(marsellus, Y) :- gives_footmassage(Y, mia).
 loves_everyone(mia, Y) :- good_dancer(Y).
 eats(jules) :- nutritious(X); tasty(X)
 
+Exercise  2.1 Which of the following pairs of terms unify? Where relevant, give the variable instantiations that lead to successful unification.
+
+bread  =  bread: unifica 
+'Bread'  =  bread: no unifica, no son el mismo átomo. 
+'bread'  =  bread: unifica, ambos son el mismo átomo.
+Bread  =  bread: no unifica, Bread es una variable, bread es un átomo 
+bread  =  sausage: no unifica, son átomos diferentes.
+food(bread)  =  bread: no unifica por clash. 
+food(bread)  =  X: unifica con X = food(bread)
+food(X)  =  food(bread): unifica con X = bread luego de realizar decompose
+food(bread,X)  =  food(Y,sausage): unifica con  Y = bread; X = sausage; 
+food(bread,X,beer)  =  food(Y,sausage,X): no unifica, X no puede tener dos valores distintos. 
+food(bread,X,beer)  =  food(Y,kahuna_burger): no unifica por clash. 
+food(X)  =  X: unifica con X = food(X). Sin embargo, hay occurs-check. 
+meal(food(bread),drink(beer))  =  meal(X,Y): unifica con X = food(bread), Y = drink(beer)
+meal(food(bread),X)  =  meal(X,drink(beer)) = no unifica, X no puede tener dos valores distintos.
+
+
+Exercise  2.2 We are working with the following knowledge base:
+house_elf(dobby).
+witch(hermione).
+witch('McGonagall').
+witch(rita_skeeter).
+magic(X):- house_elf(X).
+magic(X):- wizard(X).
+magic(X):- witch(X).
+
+?-  magic(house_elf).: false. house_elf(house_elf) no existe como hecho. 
+?-  wizard(harry).: false. wizard. no existe como hecho. 
+?-  magic(wizard).: false. wizard no existe como hecho. 
+?-  magic('McGonagall').: true. Hace match con la tercera regla de magic(X)
+?-  magic(Hermione).: intenta con las dos primeras de magic(X) y falla, llega al HEAD de magic(X) con BODY witch(X) y se satisface con el hecho número dos. 
