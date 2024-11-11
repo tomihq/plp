@@ -2157,7 +2157,138 @@ Por ejemplo, en SLD no es posible resolver esto: $\mathcal{C} = \{\{P(X), Q(Y)\}
 \subsubsection*{Derivación SLD}
 En cada paso, Prolog siempre toma una \textbf{claúsula de definición (PGM)} y una \textbf{claúsula objetivo (Goal)}
 \section*{Anexo}
-\subsection*{Recordando Haskell}
+\subsection*{Prolog}
+Conformado por
+\begin{itemize}
+    \item Hechos: No poseen un cuerpo. Son verdaderos siempre.
+    \item Reglas: Tambien llamados predicados.
+    \item Consultas
+\end{itemize}
+Los Hechos y las Reglas conforman una database o cláusulas. \\
+La idea de Prolog consiste en realizar consultas, es decir, preguntar cosas acerca de la información que tenemos almacenada. \\
+\subsubsection*{Hechos}
+Comienzan con minúscula siempre, y están en lowercase.
+\begin{lstlisting}
+    woman(mia).
+    woman(judy).
+    playsAirGuitar(judy).
+    party. 
+\end{lstlisting}
+En este caso tenemos 4 hechos, que sin importar la situación que estemos, siempre serán verdad. \\
+Si hacemos la siguiente consulta: \textbf{?- woman(mia)} la respuesta será true. \\
+Si hacemos la siguiente consulta \textbf{?- woman(guada)} la respuesta será false, pues la database no tiene información acerca de que guada sea una mujer. Esto es súper importante en la Programación Lógica. Que sea falso significa que estamos en un mundo cerrado, por lo tanto, lo que no son hechos ni reglas, \textbf{siempre es falso}.
+\subsubsection*{Reglas}
+Las reglas están conformadas por hechos en su cuerpo. El lado izquierdo de una regla es llamado HEAD mientras que el lado derecho de una regla es llamado BODY. \\
+\begin{lstlisting}
+    happy(yolanda).
+    listen2Music(mia).
+    listen2Music(yolanda).
+    playsAirGuitar(mia) :- listens2Music(mia).
+\end{lstlisting}
+En esta database tenemos 3 hechos y 1 regla. \\
+Las reglas se leen como: \textbf{playsAirGuitar(mia) es verdadero si listens2Music(mia) es verdadero}. Esto es importante, porque lo que quiere decir es que cada una de las condiciones del BODY implican el HEAD. \\
+¿Cómo es que Prolog deduce el resultado de \textbf{playsAirGuitar(mia)}? Lo primero que hace es buscar esta ecuación como un hecho. Como NO es un hecho, entonces se fija qué condiciones deben cumplirse para que esto sea verdadero (por defecto, es falso). Como observa que depende de listens2Music(mia), observa si esto es un hecho. Como efectivamente es un hecho, concluye que esto es verdadero. 
+\subsubsection*{Reglas $\lor$}
+Las Reglas $\lor$ se caracterizan por ser verdaderas si las condiciones no necesariamente se deben cumplir al mismo tiempo. \\
+Para poder definir un $\lor$ en Prolog, usamos \textbf{;}.
+\begin{lstlisting}
+    playsAirGuitar(butch) :- happy(butch); listens2Music(butch).
+\end{lstlisting}
+playsAirGuitar(butch) será verdadero sí y solo sí happy(butch) es verdadero \textbf{o} listens2Music(butch) es verdadero.
+\subsubsection*{Variables}
+Las variables en Prolog no son como en un lenguaje imperativo que significan un nombre para un valor dado. Acá las variables se unifican a valores y estas comienzan con una letra mayúscula. \\
+Esto quiere decir que, Prolog por cada vez que trata de devolver una respuesta, en realidad está devolviendo una unificación para la cual una condición es cierta (hecho) 
+\begin{lstlisting}
+    woman(mia).
+    woman(judy).
+    woman(yolanda).
+    loves(vincent, mia).
+    loves(marsellus, mia).
+    loves(pumpkin, honey_bunny).
+    loves(honey_bunny, pumpkin).
+\end{lstlisting}
+De la siguiente database, podemos hacer consultas como: \textbf{woman(X)}, ¿qué es lo que estamos preguntando? \textbf{dame todas las posibilidades para X donde X cumpla woman}. \\
+Esto se resuelve de la misma manera en que nosotros hacíamos el Algoritmo de Martinelli-Montanari, quiero decir que: 
+\begin{itemize}
+    \item $\{woman(X) \stackrel{?}{=} woman(mia)\}$
+    \begin{itemize}
+        \item Dec $\rightarrow$ $\{X \stackrel{?}{=} mia\}$  
+        \item Del $\rightarrow \emptyset$
+        \item Luego, X=mia. 
+    \end{itemize}
+\end{itemize}
+Esto mismo sucede para woman(judy) y woman(yolanda). \\
+¿Qué pasa con loves?, bueno, falla por clash porque los predicados no son el mismo, ni tampoco necesitan la misma cantidad de argumentos.
+\begin{itemize}
+    \item $\{woman(X) \stackrel{?}{=} loves(vincent, mia)\}$
+    \begin{itemize}
+        \item $\rightarrow$ clash. 
+    \end{itemize}
+\end{itemize}
+\textbf{Importante}: Recordar que una variable unifica con cualquier cosa. \\
+Veamos ahora un último ejemplo, ¿qué pasa con loves(marsellus, X)? Bueno, buscará en la database los hechos o reglas que hagan match con esta consulta, viendo qué posibles valores puede tomar X para ser verdadero. \\
+Desde ya, no va a unificar nunca con woman porque falla por clash. \\
+Tampoco unifica con loves(vincent, mia) por el mismo motivo 
+\begin{itemize}
+    \item  $\{loves(marsellus, X) \stackrel{{?}}{=} loves(vincent, mia)\}$ 
+    \begin{itemize}
+        \item Dec $\rightarrow$ $\{marsellus \stackrel{{?}}{=} vincent\}, \{X \stackrel{{?}}{=} mia\}$  
+        \item $\rightarrow$ clash entre marsellus y vincent, son dos funciones de aridad 0 y son diferentes.
+    \end{itemize}
+\end{itemize}
+\subsubsection*{Términos}
+En Prolog, los términos están conformados por: atómos, números, variables y términos complejos. 
+\begin{itemize}
+    \item Los átomos son aquellos que comienzan con minúscula, están conformados por letras minúsculas, letras mayúsculas, dígitos y el símbolo de $\mathunderscore$. Ej.: listens2Music, playsAirGuitar, 'vincent'.
+    \item Los números son como conocemos en todos los lenguajes de programación, números.
+    \item Las variables empiezan con mayúscula, están conformadas por mayúsculas, minúsculas, números y $\mathunderscore$ y usamos $\mathunderscore$ para hablar de una variable anónima. 
+    \item Los términos complejos o también conocidos como estructuras, están conformados por una palabra y una secuencia de argumentos. Ya vimos anteriormente algunos, por ejemplo playsAirGuitar(jody) y se nota playsAirGuitar/1 pues requiere de un argumento.
+\end{itemize}
+\textbf{Importante}: Cuando decimos que playsAirGuitar requiere de un solo argumento, decimos que es de aridad 1 o función unaria. \\
+Esto de la aridad es útil entenderlo porque Prolog nos permite tener un mismo nombre de predicado, pero con diferente cantidad de argumentos. Esto, a bajo nivel lo trata como si fuesen dos predicados totalmente diferentes. \\
+De ahí viene que esto es válido:
+\begin{lstlisting}
+    loves(tom, guada).
+    loves(tom, kari).
+    loves(kari, tom, andy).
+\end{lstlisting}
+\subsubsection*{¿Cuándo usar variables anónimas, y cuando no?}
+Veamos el siguiente ejemplo 
+\begin{lstlisting}
+    gives_footmassage(X, mia).
+    kills(marsellus, Y) :- gives_footmassage(Y, mia).
+
+    gives_footmassage2(_, mia).
+    kills2(marsellus, Y) :- gives_footmassage2(Y, mia).
+\end{lstlisting}
+¿Cual es la diferencia entre $gives_footmassage$ y $gives_footmassage2$? que $gives_footmassage2$ será verdadero siempre y cuando el segundo argumento sea mia, pero jamás sabremos con certeza quién le da un footmassage a mia. Entonces, marsellus no sabe. \\
+En el $gives_footmassage$, marsellus sabe que tendrá que matar al X que le haga masajes en los pies a mia. \\
+\textbf{Entonces}: NO usar variables anónimas en definiciones de predicados a menos que nunca se quiera unificar o devolver una respuesta concreta de ese argumento. 
+\subsubsection*{Unificación}
+Es \textbf{fundamental} entender qué es la unificación. Decimos que dos términos unifican si son el mismo término o ellos contienen variables que pueden ser instanciadas como términos que pueden terminar siendo términos iguales. \\
+\textbf{Unifican}: 42=42 unifica porque son el mismo número, mia=mia unifica porque son el mismo átomo, X=X unifican porque son la misma variable y woman(mia) = woman(mia) unifican porque son el mismo término complejo. \\
+\textbf{No unifican}: 42=41, ni tampoco woman(mia) = woman(vincent), ni tampoco loves(a, b) = loves(mia, vincent) \\
+\textbf{¿Qué sucede con woman(mia) = woman(X)?} esto si unifica, porque existe una unificación para X de tal manera que woman(mia) = woman(X) y esto sucede sí y solo sí X = mia, es decir, X debe instanciarse con el valor de mia para unificar. \\
+\textbf{¿Qué sucede con loves(vincent,X) = loves(X, mia)?}, esta no unifica. ¿por qué? 
+\begin{itemize}
+    \item Dec $\rightarrow$: $\{vincent \stackrel{?}{=} X\}$, $\{X\stackrel{?}{=} mia\}$
+    \item Swap $\rightarrow$: $\{X \stackrel{?}{=} vincent\}$, $\{X\stackrel{?}{=} mia\}$
+    \item Delete $\{X := vincent\}$: $\{vincent \stackrel{?}{=} mia\}$ y esto es falso, pues los términos vincent y mia no unifican.
+\end{itemize}
+Usualmente, no estamos solamente interesados en el hecho de que dos términos unifiquen, sino que tambien queremos ver cómo las variables tienen que ser instanciadas para que sean iguales. Prolog nos da esta información pues cuando unifica dos términos realiza todas las instanciaciones necesarias. 
+\begin{lstlisting}
+    2 = 2 unifica 
+    '2' = 2 no unifica 
+    mia = X unifica, X = mia 
+    X = Y unifica 
+    loves(X,X) = loves(marsellus, mia) no unifica, porque no hay forma de que X tenga dos posibles unificaciones a la vez.
+\end{lstlisting}
+\textbf{Importante}: Por defecto, Prolog no tiene activo el occurs-check. Esto quiere decir, que podríamos tener referencias circulares infinitas si no tenemos cuidado. Esto quiere decir que esto: $X_{1} \stackrel{?}{=} X_{3} \rightarrow X_{1}$ es posible, aunque no debería de serlo.
+\subsubsection*{Occurs-Check}
+El Occurs-Check es la ocurrencia de una variable que estamos definiendo, que dependa de sí misma. Esto produce referencias circulares infinitas. \\
+Ej.: $father(X) := X$ es una regla que tiene Occurs-Check, es decir, se cuelga. Esto viene a que si $X = father(X)$ entonces esto sería father(father(X)) = father(X) pero a su vez X es father(X) entonces $X = father(father(father(father(\dots))))$ \\
+Esto sucede porque Prolog es un lenguaje optimista. Este asume que vos no le vas a enviar nada peligroso.
+\subsection*{Haskell}
 Para ejecutar un archivo hay que instalar GHCI. Una vez instalado, nos paramos en la terminal en el directorio donde está el archivo que queremos ejecutar. 
 \begin{itemize}
     \item Cargar archivo: :l nombreArchivo
