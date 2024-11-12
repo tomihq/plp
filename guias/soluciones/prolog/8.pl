@@ -10,3 +10,4 @@ sum([], 0).
 sum([H | T], Res) :- sum(T, Rest), Res is Rest + H.
 
 partesQueSuma(L, S, Res) :- partes(L, Res),sum(Res, Suma), Suma =:= S.   
+
