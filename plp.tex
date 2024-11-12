@@ -2290,7 +2290,7 @@ Ej.: $father(X) := X$ es una regla que tiene Occurs-Check, es decir, se cuelga. 
 Esto sucede porque Prolog es un lenguaje optimista. Este asume que vos no le vas a enviar nada peligroso.
 \subsubsection*{Búsqueda de Soluciones (Proof Search)}
 Evalúa cada una de los hechos/reglas que hagan match, luego, si la regla posee un body, va tomando cada una de las condiciones de izquierda a derecha. Busca las posibles soluciones y hace backtracking para ver cuales cumplen la segunda, y así sucesivamente. \\
-Cuando hacemos una consulta, las cosas que deben cumplirse para que sea verdadera, se llaman \textbf{goals}.
+Cuando hacemos una consulta, las cosas que deben cumplirse para que sea verdadera, se llaman \textbf{goals} o claúsulas objetivo.
 \begin{lstlisting}
     1. f(a).
     2. f(b).
