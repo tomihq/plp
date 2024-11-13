@@ -2064,6 +2064,7 @@ Es prácticamente un algoritmo. Es parecido al anterior en los primeros 2 pasos.
 En la teórica les ponen los pasos de una, pero a mí no me gustó como lo ordenaron. Primero lean lo de abajo, y va a haber una sección que se llama igual que esta pero con un (2). 
 \subsection*{Resolución para Lógica de Primer Orden}
 Hay que pasar por varias formas hasta llegar a la forma Clausal.
+\textbf{Importante}: Lo anoto en todos lados porque siempre me olvido. No por algo nos hacen detectar siempre las variables ligadas y libres. Si tenés más de un cuantificador con la misma variable, entonces renombrá algun cuantificador y reemplazá su ocurrencia por la nueva variable, porque después es un quilombo.
 \subsubsection*{Pasaje a forma clausal en Lógica de Primer Orden}
 \subsubsection*{Skolemización}
 La Skolemización es deshacerse de los cuantificadores existenciales. \\
@@ -2115,6 +2116,12 @@ Ej.: Sea $\neg \sigma$ con sus cláusulas, $\mathcal{C} = \{\{P(X,Y)\}, \{\neg P
     \item Luego, k = $P(f(z), Z)$ y k' = $\neg P(f(z), Z)$ nos da como resultado $\{\}$ o $\emptyset$.
     \item Por lo tanto como $\neg \sigma$ es insatisfactible, $\sigma$ es tautología.
 \end{itemize}
+\textbf{Importante}: Primer paso de todo ejercicio: si comenzamos teniendo implicaciones, o cuantificadores universales existenciales con las mismas variables, recordar renombrarlas. \\
+\textbf{Importante2}: (A nivel MGU) Si hay un cuantificador existencial que ahora depende un universal, primero hay que chequear \textbf{en qué términos} se usa la variable \textbf{ligada al cuantificador universal}. Esto es, porque cuando eliminemos el \textbf{cuantificador existencial}, la existencial se elimina y será del tipo \textbf{f(variableCuantUniversal)} pero como variableCuantUniversal estaba en otro término (no ligado al existencial) al intentar unificar nos dará occurs-check pues variableCuantUniversal NO unifica con f(variableCuantUniversal). La idea justamente acá, es que como el existencial asegura que existe (puede no existir), entonces no podemos confundir con la ligada al para todo porque esa sí vale siempre. Igual, dejo un ejemplo acá abajo.
+\[\begin{minipage}[b]{1\textwidth}
+    \includegraphics[width=\linewidth]{assets/lpo_skolem.jpg}
+\end{minipage}\]
+OJO. Esto es SOLO a nivel MGU. Con esto quiero decir que si vas a unificar, le cambies el nombre a las variables. 
 \section*{Prolog}
 El algoritmo que vimos antes para ver si una fórmula de primer orden $\sigma$ es válida funciona, pero es costosa. Esto es porque a nivel computacional implica hacer
 \begin{itemize}
