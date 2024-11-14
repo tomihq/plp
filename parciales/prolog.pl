@@ -1,7 +1,7 @@
 estudiante(tomas).
 estudiante(angel).
-notas([(tomas, tda, 10), (tomas, plp, 6), (angel, plp, 3), (angel, plp, 10)]).
-
+notas([(tomas, tda, 3), (tomas, plp, 10), (angel, plp, 3), (angel, plp, 10)]).
+/* aca como tieneMateriaAprobada E y M estan instanciados member((tomas, plp, Nota), [()...]) unifica con [(tomas, plp, 10)] y luego chequea que esa unificacion de tomas, plp tenga nota >=4 */
 tieneMateriaAprobada(E, M) :- estudiante(E), notas(XS), member((E, M, Nota), XS), Nota >= 4.
 
 eliminarAplazos([], []). 
