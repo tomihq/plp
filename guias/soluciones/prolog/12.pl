@@ -13,3 +13,4 @@ todosMenores(bin(Izq, R, _), Raiz) :- R =< Raiz, todosMenores(Izq, R).
 
 todosMayores(nil, _).
 todosMayores(bin(_, R, Der), Raiz) :- Raiz =< R, todosMayores(Der, R).
+
