@@ -15,3 +15,9 @@ altura(bin(Izq, _, Der), Alt) :-
                                 altura(Izq, Alt2), Alt3 is Alt2 + 1, 
                                 altura(Der, Alt4), Alt5 is Alt4 + 1, 
                                 devolverMax(Alt3, Alt5, Alt).
+
+cantNodos(nil, 0).
+cantNodos(bin(Izq, _, Der), Alt) :- 
+                                cantNodos(Izq, Alt2), 
+                                cantNodos(Der, Alt4), 
+                                Alt is Alt2 + Alt4 + 1.
