@@ -1873,24 +1873,11 @@ Al igual que el Algoritmo M-M hay dos opciones
 \end{itemize}
 Se denota $W(U) \rightsquigarrow \Gamma \vdash M:\tau$ para indicar que el algoritmo de inferencia tiene éxito cuando se le pasa U como entrada y devuelve la tripla. \\
 
-\begin{minipage}[b]{0.3\textwidth}
+\begin{minipage}[b]{0.7\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{assets/inf_1.png}
+    \includegraphics[width=\linewidth]{assets/algoritmo_w.png}
 \end{minipage}
-\hfill
-\begin{minipage}[b]{0.6\textwidth}
-    \centering
-    \includegraphics[width=\linewidth]{assets/inf_2.png}
-\end{minipage} \\
-\begin{minipage}[b]{0.5\textwidth}
-    \centering
-    \includegraphics[width=\linewidth]{assets/inf_3.png}
-\end{minipage}
-\hfill
-\begin{minipage}[b]{0.5\textwidth}
-    \centering
-    \includegraphics[width=\linewidth]{assets/inf_4.png}
-\end{minipage}
+
 \textbf{Realmente Importante}: Recordemos que en los condicionales o cosas donde hay varios casos, cada tipo debe ser diferente aunque parezca obvio. Las restricciones se colocan luego. Nótese que en la segunda imagen, $U_{2}$ y $U_{3}$ son de tipos distintos $W(U_{2}) = \Gamma_{2} \vdash M_{2}:\tau_{2}$ y $W(U_{3}) = \Gamma_{3} \vdash M_{3}:\tau_{3}$ pero la restricción de como son se le da a la hora de hacer la sustitución $\{t_{2} = t_{3}\}$ \\
 \textbf{Realmente Importante}: Como en los casos condicionales puede ser que una variable aparezca en más de una rama, tenemos que verificar que esa variable tenga el mismo tipo en todas las ramas. Esto se puede ver en la segunda imagen marcado en rojo. \\ Imaginemos que en U1, U2, y U3 tengamos apariciones de una misma variable pero con diferente tipo, esto no sería válido. \\
 \textbf{Realmente Importante}: $\emptyset$ en el Algoritmo de W representa quitar una variable específica del contexto. Esto se ve fácil si de antemano vemos como es el juicio de tipado de la regla. 
