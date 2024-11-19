@@ -2150,6 +2150,276 @@ Por ejemplo, en SLD no es posible resolver esto: $\mathcal{C} = \{\{P(X), Q(Y)\}
 \textbf{Nota}: Los axiomas + reglas en Prolog se llaman \textbf{cláusulas de definición (PGM)} y estas nunca llegan a ser insatisfactibles. 
 \subsubsection*{Derivación SLD}
 En cada paso, Prolog siempre toma una \textbf{claúsula de definición (PGM)} y una \textbf{claúsula objetivo (Goal)}
+\section*{Programación Orientada a Objetos (POO)}
+No subieron la teórica así que voy a tener que escribir en base a lo que anoté yo y me pareció interesante. \\
+Vamos a usar SmallTalk donde todo es prácticamente un objeto. \\
+En SmallTalk los objetos se comunican entre sí a través de mensajes, donde cada mensaje es una invocación a un método de un objeto. \\
+Como en el Paradigma Orientado a Objetos podemos mutar instancias de objetos determinados a través de métodos (getters/setters), necesitamos tener un estado. Al principio de la materia vimos que el estado no es más que el conjunto o estado de variables en un momento dado. 
+\subsection*{Mensajes}
+Siempre están asociados a un objeto.
+\subsection*{Métodos de Instancia y Métodos de Clase}
+Los métodos no son más que la implementación de la respuesta a un mensaje dado. \\
+\begin{lstlisting}
+    Object subclass: #persona [
+        Persona class >> hola [
+            ^'hola, como estas'
+        ]
+
+        Persona class >> crearNuevaPersona [
+            ^Persona new.
+        ]
+    ]
+
+    obj := Persona new.
+    obj hola.
+\end{lstlisting}
+En este caso el mensaje es hola (invocar al método de instancia hola), y la respuesta 'hola, como estas' la devuelve el método hola de la clase persona. \\
+La diferencia entre un método de instancia y método de clase es la siguiente 
+\begin{itemize}
+    \item Método de Instancia: Son métodos que se pueden ejecutar \textbf{a través de la instancia de una clase}.
+    \begin{itemize}
+        \item Ej.: obj hola.
+    \end{itemize}
+    \item Método de Clase: Se ejecutan en la clase misma, y nos pueden ayudar a la creación de nuevas instancias.
+    \begin{itemize}
+        \item Ej.: obj := Persona crearNuevaPersona.
+    \end{itemize}
+\end{itemize}
+\subsection*{Objeto Receptor}
+Es el objeto que recibe el mensaje. Puede recibirlo tanto una clase a través de un método de clase, o una instancia de la clase a través de un método de instancia. 
+\subsection*{Objeto Colaborador}
+Es un objeto con el que el receptor interactúa o colabora para lograr una tarea o propósito. 
+\subsection*{Return}
+En el código, el return se puede notar como $\land \ variable$
+\subsection*{Uso de Variables en Clases}
+No nos referimos a ella como this, como si hacemos en muchos lenguajes, sino que acá, en SmallTalk simplemente mencionamos la variable. 
+\subsection*{POO y Clean Code}
+Jamás, bajo ningún termino agregamos campos a una clase por fácilidad de cómputo. Las variables que representan a una clase deben ser la menor cantidad, y deben estar pensadas para el objetivo que tenga ese objeto de resolver. \\
+Esto es más que nada porque, un objeto debería ser lo más chico posible además de que si agregamos campos extra, hay que mantenerlos y eso da un costo mayor. 
+\subsection*{Tipos de Expresiones en SmallTalk}
+\begin{itemize}
+    \item Variables Locales: Se escriben en minúscula 
+    \begin{itemize}
+        \item x:=3. y:=2.
+    \end{itemize}
+    \item Variables Globales: Se escriben en mayúscula (no obligatorio). Se definen a nivel de clase, y son accesibles desde cualquier parte del programa a través de la clase a la que pertenecen.
+    \begin{itemize}
+        \item classVariableNames: 'contador'
+    \end{itemize}
+    \item Mensajes Unarios: Toman un único parámetro. Se usan de manera prefija.
+    \begin{itemize}
+        \item 10 print. Imprime el valor 10.
+        \item 5 isOdd. Devuelve true. 
+    \end{itemize}
+    \item Mensajes Binarios: Toman dos parámetros. Se usan de manera infija.
+    \begin{itemize}
+        \item 3 + 5.
+        \item 10 * 2.
+        \item true and: false. 
+    \end{itemize}
+    \item Mensajes Keyword: Pueden tener múltiples argumentos, con cada argumento despues de su palabra clave correspondiente. 
+    \begin{itemize}
+        \item Rectangulo new ancho: 5 alto:10. Los keywords son ancho y alto.
+    \end{itemize}
+    \item Asignación
+    \begin{itemize}
+        \item persona := Persona new
+    \end{itemize}
+\end{itemize}
+La prioridad, dentro de una expresión es la siguiente: $unarios > binarios > keyword$
+\subsection*{Algunos ejemplos de instancias de objetos}
+\begin{itemize}
+    \item nil: Es la instancia de UndefinedObject
+    \item true: Es la instancia de la clase True 
+    \item false: Es la instancia de la clase False
+    \item Constantes Númericas: 1, 12, 125... son números, instancias de clases como SmallInteger o LargeInteger.
+    \item Strings: $'hola'$ es la instancia de la clase String
+    \item Símbolos: \#Rectángulo. Instancia de la clase Symbol. Un Símbolo es un objeto que representa un identificador único e inmutable. 
+    \item Caracteres: \$a es la instancia de la clase Character. Representa un único caracter.
+\end{itemize}
+\subsection*{Herencia}
+Importante: En la materia no se lo menciona, pero siempre es mejor priorizar la composición antes que la herencia. \\
+La Herencia trae muchos problemas a nivel de objetos porque se vuelve inmantenible si la clase padre tiene muchos atributos, y esto es importante, porque una clase no debería estar abierta a eliminar cosas núcleo pero sí abierta a extenderla. \\
+Esto es porque si refactorizamos la clase padre, si hay mas de una clase que heredaban esta, vamos a tener que considerar modificar andá a saber cuantas más clases. \\
+El concepto de Herencia es importante, porque cuando hablamos de una relación padre-hijo, si desde hijo queremos llenar campos que están en el padre, usamos la palabra super, mientras que si queremos hablar de nuestro ámbito local de objeto usamos self. \\
+Voy a mostrar un ejemplo en un lenguaje que conozca bien (TypeScript) para que después puedan relacionarlo en cualquier lenguaje. 
+\begin{lstlisting}
+    class ContactoBasico {
+        msg: string;
+
+        constructor(data){
+            this.msg = data.msg;
+        }
+    }
+
+    class ContactoEmail extends ContactoBasico {
+        email: string;
+
+        constructor(data){
+            super(data);
+            this.email = data.email;
+        }
+
+        hacerAlgo(){
+            console.log(`Email: ${this.email}, Mensaje: ${this.msg}`);
+        }
+    }
+\end{lstlisting}
+En el ejemplo anterior, podemos ver que ContactoEmail puede almacenar un valor en msg como si fuese una variable de clase de sí misma, pero en realidad, esta puede ser utilizada a nivel ContactoEmail porque la estamos llenando vía super.
+\subsection*{Self}
+Cuando hablamos de Self, estamos hablando de utilizar las variables o métodos de la instancia del objeto que estamos manipulando. \\
+El Self siempre busca hacia abajo. 
+\subsection*{Super}
+Cuando hablamos de Super, estamos hablando de herencia. Esto quiere decir que si una clase habla de super, está extendiendo de otra. Ojo, super habla de la clase inmediatamente que está por encima. \\
+Esto es súper importante, porque hay muchos lenguajes (y gracias a dios) que no aceptan herencia múltiple. 
+\begin{lstlisting}
+    class ContactoBasico {
+        msg: string;
+
+        constructor(data){
+            this.msg = data.msg;
+        }
+
+        hacerAlgo(){
+            console.log("Hola");
+        }
+    }
+
+    class ContactoEmail extends ContactoBasico {
+        email: string;
+
+        constructor(data){
+            super(data);
+            this.email = data.email;
+        }
+
+        hacerAlgo(){
+            console.log(`Email: ${this.email}, Mensaje: ${this.msg}`);
+        }
+    }
+
+    class ContactoEmailMasComplicado extends ContactoEmail {
+        emailSecundario: string; 
+
+        constructor(data){
+            super(data);
+            this.emailSecundario = data.emailSecundario;
+        }
+
+        hacerAlgo(){
+            return super.hacerAlgo();
+        }
+
+    }
+\end{lstlisting}
+Ojo. En este ejemplo, si queremos instanciar ContactoEmailMasComplicado tendremos que cumplir la precondición de super, es decir, el constructor de ContactoEmail, y a su vez el de ContactoBásico. Esto es porque es una cadena. Ya se dan cuenta del por qué es malo laburar con herencia. \\
+¿Qué es lo que sucede, si una vez instanciada ContactoEmailMasComplicado en obj, llamamos obj.hacerAlgo? ¿Qué hacerAlgo ejecuta?, bueno, el padre inmediato. Ejecutaría  console.log(`Email: ${this.email}, Mensaje: ${this.msg}`), es decir, el hacerAlgo() que está en ContactoEmail, que es padre de ContactoEmailMasComplicado. 
+\subsection*{Importancia del Return}
+En los métodos de una clase, si no tenemos un return, entonces el método retornará \textbf{self}. Es decir, la instancia. 
+\subsection*{Métodos de Clase}
+Los métodos de clase nos permiten crear instancias de una clase sin utilizar desde fuera de la clase la palabra reservada \textbf{new}. Esto nos permite que la clase por sí misma, diga qué es lo que podemos usar para crear instancias de ella. 
+\begin{lstlisting}
+    Object subclass: #Rectangulo 
+            instanceVariableNames: 'ancho alto'
+            classVariableNames: ''
+
+    Rectangulo class >> ancho: ancho alto: alto [
+        ^self new 
+            ancho: ancho;
+            alto: alto;
+            yourself.
+    ]
+
+    Rectangulo >> ancho: valor [
+        ancho := valor
+    ]
+
+    Rectangulo >> alto: valor [
+        alto := valor
+    ]
+
+    Rectangulo >> descripcion [
+        ^'Rectángulo de ancho ', ancho printString, ' y alto ', alto printString
+    ]
+
+    Uso: 
+    rect := Rectangulo ancho: 30 alto: 20.
+    rect descripcion.
+
+
+\end{lstlisting}
+Importante notar, que cuando hacemos $\land self \ new \ ancho: ancho;$ estamos creando una nueva instancia, mandando un mensaje al método ancho con el parámetro ancho. \\
+Importante notar también, que cuando hacemos self new, estamos enviando un mensaje de new con varios argumentos. Estos argumentos los separamos por ; porque son parte del mismo mensaje.
+\subsection*{Sobrecarga}
+Decimos que un método de clase está sobrecargado cuando existe más de un método con el mismo nombre pero que toman diferente cantidad de parámetros. Es importante notar que, los métodos de clase más restrictivos deberían poder estar encapsulados en el más general. 
+\begin{lstlisting}
+    object subclass #robot 
+           instance variablenames: 'posicion'
+
+           inicializar: unaposicion
+              posicion := unaposicion 
+
+           posicion:
+              ^posicion 
+    
+            inicializar:
+                self inicializar: (0 @ 0)
+\end{lstlisting}
+\subsection*{Sintaxis de SmallTalk}
+\begin{itemize}
+    \item Usá \textbf{.} para indicar donde termina una instrucción. Es similar al \textbf{;} de C++ pero acá, si hay solamente una línea el \textbf{.} no es necesario.
+    \begin{itemize}
+        \item Ej.: 	x := 10. y := 20.
+    \end{itemize}
+    \item Usá \textbf{;} cuando tengas que encadenar mensajes a un mismo objeto, sin finalizar la ejecución de la expresión anterior. 
+    \begin{itemize}
+        \item Ej.: Transcript show: 'Hola'; cr; show: 'Mundo'
+    \end{itemize}
+\end{itemize}
+\subsection*{Bloques}
+Permite encapsular lógica dentro de un código independiente y reutilizable. Está compuesto por una secuencia de instrucciones que se agrupan y pueden ser pasadas como argumentos a métodos o invocadas como acción dentro de un método. \\
+La sintáxis está compuesta por :variable + expresión \\
+Si solo hay que definirlo, lo terminamos con \textbf{.}
+\begin{lstlisting}
+    [:x | x * 2]
+\end{lstlisting}
+Si hay que pasarle argumentos, lo invocamos con \textbf{:}
+\begin{lstlisting}
+    resultado := (1 to: 3) collect: [:x | x * 2].
+    resultado tiene [2, 4, 6]
+\end{lstlisting}
+Si hay que obtener el resultado de un bloque, colocamos value antes del \textbf{.}. El value invoca al bloque. Un value vacío es llamar al método sin argumentos.
+\begin{lstlisting}
+    resultado := [1 + 2 + 3] value. 
+    resultado tiene el valor de 6
+\end{lstlisting}
+Si hay que usarlo en condicionales, cada rama podría ser un bloque 
+\begin{lstlisting}
+    resultado := 10 > 5 
+        ifTrue: ['es mayor']
+        ifFalse: ['es menor'].
+\end{lstlisting}
+Si hay que enviarle argumentos a los bloques, los enviamos a través de value, es decir, invocamos al bloque con tantos argumentos instanciados.
+\begin{lstlisting}
+    resultado := [:x :y | x+y ] value: 3 value: 4.
+\end{lstlisting} 
+Si querés usar variables locales en los bloques, la sintaxis es diferente 
+\begin{lstlisting}
+    resultado := [ | x y | x:= 3. y:=2. x+y. ]
+\end{lstlisting}
+\textbf{Importante}: Si un bloque está definido para n argumentos, solo se podrá invocar ese bloque enviando los n argumentos.
+\begin{lstlisting}
+    resultado := [:x :y | x+1] value: 1. falla 
+    resultado := [:x :y | x+1] value: 1 value: 3. funciona
+\end{lstlisting}
+Para invocar bloques anidados, simplemente usamos value reiteradas veces pero indicando la cantidad de argumentos.
+\begin{lstlisting}
+    [ | z | z:=10 . [:x | x+z]] value value: 10.
+    Invoca al bloque padre, y como el segundo bloque espera un argumento obligatorio le enviamos el valor de 10. 
+\end{lstlisting}
+\subsection*{Excepciones}
+Si mandamos un mensaje a un método que no existe en la clase, se tratará de buscar en cada uno de los super recursivamente. El último intento lo hará en el padre de todos los objetos, es decir, la clase Object. Si no existe ahí, se ejecutará una excepción (does not understand).
+
 \section*{Anexo}
 \subsection*{Prolog}
 Un programa en Prolog está compuesto por
