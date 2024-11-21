@@ -2469,7 +2469,8 @@ Luego, la instrucción aBlock value, ejecuta el closure esperando un valor, y ha
 Lo interesante viene ahora, anotherBlock := a m1. almacena el bloque de m1 pero como una instancia NUEVA. Es decir, es otro bloque INDEPENDIENTE. \\
 Por lo tanto cuando hagamos anotherBlock value. arrojará y = 1. \\
 Finalmente, aBlock value sumará 1 al primer bloque, y retornará su valor, es decir, y = 3. 
-\textbf{Conclusión}: Ninguno de los bloques sabe que están instanciados para variables diferentes, y cada bloque recuerda qué valor tomaba la variable y en cada instrucción.
+\textbf{Conclusión}: Ninguno de los bloques sabe que están instanciados para variables diferentes, y cada bloque recuerda qué valor tomaba la variable y en cada instrucción. \\
+¿Cuál es el mensaje, cual el receptor y cual sus colaboradores? bueno, el mensaje sería m1, el receptor sería el propio objeto a y no hay ningún colaborador.
 \subsection*{Excepciones}
 Si mandamos un mensaje a un método que no existe en la clase, se tratará de buscar en cada uno de los super recursivamente. El último intento lo hará en el padre de todos los objetos, es decir, la clase Object. Si no existe ahí, se ejecutará una excepción (does not understand).
 
