@@ -2443,7 +2443,7 @@ Para invocar bloques anidados, simplemente usamos value reiteradas veces pero in
     [ | z | z:=10 . [:x | x+z]] value value: 10.
     Invoca al bloque padre, y como el segundo bloque espera un argumento obligatorio le enviamos el valor de 10. 
 \end{lstlisting}
-¿Qué relación tienen los bloques con los closures? bueno, que cuando nosotros estamos guardando un método que contiene un bloque, que a su vez, el bloque utiliza una variable de ese método, estamos encapsulando a este bloque en un universo donde las variable que use van a ser inmmutables, a menos que ejecutemos este bloque reiteradas veces. \\
+¿Qué relación tienen los bloques con los closures? Cuando guardamos un método que contiene un bloque, y a su vez, el bloque utiliza una variable de ese método, estamos encapsulando a este bloque en un universo donde las variables que se usen van a ser inmmutables, a menos que ejecutemos este bloque reiteradas veces. \\
 Veamos un ejemplo 
 \begin{lstlisting}
     A m1 
@@ -2462,8 +2462,8 @@ Veamos un ejemplo
         anotherBlock value. 
         ^aBlock value.
 \end{lstlisting}
-Prestemos atención a A por un momento, A es un método que básicamente define dos variables locales x,y donde y es inicializada con 0, y x es inicializada con un bloque que depende de y. Al finalizar el método, devuelve el bloque. \\
-Ahora vayamos a B m2. La variable a almacenará la instancia de A creada (para poder usar el método de instancia m1). Luego que hace esto, hay dos partes, una variable llamada aBlock, donde aBlock almacenará el block-closure [ y := y+1 ]. \\
+Prestemos atención a A por un momento, A es un método que básicamente define dos variables locales \textbf{x, y} donde \textbf{y} es inicializada con 0, y \textbf{x} es inicializada con un bloque que depende de \textbf{y}. Al finalizar el método, devuelve el bloque. \\
+Ahora vayamos a B m2. La variable \textbf{a} almacenará la instancia de A creada (para poder usar el método de instancia m1). Luego que hace esto hay dos partes, una variable llamada aBlock, donde aBlock almacenará el block-closure [ y := y+1 ]. \\
 Luego, la instrucción aBlock value ejecuta el closure esperando un valor, y hasta ahora, el valor que arroja es 1 (Nótese que arroja 1 porque es 0 := 0+1) \\
 Luego, la instrucción aBlock value, ejecuta el closure esperando un valor, y hasta ahora, el valor que arroja es 2 (Nótese que arroja 2 porque en la llamada anterior, y valía 1, entonces 1 := 1+1 = 2) \\
 Lo interesante viene ahora, anotherBlock := a m1. almacena el bloque de m1 pero como una instancia NUEVA. Es decir, es otro bloque INDEPENDIENTE. \\
