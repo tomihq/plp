@@ -2160,7 +2160,7 @@ Siempre están asociados a un objeto.
 \subsection*{Métodos de Instancia y Métodos de Clase}
 Los métodos no son más que la implementación de la respuesta a un mensaje dado. \\
 \begin{lstlisting}
-    Object subclass: #persona [
+    Object subclass: Persona [
         Persona class >> hola [
             ^'hola, como estas'
         ]
@@ -2188,7 +2188,8 @@ La diferencia entre un método de instancia y método de clase es la siguiente
 \subsection*{Objeto Receptor}
 Es el objeto que recibe el mensaje. Puede recibirlo tanto una clase a través de un método de clase, o una instancia de la clase a través de un método de instancia. 
 \subsection*{Objeto Colaborador}
-Es un objeto con el que el receptor interactúa o colabora para lograr una tarea o propósito. 
+Es un objeto con el que el receptor interactúa o colabora para lograr una tarea o propósito. \\
+Es un parámetro. Ej.: 10 mcm: 4, 4 actúa como colaborador.
 \subsection*{Return}
 En el código, el return se puede notar como $\land \ variable$
 \subsection*{Uso de Variables en Clases}
@@ -2210,6 +2211,7 @@ Esto es más que nada porque, un objeto debería ser lo más chico posible adem�
     \begin{itemize}
         \item 10 print. Imprime el valor 10.
         \item 5 isOdd. Devuelve true. 
+        \item -1. Devuelve el número -1, el (-) es un mensaje unario.
     \end{itemize}
     \item Mensajes Binarios: Toman dos parámetros. Se usan de manera infija.
     \begin{itemize}
@@ -2226,7 +2228,30 @@ Esto es más que nada porque, un objeto debería ser lo más chico posible adem�
         \item persona := Persona new
     \end{itemize}
 \end{itemize}
-La prioridad, dentro de una expresión es la siguiente: $unarios > binarios > keyword$
+La prioridad, dentro de una expresión es la siguiente: $unarios > binarios > keyword$ \\
+Veamos un ejemplo donde tiene importancia esto: Sea una clase de un entero, implemente un método de instancia que permita saber cual es el mcm del número instanciado y otro que viene por parámetro. \\
+\begin{lstlisting}
+    mcm: numberTwo 
+        | res | 
+        res := self * b // self gcd: b
+        ^res
+\end{lstlisting}
+Como está implementado este código va a fallar, porque primero va a hacer self * b, e inmediatamente va a querer dividir por algo que todavía no se resolvió. 
+\begin{lstlisting}
+    mcm: numberTwo 
+        | res |
+        res := self * b // (self gcd: b)
+        ^res
+\end{lstlisting}
+\textbf{Importante}: Nótese que todos los métodos los estamos haciendo dentro de una clase. Esto quiere decir que siempre tenemos que asumir que estamos dentro de un objeto. \\
+Si tuviesemos que notar qué mensajes, receptores, colaboradores, resultados hay para la siguiente entrada: $6 \ mcm \ 10 $
+\begin{itemize}
+    \item Mensaje: mcm | Receptor: 6 | Colaboradores: 10 | Resultado: 30
+    \item Mensaje: * | Receptor: Self (6) | Colaboradores: 10 | Resultado: 60 
+    \item Mensaje: gcd | Receptor: Self (6) | Colaboradores: 10 | Resultado: 2
+    \item Mensaje: // | Receptor: 60 | Colaboradores: 2 | Resultado: 30 
+\end{itemize}
+Nótese que básicamente fuimos paso a paso viendo qué instrucciones estaban y quienes estaban involucrados. 
 \subsection*{Algunos ejemplos de instancias de objetos}
 \begin{itemize}
     \item nil: Es la instancia de UndefinedObject
@@ -2351,7 +2376,7 @@ Los métodos de clase nos permiten crear instancias de una clase sin utilizar de
 Importante notar, que cuando hacemos $\land self \ new \ ancho: ancho;$ estamos creando una nueva instancia, mandando un mensaje al método ancho con el parámetro ancho. \\
 Importante notar también, que cuando hacemos self new, estamos enviando un mensaje de new con varios argumentos. Estos argumentos los separamos por ; porque son parte del mismo mensaje.
 \subsection*{Sobrecarga}
-Decimos que un método de clase está sobrecargado cuando existe más de un método con el mismo nombre pero que toman diferente cantidad de parámetros. Es importante notar que, los métodos de clase más restrictivos deberían poder estar encapsulados en el más general. 
+Decimos que un método de clase está sobrecargado cuando existe más de un método con el mismo nombre pero que toman diferentes parámetros (ya sea en cantidad o en tipos, lo importante es que no sean la misma cantidad de parámetros en el mismo orden y mismo tipo). Es importante notar que los métodos de clase más restrictivos deberían poder estar encapsulados en el más general. 
 \begin{lstlisting}
     object subclass #robot 
            instance variablenames: 'posicion'
@@ -2376,7 +2401,7 @@ Decimos que un método de clase está sobrecargado cuando existe más de un mét
         \item Ej.: Transcript show: 'Hola'; cr; show: 'Mundo'
     \end{itemize}
 \end{itemize}
-\subsection*{Bloques}
+\subsection*{Bloques (Block-Closures)}
 Permite encapsular lógica dentro de un código independiente y reutilizable. Está compuesto por una secuencia de instrucciones que se agrupan y pueden ser pasadas como argumentos a métodos o invocadas como acción dentro de un método. \\
 La sintáxis está compuesta por :variable + expresión \\
 Si solo hay que definirlo, lo terminamos con \textbf{.}
@@ -2388,7 +2413,8 @@ Si hay que pasarle argumentos, lo invocamos con \textbf{:}
     resultado := (1 to: 3) collect: [:x | x * 2].
     resultado tiene [2, 4, 6]
 \end{lstlisting}
-Si hay que obtener el resultado de un bloque, colocamos value antes del \textbf{.}. El value invoca al bloque. Un value vacío es llamar al método sin argumentos.
+Si hay que obtener el resultado de un bloque, colocamos value antes del \textbf{.}. \\
+El value invoca al bloque. Un value vacío es llamar al método sin argumentos.
 \begin{lstlisting}
     resultado := [1 + 2 + 3] value. 
     resultado tiene el valor de 6
@@ -2417,8 +2443,36 @@ Para invocar bloques anidados, simplemente usamos value reiteradas veces pero in
     [ | z | z:=10 . [:x | x+z]] value value: 10.
     Invoca al bloque padre, y como el segundo bloque espera un argumento obligatorio le enviamos el valor de 10. 
 \end{lstlisting}
+¿Qué relación tienen los bloques con los closures? bueno, que cuando nosotros estamos guardando un método que contiene un bloque, que a su vez, el bloque utiliza una variable de ese método, estamos encapsulando a este bloque en un universo donde las variable que use van a ser inmmutables, a menos que ejecutemos este bloque reiteradas veces. \\
+Veamos un ejemplo 
+\begin{lstlisting}
+    A m1 
+        | x y |
+        y := 0
+        x := [ y := y+1 ].
+        ^x
+
+    B m2
+        | a aBlock anotherBlock |
+        a := A new.
+        aBlock := a m1. 
+        aBlock value. 
+        aBlock value. 
+        anotherBlock := a m1.
+        anotherBlock value. 
+        ^aBlock value.
+\end{lstlisting}
+Prestemos atención a A por un momento, A es un método que básicamente define dos variables locales x,y donde y es inicializada con 0, y x es inicializada con un bloque que depende de y. Al finalizar el método, devuelve el bloque. \\
+Ahora vayamos a B m2. La variable a almacenará la instancia de A creada (para poder usar el método de instancia m1). Luego que hace esto, hay dos partes, una variable llamada aBlock, donde aBlock almacenará el block-closure [ y := y+1 ]. \\
+Luego, la instrucción aBlock value ejecuta el closure esperando un valor, y hasta ahora, el valor que arroja es 1 (Nótese que arroja 1 porque es 0 := 0+1) \\
+Luego, la instrucción aBlock value, ejecuta el closure esperando un valor, y hasta ahora, el valor que arroja es 2 (Nótese que arroja 2 porque en la llamada anterior, y valía 1, entonces 1 := 1+1 = 2) \\
+Lo interesante viene ahora, anotherBlock := a m1. almacena el bloque de m1 pero como una instancia NUEVA. Es decir, es otro bloque INDEPENDIENTE. \\
+Por lo tanto cuando hagamos anotherBlock value. arrojará y = 1. \\
+Finalmente, aBlock value sumará 1 al primer bloque, y retornará su valor, es decir, y = 3. 
+\textbf{Conclusión}: Ninguno de los bloques sabe que están instanciados para variables diferentes, y cada bloque recuerda qué valor tomaba la variable y en cada instrucción.
 \subsection*{Excepciones}
 Si mandamos un mensaje a un método que no existe en la clase, se tratará de buscar en cada uno de los super recursivamente. El último intento lo hará en el padre de todos los objetos, es decir, la clase Object. Si no existe ahí, se ejecutará una excepción (does not understand).
+
 
 \section*{Anexo}
 \subsection*{Prolog}
@@ -2615,6 +2669,7 @@ Ejercicio.: ¿Qué salida arroja Prolog si la consulta es $is\mathunderscore dig
         \item Por lo tanto, ahora el goal se reduce a $is\mathunderscore  digesting(frog, mosquito)$, y como esto es un hecho y el goal ahora está vacío, Prolog demuestra que la consulta es satisfactible y la unificación para que lo sea es Z = frog.
     \end{itemize}
 \end{itemize}
+
 \subsection*{Haskell}
 Para ejecutar un archivo hay que instalar GHCI. Una vez instalado, nos paramos en la terminal en el directorio donde está el archivo que queremos ejecutar. 
 \begin{itemize}
