@@ -2443,6 +2443,9 @@ Para invocar bloques anidados, simplemente usamos value reiteradas veces pero in
     [ | z | z:=10 . [:x | x+z]] value value: 10.
     Invoca al bloque padre, y como el segundo bloque espera un argumento obligatorio le enviamos el valor de 10. 
 \end{lstlisting}
+\textbf{Importante}: \textbf{NUNCA} usar un return dentro de un bloque. Es algo bastante oscuro. \\
+\textbf{Importante}: Los bloques devuelven como resultado la última expresión del bloque.
+\subsubsection*{Bloques = Block Closures}
 ¿Qué relación tienen los bloques con los closures? Cuando guardamos un método que contiene un bloque, y a su vez, el bloque utiliza una variable de ese método, estamos encapsulando a este bloque en un universo donde las variables que se usen van a ser inmmutables, a menos que ejecutemos este bloque reiteradas veces. \\
 Veamos un ejemplo 
 \begin{lstlisting}
@@ -2473,7 +2476,40 @@ Finalmente, aBlock value sumará 1 al primer bloque, y retornará su valor, es d
 ¿Cuál es el mensaje, cual el receptor y cual sus colaboradores? bueno, el mensaje sería m1, el receptor sería el propio objeto a y no hay ningún colaborador.
 \subsection*{Excepciones}
 Si mandamos un mensaje a un método que no existe en la clase, se tratará de buscar en cada uno de los super recursivamente. El último intento lo hará en el padre de todos los objetos, es decir, la clase Object. Si no existe ahí, se ejecutará una excepción (does not understand).
-
+\subsubsection*{Colecciones en SmallTalk}
+Se indexan desde el 1 en adelante. Les querían caer mal a los que indexamos desde 0. \\
+Algunas de las colecciones mas conocidas son 
+\begin{itemize}
+    \item Bag (Multiconjunto)
+    \item Set (Conjunto)
+    \item Array (Arreglo)
+    \item OrderedCollection (Lista)
+    \item SortedCollection (Lista ordenada)
+    \item Dictionary (Hash)
+\end{itemize}
+El mensaje que hay que utilizar para crear estas colecciones es \textbf{with}. \\
+Hay diferentes maneras (equivalentes) de crear una colección y agregar sus elementos
+\begin{itemize}
+    \item Bag with: 1 with: 2 with: 4
+    \item $\#$ (1 2 4) = (Array with: 1 with: 2 with: 4) $\rightarrow$. Ojo, el $\#$ es un símbolo, por lo tanto sería una lista inmutable.
+    \item Bag withAll: $\#$(1 2 4)
+\end{itemize}
+Algunos mensajes que aceptan las colecciones
+\begin{itemize}
+    \item add: agrega un elemento.
+    \item at: devuelve el elemento en una posición.
+    \item at:put: agrega un elemento a una posición.
+    \item includes: responde si un elemento pertenece o no.
+    \item includesKey: responde si una clave pertenece o no.
+    \item do: evalúa un bloque con cada elemento de la colección.
+    \item keysAndValuesDo: evalúa un bloque con cada par clave-valor. 
+    \item keysDo: evalúa un bloque con cada clave.
+    \item select: devuelve los elementos de una colección que cumplen un predicado. 
+    \item reject: la negación del select.
+    \item collect: devuelve una colección que es resultado de aplicarle un bloque a cada elemento de la colección original.
+    \item detect: devuelve el primer elemento que cumple un predicado. 
+    \item reduce: toma un bloque de dos o más parametros de entrada y hace fold de los elementos de izquierda a derecha.
+\end{itemize}
 
 \section*{Anexo}
 \subsection*{Prolog}
@@ -2484,7 +2520,7 @@ Un programa en Prolog está compuesto por
     \item Consultas
 \end{itemize}
 Los Hechos y las Reglas conforman una database o cláusulas. \\
-La idea de Prolog consiste en realizar consultas, es decir, preguntar cosas acerca de la información que tenemos almacenada. \\
+La idea de Prolog consiste en realizar consultas, es decir, preguntar cosas acerca de la información que tenemos almacenada. 
 \subsubsection*{Hechos}
 Comienzan con minúscula siempre, y están en lowercase.
 \begin{lstlisting}
