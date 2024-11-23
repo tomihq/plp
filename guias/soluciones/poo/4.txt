@@ -33,5 +33,5 @@ Define un bloque con una variable local z que se inicializa con 10. Luego se def
 El valor de z se usa en el segundo bloque como closure, por lo tanto cuando hacemos value en realidad lo que hace es devolvernos [:x | x+z] y cuando hacemos value: 10 lo que hace es hacer 10 + 10 donde la z es el argumento anteriormente definido en su closure.
 
 ¿Cuál es la diferencia entre [|x y z| x + 1] y [:x :y :z| x + 1]?
-La diferencia es que el primer bloque tiene 3 variables locales x y z pero a efectos prácticos no hace nada porque x no está inicializada ni tampoco se espera por parámetro. Es decir, explota el primer.
+La diferencia es que el primer bloque tiene 3 variables locales x y z pero a efectos prácticos no hace nada porque x no está inicializada ni tampoco se espera por parámetro. Es decir, explota y no funciona porque x es Undefined.
 El segundo bloque recibe 3 argumentos, donde si envíamos los tres argumentos y evalúamos el bloque el resultado es tomar el primer argumento y sumarle uno. 

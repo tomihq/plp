@@ -1,0 +1,15 @@
+Mostrar un ejemplo por cada uno de los siguientes mensajes que pueden enviarse a las colecciones en el lenguaje Smalltalk. Indicar a qué evalúan dichos ejemplos.
+
+#collect: es el map. 
+| res |
+res := #(1 2 4) collect: [:numero | numero * 2].
+
+El resultado sería multiplicar por dos todos los elementos de la lista, es decir, [2, 4, 8].
+
+#select: es el filter 
+| res |
+res := #(1 2 3) collect: [:numero | numero = 1 ].
+
+El resultado sería [1]
+
+#inject: into: son dos operaciones en una, es basicamente añadir un elemento dentro de una lista.
