@@ -1,8 +1,6 @@
 resumen.*
 !resumen.tex
-plp.log
-plp.out
-plp.synctex.gz
-plp.aux
-plp.fdb_latexmk
-plp.fls
+plp.*
+!plp.pdf
+utiles/*
+!utiles/2doparcial.pdf

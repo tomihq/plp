@@ -1,0 +1,99 @@
+Rdo: unarios > binarios > keywords
+
+Identificar mensajes. Indicar el objeto receptor y los colaboradores en cada caso.
+ 
+a) 10 numberOfDigitsInBase: 2.
+Mensaje: numberOfDigitsInBase 
+Obj. Receptor: 10
+Colaboradores: 2
+
+b) 10 factorial.
+Mensaje: factorial 
+Obj. Receptor: 10
+
+c) 20 + 3 * 5.
+Como no hay paréntesis, seguiría la prioridad de mensajes de esta forma (20 + 3) * 5.
+20 + 3: 
+Mensaje: +
+Obj Receptor: 20
+Colaboradores: 3
+Res = 23
+Luego que resuelve
+23 * 5
+Mensaje: *
+Obj Receptor: 23
+Colaboradores: 5
+
+d) 20 + (3*5).
+Como acá exclusivamente se está diciendo a SmallTalk que antes de sumar debe realizarse (3*5), es decir, la prioridad máxima la tiene la operación de los paréntesis, entonces lo que va a hacer es resolver eso, y luego aplicar la suma.
+Mensaje 1: *
+Obj. Receptor: 3
+Colaborador: 5
+Resultado = 15
+
+Luego que tenemos este resultado, evalua
+20 + Resultado, entonces:
+Mensaje: +
+Obj. Receptor: 20
+Colaborador: Resultado
+
+f) 1 = 2 ifTrue: ['what!?'].
+Mensaje: =
+Obj. Receptor: 1
+Colaborador: 2
+
+Mensaje: ifTrue 
+Obj. Receptor: False
+Colaborador: ['what!?']
+Resultado: False
+
+g) 1@1 insideTriangle: 0@0 with: 2@0 with: 0@2.
+Los paréntesis serían de esta forma: 1@1 (insideTriangle: 0@0 with: 2@0 with: 0@2.)
+Lo que hace 1@1 es instancia de la clase Point, y esta clase Point tiene un método de instancia llamado insideTriangle que recibe 3 argumentos / colaboradores.
+
+Mensaje: insideTriangle:with:with:
+Receptor: 1@1
+Colaboradores: 0@0 with: 2@0 with: 0@2
+
+h) 'Hello World' indexOf: $0 startingAt: 6.
+Mensaje: indexOf $startingAt
+Receptor: 'Hello World'
+Colaboradores: $0 y 6 
+
+i) (OrderedCollection with: 1) add: 25; add: 35; yourself.
+Esto hace varias cosas, lo primero que tiene prioridad es lo que tiene paréntesis por lo tanto lo primero que hace es instanciar una OrderedCollection con el valor de 1.
+Entonces
+Receptor: OrderedCollection | Colaborador: 1 | Res = Instancia de OC
+Receptor: Instancia de OC | Mensaje: add | Colaborador: 25
+Receptor: Instancia de OC | Mensaje: add | Colaborador: 35
+Receptor: Instancia de OC | Mensaje: yourself | Colaborador: none
+
+j) Object subclass: #SnakesAndLadders
+instanceVariablesNames: 'players squares turn die over'
+classVariableNames: ''
+poolDictionaries: ''
+category: 'SnakesAndLadders'
+
+Hay varios mensajes acá.
+Receptor: Object Class
+Mensaje: subclass
+Colaborador: #SnakesAndLadders
+
+Receptor: SnakesAndLadders
+Mensaje: instanceVariableNames
+Colaboradores: 'players squares turn die over' cada uno por separado
+
+Receptor: SnakesAndLadders
+Mensaje: classVariableNames
+Colaborador: ''
+
+Receptor: SnakesAndLadders
+Mensaje: poolDictionaries
+Colaborador: ''
+
+Receptor: SnakesAndLadders
+Mensaje: category 
+Colaborador: 'SnakesAndLadders'
+
+
+

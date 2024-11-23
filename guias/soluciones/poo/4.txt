@@ -1,0 +1,37 @@
+4. Para cada una de las siguientes expresiones, indicar qué valor devuelve o explicar por qué se produce un error al ejecutarlas.
+a. [:x | x+1] value: 2
+Es un bloque que recibe un argumento con el nombre de x. El bloque es responsable es tomar ese x, y sumarle una unidad. 
+Entonces, en este caso, el resultado de ejecutarlo con value: 2 el resultado sería 3. Nótese que value lo evalúa y 2 es el parámetro que envía para evaluarlo.
+
+b. [ |x| x:=10. x+12] value 
+Define un bloque con una variable local x, que al ejecutar este bloque toma el valor de 10, y devuelve como resultado la expresión 10 + 12
+Nótese que luego de x:=10 está seguido por punto porque termina una instrucción.
+
+c. [ :x :y | |z| z:=x+y ] value: 1 value: 2.
+Es un bloque que recibe dos argumentos, y define una variable local z. Al ejecutar el bloque con los argumentos 1 y 2, el resultado es 3.
+
+d. [ :x :y | x+1 ] value: 1.
+Da error, los bloques necesitan si o si que se le proporcionen todos los argumentos obligatorios aunque no se usen todos dentro del bloque. 
+
+e. [:x | [:y | x+1]] value: 2.
+El bloque está bien definido, define un bloque en forma de closure y retorna [:y | x+1] recordando el valor de 2 de cuando fue definido.
+
+f. [[:x | x+1]] value. 
+El bloque está bien definido, devuelve [:x | x+1] que espera un argumento para ser evaluado.
+Ej.: 
+| data |
+data := [[:x | x+1]] value. 
+res := data value: 2. esto devuelve 3.
+
+
+g. [:x :y :z | x + y + z] valueWithArguments: #(1 2 3)
+Define un bloque que espera tres argumentos y devuelve la suma de estos. 
+En este caso valueWithArguments envia una lista de argumentos (que llegan cada uno en el orden esperados por el bloque) y devuelve la respuesta que sería 6.
+
+h. [ |z| z:=10. [:x | x+z]] value value: 10
+Define un bloque con una variable local z que se inicializa con 10. Luego se define un bloque aun mas interno que espera un argumento x, y luego de tomar el x lo suma al valor de z definido anteriormente.
+El valor de z se usa en el segundo bloque como closure, por lo tanto cuando hacemos value en realidad lo que hace es devolvernos [:x | x+z] y cuando hacemos value: 10 lo que hace es hacer 10 + 10 donde la z es el argumento anteriormente definido en su closure.
+
+¿Cuál es la diferencia entre [|x y z| x + 1] y [:x :y :z| x + 1]?
+La diferencia es que el primer bloque tiene 3 variables locales x y z pero a efectos prácticos no hace nada porque x no está inicializada ni tampoco se espera por parámetro. Es decir, explota el primer.
+El segundo bloque recibe 3 argumentos, donde si envíamos los tres argumentos y evalúamos el bloque el resultado es tomar el primer argumento y sumarle uno. 

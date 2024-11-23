@@ -1,0 +1,11 @@
+3. 
+Objeto: Un objeto es una instancia de una clase, obj := Persona new. 
+Mensaje unario: 3 factorial. Es un mensaje unario porque factorial es un método de instancia de los números enteros. 
+Mensaje binario: 3 * 5. Es un mensaje bianrio pues el mensaje * espera dos colaboradores.
+Mensaje keyword: 1@1 insideTriangle: 0@0 with: 1@2. Es un mensaje keyword porque la instancia de Point 1@1, es el receptor de un mensaje insideTriangle que tiene colaboradores keyword.
+Colaborador: 1 * 2, el colaborador seria 2 acá, porque la operación del * se hace en base a la instancia del Integer 1. 
+Variable Local: Se definen entre | |, por ejemplo, en un bloque: [| x y | x:=1; y:=2].
+Asignación: x:= 2.
+Símbolo: #x := 2. Es inmutable.
+Carácter: 'a'.
+Array: Hay varias formas de instanciar un array, una seria Array with: 1 with: 2 with: 4
