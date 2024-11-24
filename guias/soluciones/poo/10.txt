@@ -1,0 +1,9 @@
+i) Verdadero. Todo son objetos.
+ii) Falso. Puede ser que el mismo objeto no tenga el método implementado y tenga que buscarlo en una jerarquía mayor.
+iii) Falso. Object new no es un método de instancia sino un método de clase. Es decir, un mensaje a una clase busca método de clase.
+iv) Falso. Cada variable que tenga una instancia, la instancia es única para esa variable.
+v) Verdadero. Las variables de clase son variables que puede usar la clase en sí, y las instancias. Pero si la clase modifica esta, las instancias también observan el cambio.
+vi) Verdadero. self refiere a la misma clase.
+vii) Falso. Si solo podemos ver ese método y nada más, no podemos saber de qué clase hereda.
+viii) Falso.
+ix) Confusa.
