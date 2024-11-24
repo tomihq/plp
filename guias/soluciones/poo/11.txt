@@ -1,0 +1,8 @@
+Suponiendo que anObject es una instancia de la clase OneClass que tiene definido el método de instancia aMessage. Al ejecutar la siguiente expresión: anObject aMessage 
+
+1) La palabra reservada self siempre está ligada al objeto receptor del mensaje que causó la ejecución del método en el que se encuentra, self representa el objeto que está ejecutando el método actualmente.
+
+2) La palabra reservada super se refiere al mismo objeto que self, pero super indica que la búsqueda del método que implementa el mensaje m debe comenzar desde la superclase de la clase actual. 
+
+3) No. 
+super == self desde el lado de que refieren al mismo objeto inicialmente, es decir, el dueño de ese mensaje. Pero self habla de la ejecución de un método propio mientras que super habla de a partir de self, buscar ese método en una superclase.
