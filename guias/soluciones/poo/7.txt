@@ -1,0 +1,33 @@
+Suponiendo que tenemos un objeto obj que tiene el siguiente método definido en su clase
+
+SomeClass << foo: x
+    |aBlock y z|
+    z := 10.
+    aBlock := [x > 5 ifTrue: [z := z+x, ^0 ] ifFalse: [z := z-x. 5]]
+    y := aBlock value.
+    y := y+z.
+    ^y.
+
+
+¿Cual es el resultado de evaluar las siguientes expresiones?
+a) obj foo: 4
+b) Message selector: #foo: argument: 5
+c) obj foo: 10 (Ayuda: el resultado no es 20)
+
+Primero veamos que hace este método foo.
+Recibe un colaborador (x) que es un número.
+Define un bloque localmente y dos variables y z.
+z es inicializada con el valor de 10.
+Se define un bloque que según el valor de x enviado como colaborador el bloque almacena un subbloque.
+Luego, en y se guarda el resultado de evaluar el bloque.
+Finalmente, luego de evaluar el bloque, se hace la suma del valor de y + z y lo almacena en y.
+Luego, devuelve el valor de ^y.
+
+a) obj foo: 4
+x = 4, 
+Al ejecutar el bloque, como x > 5 es falso, entonces evalúa [z := z-x . 5] y devuelve 5.
+Entonces, y := 5 + 10 = 15.
+
+c) obj foo: 10
+x = 10
+Devuelve 0, porque ^0 dentro de un bloque corta todo tipo de ejecución.
