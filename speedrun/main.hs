@@ -82,5 +82,17 @@ mapAT f = foldAt NilT (\r i m d -> Tri (f r) i m d)
 {- solo me hace falta agregar la raiz de cada rama cuando baje hasta donde quiero. 
     Ej.: Si no es el nivel 0 (raiz), entonces abro 3 ramas. Cuando las 3 ramas lleguen al n deseado, simplemente agrego la raiz de esa rama recursiva.
 -}
-nivel :: AT a -> Int -> [a]
-nivel = foldAt (const []) (\r i m d -> (\n -> if n == 0 then [r] else ((i n-1) ++ (m n-1) ++ (d n-1) )))
+{- nivel :: AT a -> Int -> [a] -}
+{- nivel = foldAt (const []) (\r i m d -> (\n -> if n == 0 then [r] else ((i n-1) ++ (m n-1) ++ (d n-1) ))) -}
+
+data Componente = Contenedor | Motor | Escudo | Cañon deriving Eq
+data NaveEspacial = Módulo Componente NaveEspacial NaveEspacial | Base Componente deriving Eq
+{-Componente son casos base -}
+recNave :: (Componente -> NaveEspacial -> NaveEspacial  -> b -> b -> b) -> (Componente -> b) -> NaveEspacial -> b 
+recNave fModulo fBase nave = case nave of 
+    Base c -> fBase c
+    Módulo c n1 n2 -> fModulo c n1 n2 (rec n1) (rec n2)
+    where rec = recNave fModulo fBase
+
+{- aplico literalmente recNave pero ignoro los Componente, NaveEspacial, NaveEspacial -}
+foldNave :: (b -> b -> b) -> b -> NaveEspacial -> b
