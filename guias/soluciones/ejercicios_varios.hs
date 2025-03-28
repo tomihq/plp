@@ -36,3 +36,10 @@ productoCartesiano xs ys = [(a, b) | a <- xs, b <- ys]
 
 tuplasPares :: Integral a => Integral b => [a] -> [b] -> [(a, b)]
 tuplasPares xs ys = [(x, y) | x <- xs, y <- ys, even x, even y]
+
+takeNPares :: Int -> [Int]
+takeNPares = \n -> take n [2, 4..]
+
+functionConcat :: (Int -> Int) -> [[Int]] -> [Int]
+functionConcat f l = concat $ (map (map f)) l
+
