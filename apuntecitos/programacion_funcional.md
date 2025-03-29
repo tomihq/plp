@@ -2,6 +2,36 @@
 No busco reemplazar la bibliografía original ni mucho menos, sino que la idea es acá poner conceptos chiquitos que me sirven a mí mentalmente para resolver las cosas.
 Entre muchas cosas, la idea acá es anotar tips que hayan dado los profes que me hayan parecido copados.
 
+## Evaluación Lazy (Lazy Evaluation)
+Haskell evalúa las cosas cuando solamente las necesita. Eso quiere decir que podemos ir reemplazando (en orden redex) las cosas que va necesitando por su definición.
+
+Ej.:
+
+    True || map (+1) [1..] devuelve True sin ni siquiera evaluar el map y generar la lista infinita.
+    De lo contrario, este or nunca terminaría.
+
+    Otro ejemplo: 
+    elem 2 [1..] 
+
+    elem x [] = False
+    elem x (y:ys) = x == y || elem x ys
+
+    Si desglosamos el progreso nos queda
+    2 == 1 || elem 2 [2..] equivale a False || elem 2 [2..]
+    2 == 2 || elem 2 [3..] como la primera parte evalúa a true ya no necesita seguir generando la lista infinita para buscar el valor.
+
+    Otro ejemplo:
+    (2+3) * (2+3)
+
+    Cuando definimos una función que hace ese cálculo, Haskell no guarda el resultado de ese cálculo en ningún momento. 
+    Como no necesita guardar el resultado, sí guarda la función y/o proceso en algo llamado Thunk. 
+    
+    Lo primero que se pregunta es: ¿cuál es la operación o paréntesis más externo? El (2+3) ¿necesito calcularlo para algo? la respuesta en este momento es no, porque no lo usa para nada.
+
+    Sigue revisando y encuentra el *. En este momento, revisa su tipado y se da cuenta que para que el * funcione sí o sí necesita tomar los dos argumentos.
+
+    En este momento, resuelve ambas sumas pero como en ambos lados es la misma, hace una optimización y reutiliza el resultado. ¿Cómo lo hace? Desconozco. Pero así funciona.
+    
 ## Asociación de la aplicación
 Por defecto, si no lo explicitamos, Haskell asocia la aplicación hacia la izquierda.
 
@@ -213,11 +243,44 @@ Con aplicación infija (sin lambda):
 
     agregarDosALista l = 2:l
 
+El operador de **(:)** asocia a la derecha.
 
+Ej.:
 
+    [1, 2, 3] = 1 : 2 : 3 : [] = (1 : (2 : (3: [])))
+### Listas por Comprensión
+Es una forma de generar listas en una única línea que tiene 3 secciones particulares
 
+    [formaRespuesta | llenarVariable1, llenarVariable2, ..., condicionFiltro]
 
+    Todas las combinaciones de pares de valores del 1 al 10.
+    [(x,y) | x <- [1..10], y <- [1..10]]
 
+    Digamos que ahora además, queremos que los elementos de las tuplas, al sumarlos, den un número par.
 
+    [(x,y) | x <- [1..10], y <- [1..10], even (x+y)]
+
+    Listas con infinitos pares: Necesitamos definir el paso con el que se van generando, ese paso lo indica la "," después del primer elemento.
+
+    [x | x <- [2, 4..]]
+
+### Listas infinitas
+Son un subconjunto de las listas por comprensión. Se generan sin ponerles un fin. Es importante que no haya dos generadores infinitos a la vez (porque si el primero no termina, el segundo ni siquiera empieza)
+
+    [formaRespuesta | llenarVariableInfinita1, llenarVariable2, ..., condicionFiltro]
+
+## Don't care pattern (_)
+Se utiliza cuando nos importan m cantidad de argumentos y no la cantidad total n.
+
+Ej.: 
+
+    Juntemos dos listas sí y solo sí tienen valores.
+
+    juntarListas :: [a] -> [a] -> [a]
+    juntarListas [] _ = []
+    juntarListas _ [] = []
+    juntarListas l1 l2 = l1 ++ l2
+
+    En la primera ecuación no nos interesa el valor de la segunda lista, y en la segunda ecuación no nos interesa el valor de la primera lista. 
 
 
