@@ -58,5 +58,11 @@ sumaAlt :: Num a => [a] -> a
 sumaAlt = foldr (-) 0 
 -- P1 - P2 + P3 -P4 + P5 = [1, 2, 3] = 2 - 3 = -1, 1 - (-1) = 2
 
+{-
+    Me di cuenta que en vez de hacer el ultimo menos el anteultimo es igual que hacer el anterior pero con foldl y flipeando el (-).
+    Ej.: [2, 1] la idea es hacer 1-2+... para eso empezamos haciendo foldl (-) ((-) 0 2) [1] = foldl (-) 2 [1] = foldl (-) ((-) 2 1) = 1 - 2 = -1.
+
+    La diferencia con el foldl en vez del foldr es que vamos resolviendo paso a paso, el foldr primero plega todo sin resolver, y despues de que plegó todo empieza a resolver.
+-}
 sumaInversaAlt :: Num a => [a] -> a 
 sumaInversaAlt = foldl (flip (-)) 0
