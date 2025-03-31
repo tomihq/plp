@@ -58,3 +58,5 @@ sumaAlt :: Num a => [a] -> a
 sumaAlt = foldr (-) 0 
 -- P1 - P2 + P3 -P4 + P5 = [1, 2, 3] = 2 - 3 = -1, 1 - (-1) = 2
 
+sumaInversaAlt :: Num a => [a] -> a 
+sumaInversaAlt = foldl (flip (-)) 0
