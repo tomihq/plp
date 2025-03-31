@@ -7,6 +7,9 @@
 
     La idea es convertir la función que nos den que toma dos argumentos a una función que tome una tupla con dos elementos.
     Luego, aplicamos esa función con un map para cada una de las tuplas iniciales.
+    mapDoble (+) (take 30 [1..]) (take 30 [1..])
+
+    Precondición: Como se arman tuplas, tienen que tener ambas listas la misma longitud.
 -}
 
 mapPares :: (a -> b -> c) -> [(a, b)] -> [c]
@@ -19,13 +22,15 @@ mapPares f = map $ uncurry f
     Para esto puedo hacer una lambda que se recorra sobre xs y otra lambda que "no recorra" pero ir sacandole elementos desde la cabeza. Es decir, al paso recursivo de xs le mando tail ys.
 
     Utilizar: Evaluacion Parcial y Currificacion.
-    Se usa currificacion cuando no pasamos explícitamente los parámetros a la función sino que los recibe foldr al toque.  Y usamos evaluacion parcial porque podemos mandar la primera lista, y no la segunda. lo que favorece la reutilización
+    Se usa currificacion cuando no pasamos explícitamente los parámetros a la función sino que los recibe foldr al toque.  Y usamos evaluacion parcial porque podemos mandar la primera lista, y no la segunda. lo que favorece la reutilización.
+
+    Si la segunda lista es mas larga que la primera, me quedo con la longitud de la primera.
 -}
 armarPares :: [a] -> [b] -> [(a, b)]
 armarPares = foldr(\x rec (y:ys) -> (x, y): rec ys) (const [])
 
 {-
-    mapDoble: Recibo una función currificada de dos argumentos, dos listas y devuelvo una lista de aplicaciones a esa lista.
+    mapDoble: Recibo una función currificada de dos argumentos, dos listas de misma longitud y devuelvo una lista de aplicaciones a esa lista.
 
     Idea: Primero tengo que unir las dos listas en forma de tuplas (uso armarPares), luego, aplico literalmente mapPares.
 -}
