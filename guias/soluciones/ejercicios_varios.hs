@@ -45,29 +45,45 @@ functionConcat f l = concat $ (map (map f)) l
 
 {-
     Composiciones:
-    map . map
+    1. map . map
 
-    Lo primero que hay que hacer es ver los tipos de ambas funciones. Y por convención, vamos a renombrar las variables de tipo para que no haya colisiones.
+        Lo primero que hay que hacer es ver los tipos de ambas funciones. Y por convención, vamos a renombrar las variables de tipo para que no haya colisiones.
 
-    map :: (d -> e) -> [d] -> [e]
-    (.) :: (b -> c) -> (a -> b) -> a -> c
+        map :: (d -> e) -> [d] -> [e]
+        (.) :: (b -> c) -> (a -> b) -> a -> c
 
-    Lo primero que hacemos es pasar la composición a manera prefija. Es decir, (.) map map
+        Lo primero que hacemos es pasar la composición a manera prefija. Es decir, (.) map map
 
-    Ahora sí, la composición primero comienza con (a -> b). La función que tiene a la derecha es un map. Entonces, vinculamos cada letra a los parámetros del map.
+        Ahora sí, la composición primero comienza con (a -> b). La función que tiene a la derecha es un map. Entonces, vinculamos cada letra a los parámetros del map.
 
-    (a -> b) al primer map equivale a: a = (d -> e) y b = ([d] -> [e]).
+        (a -> b) al primer map equivale a: a = (d -> e) y b = ([d] -> [e]).
 
-    Ahora, el segundo map equivale a: b = (d -> e) y c = ([d] -> [e]).
+        Ahora, el segundo map equivale a: b = (d -> e) y c = ([d] -> [e]).
 
-    Juntando la data que conseguimos del primer map, es decir que b = ([d] -> [e]) reemplazamos en el segundo map.
+        Juntando la data que conseguimos del primer map, es decir que b = ([d] -> [e]) reemplazamos en el segundo map.
 
-    Entonces, el segundo map nos queda: b = ([d] -> [e]) y c = ([[d]] -> [[e]]).
+        Entonces, el segundo map nos queda: b = ([d] -> [e]) y c = ([[d]] -> [[e]]).
 
-    Por lo tanto, el tipado final de la composición es:
-    (([d] -> [e]) -> [[d]] -> [[e]]) -> ((d -> e) -> [d] -> [e]) -> (d -> e) -> ([[d]] -> [[e]]).
+        Por lo tanto, el tipado final de la composición es: (d -> e) -> ([[d]] -> [[e]]).
+    
+    2. flip . flip
+        Lo primero que hay que hacer es ver los tipos de ambas funciones. Y por convención, vamos a renombrar las variables de tipo para que no haya colisiones.
+        flip :: (a -> b -> c) -> (b -> a -> c)
+        (.) :: (e -> f) -> (d -> e) -> d -> f
 
-    Llevando al único argumento que necesita para ser llamado nos queda: (d -> e) -> ([[d]] -> [[e]]).
+        Pasamos a notación prefija (.) flip flip.
+
+        El primer argumento es el segundo flip, entonces queda:
+        d = (a -> b -> c) y e = (b -> a -> c).
+
+        Ahora, nos queda el segundo flip. 
+        e = (a -> b -> c) y f = (b1 -> a1 -> c1).
+
+        Juntando las e, unificamos y nos queda 
+        b -> a -> c = a1 -> b1 -> c1
+        b = a1, a = b1, c = c1.
+
+        Finalizando, nos queda (b -> a -> c) -> (b -> a -> c)
 
 
 -}
