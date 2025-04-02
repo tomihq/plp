@@ -30,39 +30,3 @@ max2Curry x y | x >= y = x
 normaVectorialCurry :: Float -> Float -> Float 
 normaVectorialCurry x y = sqrt(x^2 + y^2)   
 
-curryOwn :: ((a, b) -> c) -> a -> b -> c
-curryOwn f a b = f (a, b)
-
-uncurryOwn :: (a -> b -> c) -> (a, b) -> c
-uncurryOwn f (a, b) = f a b
-
-sumFoldr :: Num a => [a] -> a
-sumFoldr = foldr (+) 0
-
-elemFoldr :: Eq a => a -> [a] -> Bool
-elemFoldr e = foldr(\x rec -> if e == x then True else rec) False
-
-filterOwn :: (a -> Bool) -> [a] -> [a]
-filterOwn f = foldr(\e rec -> if f e then e:rec else rec) []
-
-mapOwn :: (a -> b) -> [a] -> [b]
-mapOwn f = foldr(\e rec -> f e : rec) [] 
-
-{- mejorSegun :: (a -> a -> Bool) -> [a] -> a 
-mejorSegun f l = foldr1(\e rec -> if f e mejorSegun(f, l) then e else rec) -}
-
-sumasParciales :: Num a => [a] -> [a]
-sumasParciales l = reverse (foldr(\e rec -> if(length rec > 0) then e + head(rec) : rec else e:rec) [] (reverse l))
-
-sumaAlt :: Num a => [a] -> a 
-sumaAlt = foldr (-) 0 
--- P1 - P2 + P3 -P4 + P5 = [1, 2, 3] = 2 - 3 = -1, 1 - (-1) = 2
-
-{-
-    Me di cuenta que en vez de hacer el ultimo menos el anteultimo es igual que hacer el anterior pero con foldl y flipeando el (-).
-    Ej.: [2, 1] la idea es hacer 1-2+... para eso empezamos haciendo foldl (-) ((-) 0 2) [1] = foldl (-) 2 [1] = foldl (-) ((-) 2 1) = 1 - 2 = -1.
-
-    La diferencia con el foldl en vez del foldr es que vamos resolviendo paso a paso, el foldr primero plega todo sin resolver, y despues de que plegó todo empieza a resolver.
--}
-sumaInversaAlt :: Num a => [a] -> a 
-sumaInversaAlt = foldl (flip (-)) 0
