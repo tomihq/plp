@@ -5,9 +5,9 @@ foldAB z fBin Nil = z
 foldAB z fBin (Bin i r d) = fBin (rec i) r (rec d)
     where rec = foldAB z fBin
 
-recAB :: b -> (b -> a -> AB a -> AB a -> b -> b) -> AB a -> b 
+recAB :: b -> (b -> a -> b -> AB a -> AB a -> b) -> AB a -> b 
 recAB z fBin Nil = z
-recAB z fBin (Bin i r d) = fBin (rec i) r i d (rec d)
+recAB z fBin (Bin i r d) = fBin (rec i) r (rec d) i d 
     where rec = recAB z fBin
 
 
@@ -21,8 +21,16 @@ altura = foldAB 0 (\ri r rd -> 1 + (max ri rd))
 cantNodos :: AB a -> Int 
 cantNodos = foldAB 0 (\ri r rd -> 1 + ri + rd)
 
-{- mejorSegunAB :: (a -> a -> Bool) -> AB a -> a 
-mejorSegunAB f (Bin i r d) = foldAB(\ri r rd -> if f ri rd then (if f r ri then r else ri) else (if f r rd then r else rd)) (Bin i r d) -}
+mejorSegunAB :: (a -> a -> Bool) -> AB a -> a 
+mejorSegunAB f (Bin i r d) =  foldAB r (\ri r rd -> if (f r ri && f r rd) then r else if (f ri rd) then ri else rd) (Bin i r d)
+
+
+{- comparo raiz con toda rama izq y rama der. Despues bajo a raiz rama izq y comparo de vuelta, así mismo con derecha. -}
+{- esABB :: Ord a => AB a -> Bool
+esABB = recAB True (\ri r rd (Bin i2 r2 d2) (Bin i3 r3 d3) -> if(r < (esABBAux r) || r > r3) then False else ri && rd)
+
+esABBAux :: (Ord a) => a -> AB a -> Bool 
+esABBAux r = foldAB True (\ri r rd -> if()) -}
 
 ramas :: AB a -> [[a]]
 ramas = foldAB [] (\ri r rd -> if null ri && null rd then [[r]] else map (r :) ri ++ map (r :) rd)
