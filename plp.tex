@@ -1283,10 +1283,11 @@ Llamamos \textbf{contexto} a un conjunto finito de fórmulas.  \\
     \item Los conectivos $\land, \lor$ no son conmutativos ni asociativos.
     \item La implicación, al igual que en Haskell, asocia a la derecha.
     \item Ómitimos los paréntesis más externos de las fórmulas.
+    \item $\bot$ es siempre falso
 \end{itemize}
-\subsection*{Valuación}
+\subsubsection*{Valuación}
 Una valuación es una función $v : \mathcal{V} \implies \{V, F\}$ que asigna valores de verdad a las variables proposicionales. \\
-Una valuación satisface una propositión $\tau$ si $ v \vDash \tau$ donde: 
+Una valuación \textbf{satisface} una proposición $\tau$ si $ v \vDash \tau$ donde: 
 \begin{itemize}
     \item $v \vDash P \ sii \ v(P) = V$
     \item $v \vDash \neg \tau \ sii \ v \nvDash \tau$
@@ -1295,13 +1296,25 @@ Una valuación satisface una propositión $\tau$ si $ v \vDash \tau$ donde:
     \item $v \vDash \tau \implies \sigma \ sii \ v \nvDash \tau \ o \ v \vDash \sigma$
      \item $v \vDash \tau \iff \sigma \ sii \ v \vDash \tau \ sii \ v \vDash \sigma$
 \end{itemize}
-\textbf{Nota}: Una valuación es una fila de la tabla de verdad. \\
-\textbf{Nota 2}: $\vDash$ se lee como \textbf{satisface} \\
+\textbf{Nota}: Una valuación es una fila de la tabla de verdad. Es decir, cada variable se le asigna un valor de verdad para esa valuación. \\ 
+Ej.: Si tengo $\sigma \land \tau$ ¿qué necesito que pase para $\sigma$ y $\tau$ para que sea verdadero? Bueno, necesito que la valuación de $v \vDash \sigma$ y $v \vDash \tau$ \\
 A modo de ejercicio escribamos uno de estas valuaciones con árboles de derivación a nivel de sistema deductivo: 
 \begin{center}
     \barratexto{$v \vDash \tau \ v \vDash \sigma$}{$\langle$ $v \vDash \tau \land \sigma $ $\rangle$}{$\langle$ $\land$ $\rangle$}
 \end{center}
-\subsection*{Equivalencia Lógica y Tipos de Fórmulas}
+\subsubsection*{Contexto}
+Es un conjunto finito de fórmulas. Es lo que tenemos como información en nuestros juicios a medida que vamos encontrando las premisas. \\
+Ej.: $\Gamma = P \implies Q, \neg Q$
+\subsubsection*{Semántica en Lógica Proposicional}
+Una valuación v satisface un contexto $\Gamma$ $(v \vDash \Gamma)$ sí y solo sí v satisface todas las fórmulas de $\Gamma$. \\
+Si $\Gamma = P \land Q, \neg Q$ entonces para que $v \vDash \Gamma$ tiene que suceder que: 
+\begin{itemize}
+    \item $v \vDash P \land Q$ sii $v \vDash P$ y $v \vDash Q$
+    \item $v \vDash \neg Q$ sii $v \nvDash Q$
+\end{itemize}
+\textbf{Good to Know}: Todo v satisface al contexto vacío. \\
+\textbf{Consecuencia Lógica}: Si llegase a encontrar ahora una fórmula $\tau$ del conjunto $\Gamma (\Gamma \vDash \tau)$, entonces, todas las valuaciones $v$ que valían en $\Gamma$, valen también en $\tau$ (si antes valía, y ahora agregué $\tau$ veo que siga valiendo).
+\subsubsection*{Equivalencia Lógica y Tipos de Fórmulas}
 Dadas dos fórmulas $\tau$ y $\sigma$: 
 \begin{itemize}
     \item $\tau$ es lógicamente equivalente a $\sigma$ cuando $v \vDash \tau$ sii $v \vDash \sigma$ para toda valuación $v$.
@@ -1317,57 +1330,34 @@ Un conjunto de fórmulas $\Gamma$ es
     \item Satisfactible si existe una valuación $v$ tal que $\forall \tau \in \Gamma$ se tiene $v \vDash \tau$
     \item Insatisfactible si no es satisfactible.
 \end{itemize}
-\subsection*{Teorema de la Insatisfactibilidad}
+\subsubsection*{Teorema de la Insatisfactibilidad}
 Una fórmula $\tau$ es una tautología sii $\neg \tau$ es insatisfactible.
-\subsection*{Sistema Deductivo basado en Reglas de Prueba}
-\begin{itemize}
-    \item Secuente (expresión que incluye conclusión): $\tau_{1}, \tau_{2}, ..., \tau_{n} \vDash \sigma$
-    \begin{itemize}
-        \item Denota que a partir de asumir que el conjunto de fórmulas $\tau_{1}, \tau_{2}, ..., \tau_{n}$ son tautologías, podemos obtener una prueba de la validez de $\sigma$
-    \end{itemize}
-    \item Reglas de prueba: \begin{center}
-        \sd{\Gamma_{1} \vDash \tau_{1} \dots \Gamma_{n} \vDash \tau_{n}}{\Gamma \vDash \sigma: conclusion}{nombre de la regla}
-    \end{center}
-   
-\end{itemize}
-\subsection*{Convenciones de Notación}
-\begin{itemize}
-    \item Omitimos los paréntesis más externos de las fórmulas: $\tau \land \neg(\sigma \lor \rho) = (\tau \land \neg(\sigma \lor \rho))$
-    \item La implicación es asociativa a la derecha: $\tau \implies \sigma \implies \rho = (\tau \implies (\sigma \implies \rho))$
-    \item Los conectivos $\land, \lor$ \textbf{no} son conmutativos ni asociativos 
-    \begin{itemize}
-        \item  $\tau \lor (\sigma \lor \rho) \neq (\tau \lor \sigma) \lor \rho$
-        \item $\tau \land \sigma \neq \sigma \land \tau$
-    \end{itemize}
-\end{itemize}
-\subsection*{Consecuencia Lógica}
-\begin{itemize}
-    \item $\bot$ es siempre falso
-    \item $v \vDash \emptyset$
-    \item $\emptyset \vDash T$  todas las tautologías
-\end{itemize}
-\subsection*{Lógica Intusionista (NJ) vs Lógica Clásica (NK)}
-Las reglas de la lógica intusionista están contenidas en las reglas de la lógica clásica. \\
-Algunas reglas que podemos aplicar en la \textbf{lógica clásica} que no podemos usar en la Lógica Intusionista 
+\subsection*{Sistema Deductivo (Deduccion Natural)}
+El enfoque que vimos antes de la lógica proposicional a través de la semántica tiene algunas limitaciones. \\
+En nuestro caso, vemos el sistema de deducción natural aunque existen otros. \\
+Este sistema trabaja con afirmaciones (juicios) de la forma $\Gamma \vdash \tau$ donde $\Gamma$ es la hipótesis y $\tau$ es la tesis.
+\subsubsection*{Lógica Intuicionista (NJ) vs Lógica Clásica (NK)}
+Las reglas de la lógica intuicionista están contenidas en las reglas de la lógica clásica. \\
+Algunas reglas que podemos aplicar en la \textbf{lógica clásica} que no podemos usar en la lógica intucionista 
 \begin{itemize}
     \item PBC (proof by contradiction): No es derivable, es decir, no se puede deducir.
     \item LEM (law of excluded middle): Es un axioma, no tiene premisas y por lo tanto no se puede probar.
     \item $\neg \neg e$ (doble negation elimination)
 \end{itemize}
 Las reglas \textbf{PBC}, \textbf{LEM} y \textbf{$\neg \neg e$} son equivalentes.
-\[\begin{minipage}[b]{0.5\textwidth}
+\[\begin{minipage}[b]{0.7\textwidth}
     \includegraphics[width=\linewidth]{assets/logica_1.png}
 \end{minipage}\]
-\[\begin{minipage}[b]{0.5\textwidth}
+\[\begin{minipage}[b]{0.7\textwidth}
     \includegraphics[width=\linewidth]{assets/logica_2.png}
 \end{minipage}\]
+Si un juicio es derivable en NJ también lo es en NK, esto se debe a que NJ es más restrictivo que NK. \\
+¿Por qué es importante NJ? Porque es la base de un lenguaje de programación funcional.
 \subsection*{Weakening (Debilitamiento) y Strengthening (Fortalecimiento)}
-\textbf{Weakening}: Lo voy a decir en criollo, su demostración se hace por inducción, pero básicamente es que si algo se cumple solo con \textbf{$\tau$} entonces si agrego otras hipótesis también seguirá valiendo. \\
-Se dice que es Weakening porque estamos haciendo más débil la prueba, esto es porque a mayor cantidad de información que tiene el contexto es más dificil de probar. \\
-\begin{center}
-    \sd{}{\Gamma \vDash \sigma}{} $\implies$ \sd{}{\Gamma, \tau \vDash \sigma}{}
-\end{center}
-\textbf{Strengthening}: Es lo contrario a Weakening, la idea es que podemos ir sacando hipótesis que no nos sirven y poder seguir probando que vale. Se utiliza mucho en algo llamado Cálculo Lambda que veremos luego. \\
+\subsubsection*{Weakening}
+Si $\Gamma \vdash \tau$ es derivable, entonces $\Gamma, \sigma \vdash \tau$ es derivable. 
+\subsubsection*{Strengthening}
+Es lo contrario a Weakening, la idea es que podemos ir sacando hipótesis que no nos sirven y poder seguir probando que vale. Se utiliza mucho en algo llamado Cálculo Lambda que veremos luego. \\
 Se dice que es Strengthening porque estamos haciendo más fuerte la prueba, esto es porque a menor cantidad de información que tiene el contexto es más fácil de probar.
 \subsection*{Correctitud (Soundness) y Completitud}
 \textbf{Importante}: Utilizamos $\vDash$ para hablar de satisfacibilidad en el contexto de \textbf{semántica} mientras que utilizamos $\vdash$ para indicar que una fórmula se puede derivar en el contexto de \textbf{sintáxis}. \\
