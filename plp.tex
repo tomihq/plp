@@ -1231,43 +1231,59 @@ Ej conceptual: let x = (2 + 3) * 4 \\
 En este ejemplo x es básicamente un nombre o identificador que almacena un thunk dentro (2+3) * 4. \\
 Si en algun momento se llegase a utilizar, x toma el valor de 20 y lo guarda en la memoria. 
 \section*{Sistemas Deductivos}
-Es una herramienta matemática que formaliza el lenguaje de la demostración. \\
-Existen muchos sistemas deductivos, acá vamos a ver el de deducción natural que es uno parecido a la forma de pensar del humano. \\
-Está dado por un conjunto de \textbf{axiomas} y \textbf{reglas de inferencia} que tienen la siguiente estructura 
+Sirve para razonar acerca de juicios (afirmaciones que queremos probar). \\
+Ej.: Probar que \textbf{el tipo $(Bool \rightarrow Int)$} está sintácticamente bien formado 
+\subsection*{Estructura de los Sistemas Deductivos}
+Está dado por \textbf{reglas de inferencia} que tienen la siguiente estructura 
 \begin{center}
     \barratexto{}{$\langle$ axioma $\rangle$}{$\langle$ nombre $\rangle$}
     \barratexto{$\langle premisa_{0} \rangle$ $\langle premisa_{1} \rangle$... $\langle premisa_{n} \rangle$}{$\langle$ nombre de la regla $\rangle $}{$\langle conclusion \rangle$}
 \end{center}
-\textbf{Axioma}: Afirmaciones básicas que se asumen como verdaderas. No es posible deducirlas de otras afirmaciones. \\
-\textbf{Reglas de Inferencia}: Permiten derivar afirmaciones (teoremas) a partir de axiomas y otras afirmaciones.
-\subsection*{Árbol de Derivación}
+\subsection*{Diferencia entre Axioma y Reglas de Inferencia}
 \begin{itemize}
-    \item Las premisas son hojas.
+    \item \textbf{Axioma}: Es una afirmación que se asume como verdadera.
+    \item \textbf{Reglas de Inferencia}: Permiten derivar afirmaciones (teoremas) a partir de axiomas y otras afirmaciones.
+\end{itemize}
+\subsubsection*{Cómo leer reglas de inferencia}
+Existen dos formas, de abajo hacia arriba o de arriba hacia abajo.
+\begin{itemize}
+    \item De arriba hacia abajo: Si sabemos que valen las premisas, podemos decir que vale la conclusión.
+    \item De abajo hacia arriba: Si queremos demostrar que vale la conclusión, tenemos que demostrar todas las premisas.
+\end{itemize}
+\subsection*{Árbol de Derivación} 
+Es la representación gráfica de una derivación.
+\begin{itemize}
     \item Los nodos representan afirmaciones.
     \item La raíz es la afirmación que se quiere probar.
     \item Las ramas representan las reglas de inferencias que conectan a las afirmaciones. 
 \end{itemize}
 Si llegamos a una prueba correcta, \textbf{las hojas son axiomas}.
 \subsection*{Afirmación Derivable (Teorema)}
-Una afirmación es derivable si existe alguna derivación sin premisas que la tiene como conclusión.
-\subsection*{Fórmulas}
+Una afirmación es derivable si existe alguna derivación sin premisas que la tiene como conclusión. \\
+Es decir: si podés armar el árbol de derivación y llegás a hojas que son axiomas, entonces, tu afirmación es derivable.
+\subsection*{Lógica Proposicional}
+Dado un conjunto infinito de variables proposicionales: $\mathcal{P} = \{P, Q, R, \dots\}$
+\subsubsection*{Fórmulas}
 \begin{itemize}
     \item Cualquier variable proposicional es una fórmula.
     \item Si $\rho$ es una fórmula, entonces $\neg \rho$ es una fórmula.
-    \item Si $\rho$ y $\sigma$ son fórmulas, $\rho \land \sigma$ es una fórmula.
-    \item Si $\rho$ y $\sigma$ son fórmulas, $\rho \lor \sigma$ es una fórmula.
-    \item Si $\rho$ y $\sigma$ son fórmulas, $\rho \implies \sigma$ es una fórmula.
-    \item Si $\rho$ y $\sigma$ son fórmulas, $\rho \iff \sigma$ es una fórmula.
+    \item Si $\rho$ y $\sigma$ son fórmulas, $(\rho \land \sigma), (\rho \lor \sigma), (\rho \implies \sigma), (\rho \iff \sigma) $ son fórmulas.
 \end{itemize}
 Al ser un conjunto inductivo, viene provisto de 
 \begin{itemize}
     \item Esquema de prueba para probar propiedades sobre ellos \textbf{inducción estructural}.
     \item Esquema de recursión para definir funciones sobre el conjunto \textbf{recursión estructural}.
 \end{itemize}
-\subsection*{Gramática de la Lógica Proposicional}
+\subsubsection*{Gramática de la Lógica Proposicional}
 Las fórmulas son las expresiones que se pueden generar a partir de la siguiente gramática 
 \[\tau, \sigma, \rho ... :: = P \ | \ \bot \ | \ (\tau \land \sigma) \ | \ (\tau \implies \sigma) \ | \ (\tau \lor \sigma) \ | \ \neg \tau\] 
-Llamamos \textbf{contexto} a un conjunto finito de fórmulas.
+Llamamos \textbf{contexto} a un conjunto finito de fórmulas.  \\
+\textbf{Good to Know}
+\begin{itemize}
+    \item Los conectivos $\land, \lor$ no son conmutativos ni asociativos.
+    \item La implicación, al igual que en Haskell, asocia a la derecha.
+    \item Ómitimos los paréntesis más externos de las fórmulas.
+\end{itemize}
 \subsection*{Valuación}
 Una valuación es una función $v : \mathcal{V} \implies \{V, F\}$ que asigna valores de verdad a las variables proposicionales. \\
 Una valuación satisface una propositión $\tau$ si $ v \vDash \tau$ donde: 
