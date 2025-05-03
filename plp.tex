@@ -974,13 +974,16 @@ Definamos algunas cosas
     \item \textbf{Aplicación de una función a un argumento}: $MN$ 
     \item \textbf{Constantes para cada valor de verdad}: true y false.
 \end{itemize}
-\textbf{Observación}: Todo es una función, es decir, una función tomando un argumento constante u otra función es lo mismo. \\
+\subsubsection*{Orden de jerarquía en operaciones}
+\textbf{Observación}: La aplicación tiene mayor precedencia que el condicional y la abstracción $(app > abstraccion > condicional)$ \\
+Ej (aplicacion antes que condicional): if x then true else false true $\equiv$ if x then true else (false true) \\
+Ej (abstraccion antes que condicional): $\lambda$ x . if x then y else z $\equiv \lambda x .$ (if x then y else z) \\
+Ej (todo junto): $\lambda x . $ if x then y else z true $\implies \lambda x .$ if x then y else (z true) $\implies \lambda x .$ (if x then y else (z true))
+\textbf{Observación 2}: Todo es una función, es decir, una función tomando un argumento constante u otra función es lo mismo. \\
 Ej.: Una función que toma una función y la compone consigo misma es $\lambda f . \lambda x . f(fx)$ \\
-\textbf{Observación 2}: No existen funciones que tomen varios argumentos. \\ 
+\textbf{Observación 3}: No existen funciones que tomen varios argumentos. \\ 
 Ej.: $f(x,y) = $ if $y$ then $x$ else true en cálculo lambda se escribe $\lambda y . \lambda x . if \ x \ then \ y \ else \ true$ \\
-\textbf{Observación 3}: La aplicación asocia a la izquierda: $F \ false \ true = (F \ false) \ true$ \\
-\textbf{Observación 4}: La abstracción y el if tienen menor precedencia que la aplicación. \\
-Ej.: $\lambda x:\tau . M \ N = \lambda x : \tau . (M \ N) \neq (\lambda x : \tau . M) N$ \\
+\textbf{Observación 4}: La aplicación asocia a la izquierda: $F \ false \ true = (F \ false) \ true$ \\
 \textbf{Observación 5}: Las implicaciones asocian a la derecha $A \rightarrow B \rightarrow C$ = $A \rightarrow (B \rightarrow C)$
 \subsubsection*{Gramática del cálculo lambda con booleanos}
 Los términos válidos de cálculo lambda con booleanos los podemos describir con una gramática formal 
