@@ -963,27 +963,53 @@ $\tau_{1}, \tau_{2}, \dots, \tau_{n} \vDash \sigma \iff \forall \ v \ valuacion 
 \subsection*{Consistencia}
 Decimos que $\Gamma$ es consistente si $\Gamma \nvdash \bot$, es decir, $\Gamma$ es consistente si no se puede derivar una contradicción a partir de él.
 \section*{Cálculo Lambda ($\lambda$)}
+Es un lenguaje de programación. Puede computar cualquier cosa. En lenguajes funcionales hablamos de cálculo lambda mientras que en lenguajes imperativos hablamos de máquinas de Turing. 
+\subsection*{Reglas Generales}
+Es probable que muchas cosas que mencione acá no se hayan definido todavía, pero ténganlo presente a medida que lean el documento. Esto, más que nada, para que las reglas más importantes estén en un único lugar. 
+\begin{itemize}
+    \item La aplicación es asociativa a izquierda.
+    \begin{itemize}
+        \item $M N R = (M N) \ R$
+    \end{itemize}
+    \item El constructor de tipos $\rightarrow$ es asociativo a derecha.
+    \begin{itemize}
+        \item $\tau \rightarrow \sigma \rightarrow \rho = \tau \rightarrow (\sigma \rightarrow \rho)$
+    \end{itemize}
+    \item La aplicación tiene mayor precedencia (se resuelve primero) que la abstracción, y que el condicional. (APP > ABS > COND)
+    \begin{itemize}
+        \item if x then y else z true $\equiv$ if x then y else (z true). 
+        \item $\lambda x:\tau$. if x then y else z  $\equiv$ $\lambda x:\tau.$(if x then y else z). 
+        \item $\lambda x:\tau .$ if x then y else z true $=$ $\lambda x:\tau.$ if x then y else (z true) $=$ $\lambda x:\tau. $(if x then y else (z true)). 
+    \end{itemize}
+    \item fv(M): Es el conjunto de variables libres de \textbf{cada posible término M} de un sistema de tipos.
+\end{itemize}
 \subsection*{Con booleanos}
-Definamos algunas cosas 
+Los términos válidos de cálculo lambda con booleanos los podemos describir con una gramática formal 
+\[
+\begin{aligned}
+M \ ::= \ & x \quad &&\text{(variable)} \\
+       | \ & \lambda x .\ M \quad &&\text{(abstracción)} \\
+       | \ & M\ M \quad &&\text{(aplicación)} \\
+       | \ & \text{true} \quad &&\text{(constante verdadera)} \\
+       | \ & \text{false} \quad &&\text{(constante falsa)} \\
+       | \ & \text{if } M \text{ then } M \text{ else } M \quad &&\text{(condicional)}
+\end{aligned}
+\]
 \begin{itemize}
     \item \textbf{Tipos}: $\tau, \sigma, \rho, \dots ::= bool \ | \ \tau \rightarrow \sigma$. 
-    Asumimos que el constructor de tipos $\rightarrow$ es asociativo a derecha.
     \item \textbf{Términos}: Variables $X = \{X, Y, Z, \dots\}$
-    \item \textbf{Construcción explícita de función (sin nombre)}: $\lambda x . M$ 
-    \item \textbf{Aplicación de una función a un argumento}: $MN$ 
-    \item \textbf{Constantes para cada valor de verdad}: true y false.
 \end{itemize}
-\textbf{Observación}: Todo es una función, es decir, una función tomando un argumento constante u otra función es lo mismo. \\
+\subsubsection*{Orden de jerarquía en operaciones}
+\textbf{Observación}: La aplicación tiene mayor precedencia que el condicional y la abstracción $(app > abstraccion > condicional)$ \\
+Ej (aplicacion antes que condicional): if x then true else false true $\equiv$ if x then true else (false true) \\
+Ej (abstraccion antes que condicional): $\lambda$ x . if x then y else z $\equiv \lambda x .$ (if x then y else z) \\
+Ej (todo junto): $\lambda x . $ if x then y else z true $\implies \lambda x .$ if x then y else (z true) $\implies \lambda x .$ (if x then y else (z true))
+\textbf{Observación 2}: Todo es una función, es decir, una función tomando un argumento constante u otra función es lo mismo. \\
 Ej.: Una función que toma una función y la compone consigo misma es $\lambda f . \lambda x . f(fx)$ \\
-\textbf{Observación 2}: No existen funciones que tomen varios argumentos. \\ 
+\textbf{Observación 3}: No existen funciones que tomen varios argumentos. \\ 
 Ej.: $f(x,y) = $ if $y$ then $x$ else true en cálculo lambda se escribe $\lambda y . \lambda x . if \ x \ then \ y \ else \ true$ \\
-\textbf{Observación 3}: La aplicación asocia a la izquierda: $F \ false \ true = (F \ false) \ true$ \\
-\textbf{Observación 4}: La abstracción y el if tienen menor precedencia que la aplicación. \\
-Ej.: $\lambda x:\tau . M \ N = \lambda x : \tau . (M \ N) \neq (\lambda x : \tau . M) N$ \\
+\textbf{Observación 4}: La aplicación asocia a la izquierda: $F \ false \ true = (F \ false) \ true$ \\
 \textbf{Observación 5}: Las implicaciones asocian a la derecha $A \rightarrow B \rightarrow C$ = $A \rightarrow (B \rightarrow C)$
-\subsubsection*{Gramática del cálculo lambda con booleanos}
-Los términos válidos de cálculo lambda con booleanos los podemos describir con una gramática formal 
-\[M \ ::= \ x \ |\  \lambda x \ . \ M \ | \ MM \ | \ true \ | \ false \ | \ if \ M \ then \ M \ else \ M\] 
 \subsection{Tipos en Cálculo Lambda}
 En el Cálculo Lambda tipado damos los tipos en las operaciones. \\
 Ej.: $\backslash \lambda x:\sigma \ . \ M$
