@@ -1055,7 +1055,7 @@ Lo importante es acordarse que
     \item Si en el contexto tenés algo que NO te sirve para tipar en M, entonces podés sacarlo que no te va a afectar en nada (strengthening).
 \end{itemize}
 \subsubsection*{Tipos Habitados}
-Un tipo está habitado si existe una función de ejemplo que use ese tipo o más formalmente dicho, si existe un término M tal que el juicio $\vdash M:\tau$ es derivable \\
+Uu tipo está habitado si existe un término M tal que el juicio $\vdash M:\tau$ es derivable. \\
 Por ejemplo, si nos piden algo que cumpla $\vdash M:(\tau \rightarrow \rho) \rightarrow (\sigma \rightarrow \tau) \rightarrow (\sigma \rightarrow \rho)$. \\
 Podemos notar que una función que haga esto, sería la composición: $\lambda f:\tau \rightarrow e . \lambda g :\sigma \rightarrow \tau . \lambda x:\sigma . f (gx)$ o mejor escrita $(\lambda f:\tau \rightarrow e) (\lambda g :\sigma \rightarrow \tau)(\lambda x:\sigma) (f (gx))$
 \subsection*{Semántica Formal}
@@ -1072,7 +1072,7 @@ Nos permite darle significado a nuestros programas.
 \subsubsection*{Forma Normal}
 Un término está en forma normal cuando no existe ninguna regla que lo reduzca a otro.
 \subsubsection*{Determinismo}
-Decimos que la reducción está determinada (hay determinismo) cuando cada término que \textbf{NO} está en forma normal tiene una única forma de reducir.
+Cuando cada término que \textbf{NO} está en forma normal tiene una única forma de reducir.
 \subsubsection*{Estrategia de Reducción}
 Usaremos la estrategia de reducción \textbf{call by value}. \\
 $M \rightarrow N$: indica que M reduce o reescribe a N. 
