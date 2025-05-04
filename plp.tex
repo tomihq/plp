@@ -963,7 +963,8 @@ $\tau_{1}, \tau_{2}, \dots, \tau_{n} \vDash \sigma \iff \forall \ v \ valuacion 
 \subsection*{Consistencia}
 Decimos que $\Gamma$ es consistente si $\Gamma \nvdash \bot$, es decir, $\Gamma$ es consistente si no se puede derivar una contradicción a partir de él.
 \section*{Cálculo Lambda ($\lambda$)}
-Es un lenguaje de programación. Puede computar cualquier cosa. En lenguajes funcionales hablamos de cálculo lambda mientras que en lenguajes imperativos hablamos de máquinas de Turing. 
+Es un lenguaje de programación. Puede computar cualquier cosa. En lenguajes funcionales hablamos de cálculo lambda mientras que en lenguajes imperativos hablamos de máquinas de Turing. \\
+Para entrar en calor, comenzaremos hablando del cálculo lambda no tipado. Luego, introduciremos la noción de tipos.
 \subsection*{Reglas Generales}
 Es probable que muchas cosas que mencione acá no se hayan definido todavía, pero ténganlo presente a medida que lean el documento. Esto, más que nada, para que las reglas más importantes estén en un único lugar. 
 \begin{itemize}
@@ -979,9 +980,13 @@ Es probable que muchas cosas que mencione acá no se hayan definido todavía, pe
     \begin{itemize}
         \item if x then y else z true $\equiv$ if x then y else (z true). 
         \item $\lambda x:\tau$. if x then y else z  $\equiv$ $\lambda x:\tau.$(if x then y else z). 
-        \item $\lambda x:\tau .$ if x then y else z true $=$ $\lambda x:\tau.$ if x then y else (z true) $=$ $\lambda x:\tau. $(if x then y else (z true)). 
+        \item $\lambda x:\tau .$ if x then y else z true $\stackrel{APP}{=}$ $\lambda x:\tau.$ if x then y else (z true) $\stackrel{ABS}{=}$ $\lambda x:\tau. $(if x then y else (z true)). 
     \end{itemize}
-    \item fv(M): Es el conjunto de variables libres de \textbf{cada posible término M} de un sistema de tipos.
+    \item fv(M): Es el conjunto de variables libres de \textbf{cada posible término M} de un sistema de tipos. Una variable está ligada si está al alcance de una abstracción.
+    \item Todas las funciones toman un único argumento. 
+    \begin{itemize}
+        \item $\lambda x.\lambda y. \lambda z.$(if x then y else z) genera (if x then y else z) con los argumentos ya aplicados.
+    \end{itemize}
 \end{itemize}
 \subsection*{Con booleanos}
 Los términos válidos de cálculo lambda con booleanos los podemos describir con una gramática formal 
@@ -989,189 +994,142 @@ Los términos válidos de cálculo lambda con booleanos los podemos describir co
 \begin{aligned}
 M \ ::= \ & x \quad &&\text{(variable)} \\
        | \ & \lambda x .\ M \quad &&\text{(abstracción)} \\
-       | \ & M\ M \quad &&\text{(aplicación)} \\
+       | \ & M\ N \quad &&\text{(aplicación)} \\
        | \ & \text{true} \quad &&\text{(constante verdadera)} \\
        | \ & \text{false} \quad &&\text{(constante falsa)} \\
-       | \ & \text{if } M \text{ then } M \text{ else } M \quad &&\text{(condicional)}
+       | \ & \text{if } M \text{ then } N \text{ else } P \quad &&\text{(condicional)}
 \end{aligned}
 \]
 \begin{itemize}
     \item \textbf{Tipos}: $\tau, \sigma, \rho, \dots ::= bool \ | \ \tau \rightarrow \sigma$. 
     \item \textbf{Términos}: Variables $X = \{X, Y, Z, \dots\}$
 \end{itemize}
-\subsubsection*{Orden de jerarquía en operaciones}
-\textbf{Observación}: La aplicación tiene mayor precedencia que el condicional y la abstracción $(app > abstraccion > condicional)$ \\
-Ej (aplicacion antes que condicional): if x then true else false true $\equiv$ if x then true else (false true) \\
-Ej (abstraccion antes que condicional): $\lambda$ x . if x then y else z $\equiv \lambda x .$ (if x then y else z) \\
-Ej (todo junto): $\lambda x . $ if x then y else z true $\implies \lambda x .$ if x then y else (z true) $\implies \lambda x .$ (if x then y else (z true))
-\textbf{Observación 2}: Todo es una función, es decir, una función tomando un argumento constante u otra función es lo mismo. \\
-Ej.: Una función que toma una función y la compone consigo misma es $\lambda f . \lambda x . f(fx)$ \\
-\textbf{Observación 3}: No existen funciones que tomen varios argumentos. \\ 
-Ej.: $f(x,y) = $ if $y$ then $x$ else true en cálculo lambda se escribe $\lambda y . \lambda x . if \ x \ then \ y \ else \ true$ \\
-\textbf{Observación 4}: La aplicación asocia a la izquierda: $F \ false \ true = (F \ false) \ true$ \\
-\textbf{Observación 5}: Las implicaciones asocian a la derecha $A \rightarrow B \rightarrow C$ = $A \rightarrow (B \rightarrow C)$
-\subsection{Tipos en Cálculo Lambda}
-En el Cálculo Lambda tipado damos los tipos en las operaciones. \\
-Ej.: $\backslash \lambda x:\sigma \ . \ M$
+\subsection*{Cálculo Lambda tipado}
+En el Cálculo Lambda tipado damos los tipos en las operaciones, ej.: $\backslash \lambda x:\sigma \ . \ M$
 \subsection*{Función Identidad}
 En cálculo lambda existe una función id \textbf{propia por cada tipo}.
-\subsection{Semántica Operacional}
-La \textbf{gramática} nos dice qué terminos podemos escribir sintácticamente. \\
-La \textbf{semántica} nos da el significado de los términos. \\
-Las siguientes reglas tienen la forma $M \rightarrow N$ y se lee $M \ reduce \ a \ N$ o $M \ se \ reescribe \ como \ N$ \\
+\subsubsection*{Captura de variables ($\alpha$ equivalencias)}
+Decimos que dos términos M y N son $\alpha$ equivalentes si solamente difieren en el nombre de sus variables ligadas.\\
+Ej.: $\lambda x.\lambda y.x = \lambda y.\lambda x.x$
+\subsubsection*{Conjunto de Variables Libres $fv(M)$}
+El conjunto de variables libres de un término M se define para todo posible término del sistema de tipos y se denota como $fv(M)$. \\
+Definamos, para cada término del cálculo lambda en booleanos el conjunto de variables libres
 \begin{itemize}
-    \item $(\lambda x . M) N \rightarrow M \{x := N\}$ ($\beta$ reducción)
-    \item if true then $M$ else $N \rightarrow M$ ($if_{t}$)
-    \item if false then $M$ else $N \rightarrow N$ ($if_{f}$)
+    \item $fv(x) \stackrel{def}{=} \{x\}$
+    \item $fv(\lambda x. M) \stackrel{def}{=} fv(M) \backslash \{x\}$
+    \item $fv(true), fv(false) \stackrel{def}{=} \emptyset$
+    \item $fv(M N) \stackrel{def}{=} fv(M) \cup fv(N)$
+    \item $fv(if \ M \ then \ N \ else \ P) \stackrel{def}{=} fv(M) \cup fv(N) \cup fv(P)$
 \end{itemize}
-\subsubsection{Captura de variables}
-$\lambda x:bool \ . \ x \equiv $ boolean main(boolean var)$\{return \ x\}$ \\
-Cuando las variables están ligadas a un cuantificador podemos cambiarle el nombre sin problema alguno (pensar en el nombre de un parámetro de función en un lenguaje imperativo). \\
-Ej.: $x \ (\lambda x:bool \ . \ x) \equiv x \ (\lambda y:bool \ . \ x)$ \\
-Esto de que cambiar el nombre de la variable ligada al cuantificador se debe a que son clases de equivalencia ($\alpha$).
-
-\subsubsection{Conjunto de Variables Libres}
-Se denota como $fv(M)$.
-\subsection{Sistema de Tipos}
-Hasta ahora veníamos utilizando tipos estrictos, pero normalmente el Cálculo Lambda \textbf{no viene tipado}. \\
-Los tipos de cálculo lambda con booleanos los definimos inductivamente por 
-\begin{itemize}
-    \item Bool es un tipo.
-    \item Si $\tau$ y $\sigma$ son tipos, $\tau \rightarrow \sigma$ es un tipo que representa las funciones de $\tau$ en $\sigma$.
-\end{itemize}
-Gracias a los tipos, debemos escribir \textbf{de qué tipo son cada una de las variables}. \\
-\textbf{Importante}: Solo nos vamos a interesar en \textbf{términos sin variables libres}, es suficiente con escribir el tipo cuando se liga la variable. \\
-\textbf{Nota}: Solo los subtérminos tendrán variables libres. \\
-Ej.: $\lambda x:Bool . x$ es la identidad sobre los booleanos. \\
-Ej.: $\lambda x:Bool \rightarrow Bool.x$ es la identidad sobre las funciones de booleanos en booleanos. \\
-
-La gramática de cálculo lambda con booleanos tipado la definimos con una \textbf{gramática de tipos} y una de \textbf{términos} de la siguiente manera
-\begin{itemize}
-    \item $\tau :: = Bool \ | \ \tau \rightarrow \tau$
-    \begin{itemize}
-        \item Nota: $\tau \rightarrow \tau$ representa una función.
-    \end{itemize}
-    \item $M ::= x \ | \ \lambda x: \tau . M \ | \ M M \ | \ tt \ | \ ff \ | \ if \ M \ then \ M \ else \ M$
-\end{itemize}
-Donde $M$ representa un término y $\tau$ el tipo. \\
-\subsection{Contexto}
-Dijimos anteriormente que solo damos tipo a los \textbf{términos sin variables libres} pero ¿que pasa con este caso: $\lambda x:Bool.yx$? \\
-Podemos notar que $y$ es una variable libre, y como estamos usando tipos booleanos tiene que ser una función Bool en algo pero ¿como defino ese algo? \\
-Un \textbf{contexto} nos da tipos para variables, entonces en vez de decir $\lambda x:Bool.yx:Bool \rightarrow Bool$ decimos, si $y:Bool \rightarrow Bool$, entonces $\lambda x:Bool.yx : Bool \rightarrow Bool$ \\
-\textbf{Notación}: $y: Bool \rightarrow Bool \vdash \lambda x: Bool.yx : Bool \rightarrow Bool$ donde del lado izquierdo del $\vdash$ definimos el contexto.
-\subsubsection{Contexto de Tipado}
-Es un conjunto finito de pares $(x_{i}:\tau_{i})$ 
-\[\{x_{1}:\tau_{1}, \dots, x_{n}:\tau_{n}\}\]
-\textbf{Nota}: Lo notamos con letras griegas mayúsculas $(\Gamma, \triangle)$ y \textbf{sin variables repetidas}, es decir, $(i \neq j \implies x_{i} \neq x_{j})$
-\subsubsection{Juicios de Tipado}
+Si $fv(M) = \emptyset$ entonces $M$ es \textbf{cerrado} es decir, no tiene variables libres.
+\subsection*{Sistema de Tipos}
+Se formaliza con un sistema deductivo. Solo tipamos términos sin variables libres. Indica \textbf{cómo se construyen los programas.}
+\subsubsection*{Contexto de tipado}
+¿Qué sucede con el siguiente programa? $(\lambda x:Bool. (y \ x))$ \\
+Como y puede (o no) tener variables libres, necesitamos un \textbf{contexto de tipado}.\\
+Un contexto de tipado es un conjunto finito de pares $(x_{i}:\tau_{i}): \{x_{1}:\tau_{1}, \dots, x_{n}:\tau_{n}\}$ \textbf{sin variables repetidas} $(i \neq j \implies x_{i} \neq x_{j})$ \\
+A veces notamos $dom(\Gamma) = \{x_{1}, \dots, x_{n}\}$, por lo que, si queremos saber el tipo de $x_{i}$, podemos escribir $\Gamma(x_{i})$ \\
+Decimos que el contexto de tipado está vacío $(\emptyset)$ cuando \textbf{o bien el término no tiene ninguna variable libre o bien cuando el término es una constante}
+\subsubsection*{Juicios de Tipado}
 El sistema de tipos predica sobre \textbf{juicios de tipado} de la forma: $\Gamma \vdash M:\tau$ \\
 Se lee como ``en el contexto $\Gamma$, $M$ es de tipo $\tau$``
 \[\begin{minipage}[b]{1\textwidth}
     \includegraphics[width=\linewidth]{assets/tipado.jpg}
 \end{minipage}\]
-\subsection{Sistema de tipos}
-La relación de tipado $\Gamma \vdash M:\tau$ se define inductivamente por: 
-\[\begin{minipage}[b]{1\textwidth}
-    \includegraphics[width=\linewidth]{assets/sistema_tipos.png}
-\end{minipage}\]
-donde 
-\begin{itemize}
-    \item $ax_{v}$: variable 
-    \item $ax_{t}$: true 
-    \item $ax_{f}$: false
-    \item $\rightarrow_{i}$: abstracción
-    \item $\rightarrow_{e}$: aplicación
-    \item $if$: condicional
-\end{itemize}
-\textbf{Importante}: Es posible que también se utilice la siguiente notación. 
+\subsubsection*{Reglas de tipado}
 \[\begin{minipage}[b]{0.7\textwidth}
     \includegraphics[width=\linewidth]{assets/tipado_operaciones2.png}
 \end{minipage}\]
-\subsubsection{Árbol Sintático}
-Es muy útil hacerlo. \\ 
-Véase \hyperref[subsec:arbol_sintatico]{\textbf{\underline{anexo}}} para ver ejemplos para reducir expresiones y verificar si son términos. 
-\subsubsection{Término Bueno}
-Decimos que un término es bueno si existe un contexto del que puedo derivarlo. 
-\subsubsection{Término Válido}
-Está atado a como está sintácticamente formado. Es importante que solo tengan tipos válidos.
-\begin{itemize}
-    \item $x M$: No es válido. No podemos usar genéricos como M.
-    \item $\lambda x:Bool$: No es válido. Las funciones toman algo y devuelven algo. Esta lambda no es $\tau \rightarrow \tau$.
-    \item $\lambda x.x$: No es válido. No sabemos el tipo de x.
-    \item if $x$ then $\lambda x:Bool x$: No es válido, los condicionales tienen una rama else.
-    \item $\lambda x: Bool \rightarrow Bool . xy \ \lambda y: Bool . x$
-    \begin{itemize}
-        \item Si colocamos los paréntesis de la asociación queda así: $((\lambda x: Bool \rightarrow Bool . x \textbf{y}) \ (\lambda y: Bool . \textbf{x}))$
-        \item Por un lado se resuelve $(\lambda x: Bool \rightarrow Bool . xy)$ y por otro $(\lambda y: Bool . x)$.
-        \item Finalmente, cuando reduce, se realiza la aplicación. En negrita, están marcadas las variables libres.
-        \item Este término es válido.
-    \end{itemize}
-    \item $\lambda y:\sigma . y$: No es válido, no existe el tipo $\sigma$. Solo existe $Bool \ | \ \tau \implies \tau$
-    \item $xy \ \lambda x: Bool \rightarrow Bool . xy$
-    \begin{itemize}
-        \item Asociemos hacia la izquierda entonces queda $(xy) \ (\lambda x: Bool \rightarrow Bool . xy)$
-        \item Cada lado se resuelve por separado y luego se componen.
-    \end{itemize}
-\end{itemize}
-Para ver ejemplos de esto utilizando árboles sintáticos véase \hyperref[subsec:arbol_sintatico]{\textbf{\underline{anexo}}}
-\subsubsection{Término Cerrado}
-Decimos que un término es cerrado sí y solo sí no tiene variables libres.
-\subsubsection{Contexto Vacio}
-Un contexto está vacío si no existe ninguna variable libre.
-\subsubsection{Tipando operaciones}
-\[\begin{minipage}[b]{0.8\textwidth}
-    \includegraphics[width=\linewidth]{assets/tipado_operaciones.jpg}
-\end{minipage}\]
-\[\begin{minipage}[b]{0.8\textwidth}
-    \includegraphics[width=\linewidth]{assets/tipado_condicional.jpg}
-\end{minipage}\]
-\subsubsection{Clases de Equivalencia (Alfa equivalencia)}
-Los términos que difieren sólo en el nombre de las variables $ligadas$ se consideran iguales: $\lambda x:bool \ . \ x \equivDef{\alpha} \lambda y:bool \ xy$
-\subsubsection{Aplicando Clases de Equivalencia}
-Recordemos que las variables ligadas, en cualquier lenguaje de programación serían como el parámetro de una función y da igual que nombre le pongamos. Lo importante es NO tener dos parámetros con el mismo nombre.
-\[\begin{minipage}[b]{0.9\textwidth}
-    \includegraphics[width=\linewidth]{assets/alfa_reduccion.jpg}
-\end{minipage}\]
-\textbf{Nota}: Al igual que en un lenguaje de programación da igual a qué variable ligada le cambiemos su nombre.
-\subsubsection{Unicidad de Tipos}
-Si $\Gamma \vdash M:\sigma$ y $\Gamma \vdash M:\rho$ ent $\sigma = \rho$ 
-\subsubsection{Teorema (Weakening + Strengthening)}
+\subsubsection*{Unicidad de Tipos}
+Si $\Gamma \vdash M:\sigma$ y $\Gamma \vdash M:\rho$ son derivables ent $\sigma = \rho$ \\
+\textbf{Importante}: No vale en todos los sistema de tipos, pero vale en el cálculo lambda tipado y es fundamental.
+\subsubsection*{Teorema (Weakening + Strengthening)}
 Si $\Gamma \vdash M:\tau$ es derivable y $fv(M) \subseteq \Gamma \cap \Gamma'$ entonces $\Gamma' \vdash M:\tau$ es derivable
 \begin{itemize}
     \item Weakening: Agregar más hipótesis hace que la afirmación sea más débil y dificil de demostrar.
     \item Strengthening: Sacar hipótesis hace que la afirmación sea más fuerte y fácil de demostrar.
 \end{itemize}
-Veamos un ejemplo de Strengthening: $x:Bool \vdash True:Bool$ \\
-Hagámosnos una pregunta ¿utilizamos en algún lado la x? No, entonces tenemos que preguntarnos ¿realmente la necesitamos en el contexto? No. Entonces podemos quitarla y la afirmación será aún más fuerte. \\
-Entonces $\emptyset \vdash True:Bool$
-\subsection{Tipos Habitados}
-Un tipo está habitado si existe una función de ejemplo que use ese tipo. \\
+Lo importante es acordarse que
+\begin{itemize}
+    \item Si en el contexto tenés algo que te sirve para tipar en M, entonces podés agregar cuantas cosas quieras en el contexto que va a seguir valiendo (weakening). 
+    \item Si en el contexto tenés algo que NO te sirve para tipar en M, entonces podés sacarlo que no te va a afectar en nada (strengthening).
+\end{itemize}
+\subsubsection*{Tipos Habitados}
+Un tipo está habitado si existe una función de ejemplo que use ese tipo o más formalmente dicho, si existe un término M tal que el juicio $\vdash M:\tau$ es derivable \\
 Por ejemplo, si nos piden algo que cumpla $\vdash M:(\tau \rightarrow \rho) \rightarrow (\sigma \rightarrow \tau) \rightarrow (\sigma \rightarrow \rho)$. \\
 Podemos notar que una función que haga esto, sería la composición: $\lambda f:\tau \rightarrow e . \lambda g :\sigma \rightarrow \tau . \lambda x:\sigma . f (gx)$ o mejor escrita $(\lambda f:\tau \rightarrow e) (\lambda g :\sigma \rightarrow \tau)(\lambda x:\sigma) (f (gx))$
-\subsection{Semántica Formal}
-El sistema de tipos nos indica cómo se construyen los programos pero además queremos darles \textbf{significado} (semántica).
-Existen tres formas de dar semántica formal 
+\subsection*{Semántica Formal}
+Nos permite darle significado a nuestros programas.
 \begin{itemize}
-    \item \textbf{Semántica Operacional}: Indica cómo se ejecuta el programa hasta llegar a un resultado.
+    \item \textbf{Semántica Operacional}: Indica cómo se ejecuta el programa hasta llegar a un resultado. Es el tipo de semántica que usamos en la materia que trabaja en base a reglas de reducción entre términos. La idea es llegar a expresiones irreducibles.
     \begin{itemize}
-        \item Es la que vamos a usar en la materia.
-        \item Trabaja en base a reglas de reducción $\rightarrow$ entre términos. Cuando tenemos $M\rightarrow N$, M reduce. 
-        \item La idea es llegar a formas normales, es decir, expresiones irreducibles que no existe ninguna regla que las pueda deducir.
         \item small-step: ejecución paso a paso.
         \item big-step: evaluación directa al resultado.
     \end{itemize}
     \item \textbf{Semántica Denotacional}:  Interpreta los programas como objetos matemáticos.
     \item \textbf{Semántica Axiomática}: Establece relaciones lógicas entre el estado del programa antes y después de la ejecución.
 \end{itemize}
-\textbf{Importante}: Nosotros vamos a usar la estrategia de reducción call by value, y nos va a interesar mantener el determinismo de las reglas de reducción.
-\textbf{IMPORTANTÍSIMO}: Cada término \textbf{debe reducirse} a un paso a la vez y con \textbf{una sola elección} de regla semántica. Si existe más de una regla semántica para un paso dado, no es determinista. 
-\subsection{Semántica Operacional}
-\subsubsection{Small-Step}
-La semántica operacional predica sobre \textbf{juicios de evaluación}: $M \rightarrow N$ donde M y N son programas. 
-\subsubsection{Valores}
-Los valores son los posibles resultados de evaluar programas: $V::=true \ |\ false \ | \ \lambda x: \tau.M$ \\
-Los valores ya tienen todos sus parámetros completamente reducidos, de lo contrario, no serían valores. \\
+\subsubsection*{Forma Normal}
+Un término está en forma normal cuando no existe ninguna regla que lo reduzca a otro.
+\subsubsection*{Determinismo}
+Decimos que la reducción está determinada (hay determinismo) cuando cada término que \textbf{NO} está en forma normal tiene una única forma de reducir.
+\subsubsection*{Estrategia de Reducción}
+Usaremos la estrategia de reducción \textbf{call by value}. \\
+$M \rightarrow N$: indica que M reduce o reescribe a N. 
+\subsubsection*{Programa}
+Es un término M tipable y cerrado (fv(M) = $\emptyset$) que debe ser derivable para algún $\tau$. 
+\subsubsection*{Juicios de Evaluación}
+La semántica operacional hace afirmaciones sobre juicios de evaluación $M \rightarrow N$ donde M y N son programas.
+\subsubsection*{Valores}
+Los valores son los posibles resultados de evaluar programas, se definen como los términos cerrados y bien tipados V producidos por la gramática de valores. \\
+La estrategia call-by-value define los siguientes valores: $V ::= true \ | \ false \ | \ \lambda x:\sigma.M$, estos ya tienen todos sus parámetros completamente reducidos, de lo contrario, no serían valores. \\
 \textbf{Ej.}: $V ::= \ \dots \ | \ Nil \ | \ Bin(V, V, V)$ corresponde a los valores de trabajar con un árbol binario. 
+\subsubsection*{Obtener Valores}
+Para poder obtener valores, debemos ir reduciendo las expresiones. Depende de qué sistema de tipos y operaciones tengamos, cada una tiene su forma de reducirse. \\
+A continuación, se demuestran las reglas de reducción para las expresiones booleanas y funciones. 
+\[\begin{minipage}[b]{0.9\textwidth}
+    \includegraphics[width=\linewidth]{assets/reglas_operacionales.png}
+\end{minipage}\]
+\begin{itemize}
+    \item 1. Si la guarda es verdadera, entonces el término se reduce a M.
+    \item 2. Si la guarda es falsa, entonces el término se reduce a N.
+    \item 3. Si el término de la guarda se puede reducir, entonces la reducimos, para obtener el valor (verdadera o falsa). Luego de este paso, aplicamos la regla 1 o la regla 2.
+    \item 4. Si el término de M se puede reducir, lo reducimos. Luego le aplicamos a N.
+    \item 5. Si el término N se puede reducir, entonces lo reducimos. 
+    \item 6. Si el término N es un valor, sustituyo el parámetro de la lambda con el con el valor y lo aplico en el término M.
+\end{itemize}
+Estas reglas tienen nombres específicos, y se las puede encontrar en la siguiente imagen
+\[\begin{minipage}[b]{0.9\textwidth}
+    \includegraphics[width=\linewidth]{assets/gramatica_valores_reduccion.png}
+\end{minipage}\] 
+\subsubsection*{Sustitución}
+La operación de sustitución $M\{x:=N\}$ nos devuelve un nuevo término tal que resulta de reemplazar todas las ocurrencias libres de x en M por N. \\
+\textbf{Nota}: Se implementa por pattern matching porque es un constructor recursivo. 
+\[\begin{minipage}[b]{0.8\textwidth}
+    \includegraphics[width=\linewidth]{assets/def_sustitucion.png}
+\end{minipage}\] 
+\subsection*{Propiedades de la Evaluación}
+\subsubsection*{Teorema (Determinismo)}
+Si $M \rightarrow N_{1}$ y $M \rightarrow N_{2}$ entonces $N_{1} = N_{2}$ \\
+\textbf{En criollo}: No hay más de una forma de reducir algo. 
+\subsubsection*{Teorema (Preservación de Tipos o Subject Reduction)}
+Si $\Gamma \vdash M : \tau$ y $M \rightarrow N$ entonces $\Gamma \vdash N:\tau$ \\
+Si deducimos el tipo $\tau$ para un término sin ejecutar el programa, y luego ejecutamos el programa obteniendo N, entonces el término N tiene el mismo tipo. 
+\subsubsection*{Teorema (Progreso)}
+Si $\vdash M:\tau$ entonces: 
+\begin{itemize}
+    \item O bien M es un término cerrado irreducible bien tipado, osea un valor. 
+    \item O bien existe un $N$ tal que $M \rightarrow N$
+\end{itemize}
+\subsubsection*{Teorema (Terminación)}
+Si $\vdash M:\tau$ entonces no hay una cadena infinita de pasos: $M \rightarrow M_{1} \rightarrow M_{2} \rightarrow ...$
+\subsubsection*{Canonicidad}
+\begin{itemize}
+    \item Si $\vdash M:bool$ es derivable, entonces la evaluación de M termina y el resultado es true o false.
+    \item Si $\vdash M:\tau \rightarrow \sigma$ es derivable, entonces la evaluación de M termina y el resultado es una abstracción. 
+\end{itemize}
+\subsubsection*{Estado de error}
+Cuando el término está en forma normal pero no es un valor.
 \subsubsection*{Cantidad de Reglas de Congruencia}
 Suele ser una de reducción por cada término, pero es importante recalcar que si un término tiene más de un parámetro (sin variables libres) entonces ese término tiene más de una regla de reducción. \\
 A su vez, hay que hacer hincapié en por qué resalté el \textbf{sin variables libres}. Esto es porque los términos que tienen variables libres no se reducen, sino que solamente se sustituyen porque no son términos cerrados. \\
@@ -1197,52 +1155,53 @@ Bueno, los posibles valores con listas hay dos: $V::=[]_{\sigma} \ | \ V::V$ \\
     \item Si el FOLDR tiene lista vacía entonces devuelve simplemente N.
     \item Si el FOLDR NO tiene lista vacía, entonces, debo sustituir las variables h y r con la información para el paso recursivo.
 \end{itemize}
-\subsection{Semántica Operacional}
-\[\begin{minipage}[b]{0.9\textwidth}
-    \includegraphics[width=\linewidth]{assets/reglas_congruencia_computo.png}
+\subsubsection*{Árbol Sintático}
+Es muy útil hacerlo. \\ 
+Véase \hyperref[subsec:arbol_sintatico]{\textbf{\underline{anexo}}} para ver ejemplos para reducir expresiones y verificar si son términos. 
+\subsubsection*{Término Bueno}
+Decimos que un término es bueno si existe un contexto del que puedo derivarlo. 
+\subsubsection*{Término Válido}
+Está atado a como está sintácticamente formado. Es importante que solo tengan tipos válidos.
+\begin{itemize}
+    \item $x M$: No es válido. No podemos usar genéricos como M.
+    \item $\lambda x:Bool$: No es válido. Las funciones toman algo y devuelven algo. Esta lambda no es $\tau \rightarrow \tau$.
+    \item $\lambda x.x$: No es válido. No sabemos el tipo de x.
+    \item if $x$ then $\lambda x:Bool x$: No es válido, los condicionales tienen una rama else.
+    \item $\lambda x: Bool \rightarrow Bool . xy \ \lambda y: Bool . x$
+    \begin{itemize}
+        \item Si colocamos los paréntesis de la asociación queda así: $((\lambda x: Bool \rightarrow Bool . x \textbf{y}) \ (\lambda y: Bool . \textbf{x}))$
+        \item Por un lado se resuelve $(\lambda x: Bool \rightarrow Bool . xy)$ y por otro $(\lambda y: Bool . x)$.
+        \item Finalmente, cuando reduce, se realiza la aplicación. En negrita, están marcadas las variables libres.
+        \item Este término es válido.
+    \end{itemize}
+    \item $\lambda y:\sigma . y$: No es válido, no existe el tipo $\sigma$. Solo existe $Bool \ | \ \tau \implies \tau$
+    \item $xy \ \lambda x: Bool \rightarrow Bool . xy$
+    \begin{itemize}
+        \item Asociemos hacia la izquierda entonces queda $(xy) \ (\lambda x: Bool \rightarrow Bool . xy)$
+        \item Cada lado se resuelve por separado y luego se componen.
+    \end{itemize}
+\end{itemize}
+Para ver ejemplos de esto utilizando árboles sintáticos véase \hyperref[subsec:arbol_sintatico]{\textbf{\underline{anexo}}}
+\subsubsection*{Tipando operaciones}
+\[\begin{minipage}[b]{0.8\textwidth}
+    \includegraphics[width=\linewidth]{assets/tipado_operaciones.jpg}
 \end{minipage}\]
-\textbf{Importante}: $\mu$, $v$, $if_{c}$ son reglas de congruencia, es decir, nos permiten ``ingresar a la expresión para luego aplicar las reglas de cómputo`` las cuales, las reglas de compúto son $\beta, (if_{t}), (if_{f})$ \\
-\textbf{Importante 2}: Aplicar la regla $\beta$ NO cuenta como regla de redudcción. \\
-\textbf{Importante 3}: $\beta$ se utiliza \textbf{SOLO} con valores. \\
-\textbf{Importante 4}: Recordar que $\rightarrow$ indica a qué reduce, por ejemplo, en el caso del if false, tiene sentido que si el else es N, la operación te devuelva N. \\
-Veamos a continuación unos ejemplos 
-\[\begin{minipage}[b]{0.9\textwidth}
-    \includegraphics[width=\linewidth]{assets/semantica-operacional-ej.jpg}
+\[\begin{minipage}[b]{0.8\textwidth}
+    \includegraphics[width=\linewidth]{assets/tipado_condicional.jpg}
 \end{minipage}\]
+\subsubsection*{Aplicando Clases de Equivalencia}
+Recordemos que las variables ligadas, en cualquier lenguaje de programación serían como el parámetro de una función y da igual que nombre le pongamos. Lo importante es NO tener dos parámetros con el mismo nombre.
+\[\begin{minipage}[b]{0.9\textwidth}
+    \includegraphics[width=\linewidth]{assets/alfa_reduccion.jpg}
+\end{minipage}\]
+\textbf{Nota}: Al igual que en un lenguaje de programación da igual a qué variable ligada le cambiemos su nombre.
 \subsubsection*{Reglas de Tipado vs Reglas de Semántica}
 \textbf{1}. En las Reglas de Tipado \textbf{existe} el contexto mientras que en las Reglas de Semántica \textbf{no existe}. \\
 La excepción de usar un contexto en las reglas de semántica se da cuando tenemos alguna especie de guarda o un caso donde tenemos que devolver cosas de algún tipo específico, pero sin contexto no tenemos esa información. \\
 \sd{\emptyset \vdash V_{1}:\sigma}{FROM \ V_{1} \ UNTIL_{x} N \ BY \ V_{2} \rightarrow IF \ N \{x:=V_{1}\} \ THEN \ []_{\sigma} \ ELSE \ V_{1}::(FROM \ V_{2}V_{1} \ UNTIL_{x} \ N \ BY \ V_{2})}{} \\
 En este ejemplo podemos ver que como estamos en un lenguaje con \textbf{tipado estricto}, necesitamos que tanto el THEN como el ELSE devuelvan el mismo tipo. Entonces no podemos devolver una lista vacía sin especificar el tipo de sus elementos.  \\
-\textbf{2}. En las Reglas de Semántica no se coloca el tipo de retorno en cada una de las reglas. 
-\subsubsection{Sustitución}
-La operación de sustitución $M\{x:=N\}$ nos devuelve un nuevo término tal que resulta de reemplazar todas las ocurrencias libres de x en M por N. \\
-\textbf{Nota}: Se implementa por pattern matching porque es un constructor recursivo. 
-\[\begin{minipage}[b]{0.8\textwidth}
-    \includegraphics[width=\linewidth]{assets/def_sustitucion.png}
-\end{minipage}\]
-\textbf{3.} No existen los axiomas como tal en las Reglas de Semántica. Los valores siempre están ligados ante una operación dada que los utiliza. 
-\subsection{Propiedades de la Evaluación}
-\subsubsection{Teorema (Determinismo)}
-Si $M \rightarrow N_{1}$ y $M \rightarrow N_{2}$ entonces $N_{1} = N_{2}$ \\
-\textbf{En criollo}: No hay más de una forma de reducir algo. 
-\subsubsection{Teorema (Preservación de Tipos o Subject Reduction)}
-Si $\Gamma \vdash M : \tau$ y $M \rightarrow N$ entonces $\Gamma \vdash N:\tau$ \\
-Si deducimos el tipo $\tau$ para un término sin ejecutar el programa, y luego ejecutamos el programa obteniendo N, entonces el término N tiene el mismo tipo. 
-\subsubsection{Teorema (Progreso)}
-Si $\vdash M:\tau$ entonces: 
-\begin{itemize}
-    \item O bien M es un término cerrado irreducible bien tipado, osea un valor. 
-    \item O bien existe un $N$ tal que $M \rightarrow N$
-\end{itemize}
-\subsubsection{Teorema (Terminación)}
-Si $\vdash M:\tau$ entonces no hay una cadena infinita de pasos: $M \rightarrow M_{1} \rightarrow M_{2} \rightarrow ...$
-\subsubsection{Canonicidad}
-\begin{itemize}
-    \item Si $\vdash M:bool$ es derivable, entonces la evaluación de M termina y el resultado es true o false.
-    \item Si $\vdash M:\tau \rightarrow \sigma$ es derivable, entonces la evaluación de M termina y el resultado es una abstracción. 
-\end{itemize}
-\subsubsection{Extensión con Números Naturales}
+\textbf{2}. En las Reglas de Semántica no se coloca el tipo de retorno en cada una de las reglas.  
+\subsubsection*{Extensión con Números Naturales}
 Sintaxis:
 \[\begin{minipage}[b]{0.8\textwidth}
     \includegraphics[width=\linewidth]{assets/extension_naturales.png}
