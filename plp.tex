@@ -1187,7 +1187,22 @@ Normalmente tenemos una por valor. No obstante, si es una estructura tipo if/cas
 \textbf{Importante}: Como estamos en call-by-value, \textbf{no reducimos ni casos then/else} de estructuras de control. Es decir, en un case, solo reduciriamos su guarda, y lo mismo en el if. 
 \subsubsection*{Cantidad de Reglas de Cómputo}
 Normalmente, agregamos una por cada término usando los valores del tipo reducido. No obstante, hay veces que un término tiene más de una regla de cómputo. \\
-Ej.: Un case reduce a dos posibles cosas. Por lo tanto, tendría dos reglas de cómputo. \\
+Ej.: Un case reduce a dos posibles cosas. Por lo tanto, tendría dos reglas de cómputo.
+\subsubsection*{Reducción a un paso}
+La reducción a un paso solo tiene una forma de resolver las cosas. Esto es debido a la naturaleza del determinismo con nuestras reglas en el cálculo lambda a nivel semántico. Si tuvieramos más de una regla para elegir en un paso, nuestras reglas no serían determinísticas. \\
+A continuación, muestro cómo darnos cuenta de si un sistema es determinista o no.
+\[\begin{minipage}[b]{1\textwidth}
+    \includegraphics[width=\linewidth]{assets/determinismo_reglas.jpg}
+\end{minipage}\]
+\textbf{Importante}: A toda regla de congruencia se la acompaña con una regla de cómputo. No puede haber más de una de cómputo en un paso. \\
+Ahora sí, adjunto reglas para un ejemplo con árboles binarios y reducción de una expresión
+\[\begin{minipage}[b]{1\textwidth}
+    \includegraphics[width=\linewidth]{assets/reglas_semantica_ab.jpg}
+\end{minipage}\]
+\[\begin{minipage}[b]{1\textwidth}
+    \includegraphics[width=\linewidth]{assets/reduccion_un_paso_ab.jpg}
+\end{minipage}\]
+
 
 \section*{Inferencia de Tipos}
 \textbf{Términos \textcolor{red}{sin} anotaciones de tipos}: U :: = x | $\textcolor{red}{\lambda x.U}$ | U U | True | False | if U then U else U \\
