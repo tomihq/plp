@@ -1144,13 +1144,14 @@ Son un reemplazo sintáctico, no se computan. Se arman utilizando lambdas y los 
 Ej.: Digamos que necesitamos currificar en base una función y dos parámetros. \\
 $Curry_{\sigma, \tau, \delta} = \lambda f:(\sigma, \tau) \rightarrow \delta . \lambda x:\sigma .\lambda y:\tau . f(x,y)$ \\
 Ej.: Macro que nos dice si un arbol es Nil o no. \\
-$esNil_{\sigma} = \lambda x: AB_{\sigma} \rightarrow$ case x of $Nil_{\sigma} \rightarrow True \mid Bin(i, r, d) \rightarrow False$
+$esNil = \lambda x: AB_{\sigma} \rightarrow$ case x of $Nil_{\sigma} \rightarrow True \mid Bin(i, r, d) \rightarrow False$
 \subsection*{Extensiones del Cálculo Lambda}
 Voy a escribir un par de tips o cosas interesantes que encontré, y después voy a escribir algunos ejercicios como guía que justamente utilizan estos tips. \\
 En las reglas de tipado tenemos contexto, en las reglas de semántica, no. Hay una \textbf{pequeña excepción}, y es, cuando necesitamos de antemano conocer como dato el tipo de salida de una función a la hora de aplicar la regla de semántica. 
 \[\begin{minipage}[b]{1\textwidth}
     \includegraphics[width=\linewidth]{assets/tipos_semantica.jpg}
 \end{minipage}\]
+\textbf{La excepción de hablar de tipos acá, en este caso particular en semántica, viene a que Nil como es un tipo anotado y ser inicialmente $Nil_{\tau}$ al aplicarle el map, necesitamos saber en qué se convierte ese $\tau$. En el caso del BIN no pasa porque no tiene un tipo anotado.}
 \subsection*{Valores}
 Los valores de la extensión de cálculo lambda particular son los valores con los que quiero operar en mis términos. Las operaciones que devuelven cosas que no reducen a algo de mi tipo, no son valores posibles. \\
 Ej.: $\tau ::= ... \mid Nil_{\sigma} \mid Bin(M, N, O)_{\sigma} \mid esRaiz(M) \mid esNil(M) \mid $ case M of Nil $\rightarrow$ N; Bin(i, r, d) $\rightarrow$ O \\
