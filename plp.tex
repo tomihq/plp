@@ -1130,187 +1130,43 @@ Si $\vdash M:\tau$ entonces no hay una cadena infinita de pasos: $M \rightarrow 
 \end{itemize}
 \subsubsection*{Estado de error}
 Cuando el término está en forma normal pero no es un valor.
-\subsubsection*{Cantidad de Reglas de Congruencia}
-Suele ser una de reducción por cada término, pero es importante recalcar que si un término tiene más de un parámetro (sin variables libres) entonces ese término tiene más de una regla de reducción. \\
-A su vez, hay que hacer hincapié en por qué resalté el \textbf{sin variables libres}. Esto es porque los términos que tienen variables libres no se reducen, sino que solamente se sustituyen porque no son términos cerrados. \\
-Lo que hay que meterse en la cabeza es que: si no reducimos completamente todo en las reglas de congruencia es: porque o nos falta algo, o se van a sustituir en las reglas de cómputo. TODO debe finalizar siendo un valor. \\
-\textbf{Ej.}: Sean $M,N,O :: = \dots \ | \ []_{\sigma} \ | \ M::N \ | \ FOLDR \ M \ BASE \rightarrow N; REC(h,r) \rightarrow O$ \\
-¿Qué reglas de Congruencia existen para estos términos? bueno, tenemos aparentemente 3.
-\begin{itemize}
-    \item Reducir M de M::N
-    \item Reducir N de M::N
-    \item Reducir M del FOLDR. h NO se reduce porque es un valor (cabeza de la lista) y r tampoco, porque r al ser un caso recursivo tiene variables libres. 
-\end{itemize}
-\subsubsection*{¿Cuando reducir y cuando no?}
-\begin{itemize}
-    \item Si tiene variables libres no se reduce. 
-    \item Si es un caso condicional, no se reduce, porque de antemano no sabés en qué casos necesitás reducirlo. Por ejemplo, los CASE, IF o FOLDR no se suelen reducir sus términos (sí las guardas), porque no es necesario gastar cómputo en algo que no se sabe si vamos a usar.
-\end{itemize}
+\subsubsection*{Operador fix ($\bot$)}
+Es útil cuando necesitamos devolver una respuesta en un caso inválido con un tipo específico. \\
+Ej.: $raiz_{\sigma}$ = $\lambda x:AB$ $\sigma \rightarrow$ case x of $Nil_{\sigma} \rightarrow$  $\bot_{\sigma} \mid$  Bin(i, r, d) $\rightarrow$ r
+\subsection*{Extensiones del Cálculo Lambda}
+Voy a escribir un par de tips o cosas interesantes que encontré, y después voy a escribir algunos ejercicios como guía que justamente utilizan estos tips. \\
+En las reglas de tipado tenemos contexto, en las reglas de semántica, no. Hay una \textbf{pequeña excepción}, y es, cuando necesitamos de antemano conocer como dato el tipo de salida de una función a la hora de aplicar la regla de semántica. \textbf{Véase el ejercicio de la extensión de árboles binarios con map.}
+\subsection*{Valores}
+Los valores de la extensión de cálculo lambda particular son los valores con los que quiero operar en mis términos. Las operaciones que devuelven cosas que no reducen a algo de mi tipo, no son valores posibles. \\
+Ej.: $\tau ::= ... \mid Nil_{\sigma} \mid Bin(M, N, O)_{\sigma} \mid esRaiz(M) \mid esNil(M) \mid $ case M of Nil $\rightarrow$ N; Bin(i, r, d) $\rightarrow$ O \\
+De acá los valores de mi nueva extensión serían: $Nil_{\sigma}$ y $Bin(V, V, V)$. ¿Por qué case, esRaiz y esNil no? Porque no necesariamente aportan un valor diferente. \\
+Si reducimos raiz(M) va a terminar siendo, o bien un Nil o un Bin(V1, V2, V3) $\rightarrow$ V2 \\
+Si reducimos esNil(M) va a terminar siendo, o bien true o false que opera en base a un Nil o un Bin(V, V, V). \\
+\textbf{Importante}: ¿Qué pasa si hacemos \text{raiz(Nil)}? Explota. En estos casos particulares que no está definido, no haríamos una regla de tipado para ese caso, y, si tenemos que hacer una macro, en el caso nil devolveríamos un $\bot$ del tipo de salida del case. 
+\subsection*{Cantidad de Reglas de Tipado}
+Agregamos, al menos una por cada término. 
+\subsubsection*{Reglas de tipado con términos con ocurrencias libres}
+Si tenemos una estructura del tipo condicional como un case, que devuelve un término que puede tener variables libres, entonces, en el contexto de ese caso, tenemos que añadir las variables que necesite. 
+\[\begin{minipage}[b]{1\textwidth}
+    \includegraphics[width=\linewidth]{assets/case_lambda.jpg}
+\end{minipage}\]
+\[\begin{minipage}[b]{1\textwidth}
+    \includegraphics[width=\linewidth]{assets/case_lambda_ab.jpg}
+\end{minipage}\]
+\[\begin{minipage}[b]{1\textwidth}
+    \includegraphics[width=\linewidth]{assets/recr_lambda.jpg}
+\end{minipage}\]
+\subsubsection*{Cantidad de Reglas de Congruencia (Semántica)}
+Normalmente, tenemos una por cada término. No obstante, si el término tiene más de un argumento, va a tener esa cantidad. \\
+Ej.: $Bin(M, N, O)$ es un único término pero que tiene 3 subtérminos. Por lo tanto, tendría 3 reglas de congruencia para reducirlo a un valor. 
+\subsubsection*{Cantidad de Reglas de Cómputo (Semántica)}
+Normalmente tenemos una por valor. No obstante, si es una estructura tipo if/case tenemos más de una por cada posible salida. \\
+\textbf{Importante}: Si las salidas condicionales son un término que podría eventualmente tener variables libres, hay que sustituir esas variables libres por el valor correspondiente que deberán tener ligado. 
+\textbf{Importante}: Como estamos en call-by-value, \textbf{no reducimos ni casos then/else} de estructuras de control. Es decir, en un case, solo reduciriamos su guarda, y lo mismo en el if. 
 \subsubsection*{Cantidad de Reglas de Cómputo}
-Todos los valores posibles tienen una regla de Cómputo, usualmente, cada valor va a estar asociada a las posibles operaciones de las reglas de Congruencia. \\
-Siguiendo el ej. anterior, defina los posibles valores del sistema y dé las reglas de cómputo. \\
-Bueno, los posibles valores con listas hay dos: $V::=[]_{\sigma} \ | \ V::V$ \\
-¿Qué operaciones deberíamos poder realizar con estos valores?: FOLDR con lista vacía, y FOLDR sin una lista vacía. 
-\begin{itemize}
-    \item Si el FOLDR tiene lista vacía entonces devuelve simplemente N.
-    \item Si el FOLDR NO tiene lista vacía, entonces, debo sustituir las variables h y r con la información para el paso recursivo.
-\end{itemize}
-\subsubsection*{Árbol Sintático}
-Es muy útil hacerlo. \\ 
-Véase \hyperref[subsec:arbol_sintatico]{\textbf{\underline{anexo}}} para ver ejemplos para reducir expresiones y verificar si son términos. 
-\subsubsection*{Término Bueno}
-Decimos que un término es bueno si existe un contexto del que puedo derivarlo. 
-\subsubsection*{Término Válido}
-Está atado a como está sintácticamente formado. Es importante que solo tengan tipos válidos.
-\begin{itemize}
-    \item $x M$: No es válido. No podemos usar genéricos como M.
-    \item $\lambda x:Bool$: No es válido. Las funciones toman algo y devuelven algo. Esta lambda no es $\tau \rightarrow \tau$.
-    \item $\lambda x.x$: No es válido. No sabemos el tipo de x.
-    \item if $x$ then $\lambda x:Bool x$: No es válido, los condicionales tienen una rama else.
-    \item $\lambda x: Bool \rightarrow Bool . xy \ \lambda y: Bool . x$
-    \begin{itemize}
-        \item Si colocamos los paréntesis de la asociación queda así: $((\lambda x: Bool \rightarrow Bool . x \textbf{y}) \ (\lambda y: Bool . \textbf{x}))$
-        \item Por un lado se resuelve $(\lambda x: Bool \rightarrow Bool . xy)$ y por otro $(\lambda y: Bool . x)$.
-        \item Finalmente, cuando reduce, se realiza la aplicación. En negrita, están marcadas las variables libres.
-        \item Este término es válido.
-    \end{itemize}
-    \item $\lambda y:\sigma . y$: No es válido, no existe el tipo $\sigma$. Solo existe $Bool \ | \ \tau \implies \tau$
-    \item $xy \ \lambda x: Bool \rightarrow Bool . xy$
-    \begin{itemize}
-        \item Asociemos hacia la izquierda entonces queda $(xy) \ (\lambda x: Bool \rightarrow Bool . xy)$
-        \item Cada lado se resuelve por separado y luego se componen.
-    \end{itemize}
-\end{itemize}
-Para ver ejemplos de esto utilizando árboles sintáticos véase \hyperref[subsec:arbol_sintatico]{\textbf{\underline{anexo}}}
-\subsubsection*{Tipando operaciones}
-\[\begin{minipage}[b]{0.8\textwidth}
-    \includegraphics[width=\linewidth]{assets/tipado_operaciones.jpg}
-\end{minipage}\]
-\[\begin{minipage}[b]{0.8\textwidth}
-    \includegraphics[width=\linewidth]{assets/tipado_condicional.jpg}
-\end{minipage}\]
-\subsubsection*{Aplicando Clases de Equivalencia}
-Recordemos que las variables ligadas, en cualquier lenguaje de programación serían como el parámetro de una función y da igual que nombre le pongamos. Lo importante es NO tener dos parámetros con el mismo nombre.
-\[\begin{minipage}[b]{0.9\textwidth}
-    \includegraphics[width=\linewidth]{assets/alfa_reduccion.jpg}
-\end{minipage}\]
-\textbf{Nota}: Al igual que en un lenguaje de programación da igual a qué variable ligada le cambiemos su nombre.
-\subsubsection*{Reglas de Tipado vs Reglas de Semántica}
-\textbf{1}. En las Reglas de Tipado \textbf{existe} el contexto mientras que en las Reglas de Semántica \textbf{no existe}. \\
-La excepción de usar un contexto en las reglas de semántica se da cuando tenemos alguna especie de guarda o un caso donde tenemos que devolver cosas de algún tipo específico, pero sin contexto no tenemos esa información. \\
-\sd{\emptyset \vdash V_{1}:\sigma}{FROM \ V_{1} \ UNTIL_{x} N \ BY \ V_{2} \rightarrow IF \ N \{x:=V_{1}\} \ THEN \ []_{\sigma} \ ELSE \ V_{1}::(FROM \ V_{2}V_{1} \ UNTIL_{x} \ N \ BY \ V_{2})}{} \\
-En este ejemplo podemos ver que como estamos en un lenguaje con \textbf{tipado estricto}, necesitamos que tanto el THEN como el ELSE devuelvan el mismo tipo. Entonces no podemos devolver una lista vacía sin especificar el tipo de sus elementos.  \\
-\textbf{2}. En las Reglas de Semántica no se coloca el tipo de retorno en cada una de las reglas.  
-\subsubsection*{Extensión con Números Naturales}
-Sintaxis:
-\[\begin{minipage}[b]{0.8\textwidth}
-    \includegraphics[width=\linewidth]{assets/extension_naturales.png}
-\end{minipage}\]
-Semántica:
-\[\begin{minipage}[b]{0.8\textwidth}
-    \includegraphics[width=\linewidth]{assets/extension_naturales_semantica.png}
-\end{minipage}\]
-\textbf{Ultra Importante}: Cada vez que extendmos tipos o sintaxis hay que chequear que siga valiendo el progreso, el determinismo y la preservación de tipos. \\
-\textbf{¿Es segura esta extensión?}: No, porque con estas reglas se rompe el progreso pues pred(0) es forma normal pero no es un valor válido. \\
-Si quisieramos que siga valiendo el progreso podemos extender la semántica y agregar un caso \textbf{$pred(zero) \rightarrow zero$ ($pred_{0}$)}
-\subsubsection{Macros}
-\[\begin{minipage}[b]{0.8\textwidth}
-    \includegraphics[width=\linewidth]{assets/macros.png}
-\end{minipage}\]
-\subsubsection{Agregando Reglas para las Abstracciones}
-\[\begin{minipage}[b]{0.8\textwidth}
-    \includegraphics[width=\linewidth]{assets/forma_normal.png}
-\end{minipage}\]
-(No entendí qué caso es el conflictivo si tuvimos que cambiar de $\lambda x: \sigma . M$ a $\lambda x:\sigma . F$) ¿qué no podíamos hacer antes? \\
-Entiendo que diciendo que tengas $\lambda x:\sigma . F$ estas diciendo que si le metés un input tenés que garantizar que lo que tenga la lambda adentro \textbf{ya sea una forma normal} y sabés que el proceso va a terminar bien. \\
-Si usás $\lambda x: \sigma . M$ tenés el problema de que si le ponés cualquier cosa a M podés llegar a algo que no es reducible y capaz se cuelga? 
-\subsection*{Sistema de Tipos para el Cálculo Lambda}
-\textbf{Aclaración Importante}: En deducción natural hablabamos de $\tau, \sigma$ como hipótesis o proposiciones. Acá en cálculo lambda, esos son tipos. \\
-Ej.: $\tau \rightarrow \sigma$ era una conclusión en deducción natural, acá es el tipo de una lambda. \\
-Entonces ahora sí, veamos el sistema de tipos para el cálculo Lambda omitiendo los booleanos porque son exactamente igual que en deducción natural. \\
-\sd{\Gamma, x:\tau \vdash M:\sigma}{\Gamma \vdash \lambda x: \tau.M: \tau \rightarrow \sigma}{T-ABS ($\rightarrow i$)}
-\sd{}{\Gamma, x: \tau \vdash x:\tau}{T-VAR (ax)}
-\sd{\Gamma \vdash M:\tau \rightarrow \sigma r \vdash N:\tau}{\Gamma \vdash MN:\tau}{T-APP ($\rightarrow$ e)}
-\subsubsection{Lógica Combinatoria}
-Es una variante del calculo $\lambda$. \\
-Si a $\sigma \rightarrow \tau$ lo leemos como $\sigma \implies \tau$ luego, la regla de tipadod e aplicación de una función es la regla Modus Ponens. \\
-\subsection*{Pruebas y Programas}
-En la \textbf{Deducción Natural} hablamos en base a proposiciones, en cálculo lambda, las proposiciones son tipos. \\
-En la \textbf{Deducción Natural} hablamos en base a pruebas, en cálculo lambda, las pruebas son términos. 
-\subsubsection{Juicios Derivables}
-Un juicio $\vdash \tau$ es derivable sí y solo sí, el tipo $\tau$ está habitado, es decir, existe algun camino que nos lleva a demostrar $\tau$. \\
-Como también podemos probar estas cosas en deducción natural, lo hacemos también en cálculo lambda. \\
-\[\begin{minipage}[b]{0.8\textwidth}
-    \includegraphics[width=\linewidth]{assets/juicio_tipado_lambda.jpg}
-\end{minipage}\]
-\textbf{Importante}: Como esto son fórmulas, puede haber muchas pruebas distintas para una misma fórmula. Mirá esta forma de probar lo mismo de antes pero más complicado.
-\[\begin{minipage}[b]{0.8\textwidth}
-    \includegraphics[width=\linewidth]{assets/juicio_tipado_lambda_2.jpg}
-\end{minipage}\]
-\subsubsection{Simplificación de Pruebas}
-Corte: Un corte es un lema que probamos a pesar que \textbf{no es una subfórmula de la afirmación final}. Es decir, no es algo que queramos demostrar en la conclusión pero nos ayuda a seguir adelante. \\
-Se caracteriza por tener pasos como $\implies_{i}$ y luego $\implies_{e}$ o también, $\land_{i}$ y $\land e_{1}$ o $\land e_{2}$. \\
-Básicamente cuando veas una introducción y una eliminación, ahí estás haciendo un corte. \\
-La variable que hacés aparecer aparte es el corte. \\
-En la computación, un paso de reducción $\beta$ (E-APP ABS) se corresponde con una eliminación de corte. 
-\subsubsection{Prueba en Forma Normal}
-Es aquella prueba que no posee ningún tipo de corte. 
-\subsubsection{Normalización de Pruebas}
-Se realiza mediante la eliminación de cortes, es decir, tratar de quitar esos cortes para llevarlo a forma normal. 
-\subsubsection{Conjunción (Producto) en Lambda}
-\[\begin{minipage}[b]{0.6\textwidth}
-    \includegraphics[width=\linewidth]{assets/conjuncion_lambda.jpg}
-\end{minipage}\]
-Veamos ahora como hacer reducciones con productos. 
-\[\begin{minipage}[b]{0.6\textwidth}
-    \includegraphics[width=\linewidth]{assets/producto_corte.jpg}
-\end{minipage}\]
-Nótese que la idea desde un primer momento era quedarse con M $\sigma$. Por lo tanto, el corte es añadir $\tau$.
-\subsubsection{Disyunción (Suma) en Lambda} 
-El corte característico acá es $\lor_{e}$ y luego $\lor_{i}$ mirando desde abajo hacia arriba. 
-\[\begin{minipage}[b]{0.74\textwidth}
-    \includegraphics[width=\linewidth]{assets/disyuncion.jpg}
-\end{minipage}\]
-\subsubsection{Absurdo}
-No existe \textbf{ningún constructor} para el tipo $\bot$ (vacío). 
-\[\begin{minipage}[b]{0.7\textwidth}
-    \includegraphics[width=\linewidth]{assets/absurdo_lambda.jpg}
-\end{minipage}\]
-\subsection*{Correspondencia de Curry-Howard}
-$A_{1},...A_{n} \vdash \sigma$ es derivable en NJ (Logica Intusionista) si $\exists$ término $M$ donde $Fv(M) \subseteq \{x_{1}, ..., x_{n}\}$ tal que $x_{1}:A_{1}, ..., x_{n}:A_{n} \vdash M:\sigma$ \\
-\textbf{En criollo}: Si en Cálculo Lambda tenes términos $x_{1}, ..., x_{n}$ que correspondan a $A_{1}, ..., A_{n}$ uno a uno entonces, lo podés considerar como válido. \\
-Ej.: $P, Q \vdash P \land Q \equiv x:P, y:Q \vdash <x, y>: P \land Q$ donde 
-\begin{itemize}
-    \item $A_{1} = P \ A_{2} = Q$
-    \item $x_{1}:P$ es decir, $x_{1}:A_{1}$
-    \item $x_{2}:Q$ es decir, $x_{2}:A_{2}$
-    \item $\sigma = P \land Q$ pero en cálculo lambda, nuestro término M, es de tipo sigma. $<x,y>:P \land Q$
-\end{itemize}
-\subsubsection{Corolario de Logica Intusionista}
-$\nvdash \bot$: No puedo concluir que hay contradicción, lo que sugiere que mis premisas son consistentes. 
-\subsubsection{Codificación de la Negación}
-$\neg \sigma \equiv \sigma \rightarrow \bot$ \\
-\textbf{Nota}: $\neg_{i} \equiv \implies i $ y $\neg_{e} \equiv \implies e$ \\
-\subsubsection{Tipo Unit}
-También conocida como Fórmula T, es una fórmula válida que siempre es verdadera y es un tipo algebraico con un único constructor T. \\
-En el cálculo $\lambda$ extendemos la sintaxis con el tipo T que tiene un único elemento. 
-\[\begin{minipage}[b]{0.3\textwidth}
-    \includegraphics[width=\linewidth]{assets/extension_lambda_t.png}
-\end{minipage}\]
-Consideramos a la Logica Intusionista extendida con la siguiente regla \\
-\sd{}{\Gamma \vdash T}{$T_{i}$} 
-Y tiene la siguiente regla de tipado en Cálculo $\lambda$ \\
-\sd{}{\Gamma \vdash T:T}{T-UNIT} 
-\subsubsection{Recursión}
-Se utiliza el operador fix: $M ::= ... \ | \ fix \ M$\\
-No se precisa ningún tipo nuevo pero sí una regla de tipado. \\
-\sd{\Gamma \vdash M : \sigma \rightarrow \sigma}{\Gamma \vdash fix \ M : \sigma}{T-FIX} \\
-También extendemos la semántica para poder ir resolviendo las operaciones. 
-\[\begin{minipage}[b]{0.6\textwidth}
-    \includegraphics[width=\linewidth]{assets/fix_recursion.png}
-\end{minipage}\]
-Gracias a fix ahora podemos definir funciones parciales $fix \ (\lambda x: \sigma . x)$ donde $\vdash \ fix \ (\lambda x:\sigma.x):\sigma$ para cualquier $\sigma$. En particular, vale para $\sigma = \bot$ \\
-\textbf{Importante}: No podemos extender la Lógica Intusionista (NJ) con un operador fix pues la lógica sería inconsistente. Ej.: $\vdash \bot$ sería derivable.
+Normalmente, agregamos una por cada término usando los valores del tipo reducido. No obstante, hay veces que un término tiene más de una regla de cómputo. \\
+Ej.: case
+
 \section*{Inferencia de Tipos}
 \textbf{Términos \textcolor{red}{sin} anotaciones de tipos}: U :: = x | $\textcolor{red}{\lambda x.U}$ | U U | True | False | if U then U else U \\
 \textbf{Términos \textcolor{blue}{con} anotaciones de tipos}: U :: = x | $\textcolor{blue}{\lambda x.M}$ | M M | True | False | if U then U else U
