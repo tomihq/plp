@@ -1153,12 +1153,18 @@ En las reglas de tipado tenemos contexto, en las reglas de semántica, no. Hay u
 \end{minipage}\]
 \textbf{La excepción de hablar de tipos acá, en este caso particular en semántica, viene a que Nil como es un tipo anotado y ser inicialmente $Nil_{\tau}$ al aplicarle el map, necesitamos saber en qué se convierte ese $\tau$. En el caso del BIN no pasa porque no tiene un tipo anotado.}
 \subsection*{Valores}
-Los valores de la extensión de cálculo lambda particular son los valores con los que quiero operar en mis términos. Las operaciones que devuelven cosas que no reducen a algo de mi tipo, no son valores posibles. \\
-Ej.: $\tau ::= ... \mid Nil_{\sigma} \mid Bin(M, N, O)_{\sigma} \mid esRaiz(M) \mid esNil(M) \mid $ case M of Nil $\rightarrow$ N; Bin(i, r, d) $\rightarrow$ O \\
+Los valores de la extensión de cálculo lambda particular son los términos reducidos de mi extensión que representan mi tipo en forma irreducible. 
+\subsubsection*{Valores en Árboles Binarios}
+$\sigma ::= ... \mid AB_{\sigma}$ \\\
+$M = ::= ... \mid Nil_{\sigma} \mid Bin(M, N, O)_{\sigma} \mid esRaiz(M) \mid esNil(M) \mid $ case M of Nil $\rightarrow$ N; Bin(i, r, d) $\rightarrow$ O \\
 De acá los valores de mi nueva extensión serían: $Nil_{\sigma}$ y $Bin(V, V, V)$. ¿Por qué case, esRaiz y esNil no? Porque no nos aportan ningun posible valor nuevo. \\
 Si reducimos raiz(M) va a terminar siendo, o bien un Nil o un Bin(V1, V2, V3) $\rightarrow$ V2 \\
 Si reducimos esNil(M) va a terminar siendo, o bien true o false que opera en base a un Nil o un Bin(V, V, V). \\
 \textbf{Importante}: ¿Qué pasa si hacemos \text{raiz(Nil)}? Explota (perdemos progreso, porque no puede reducirse más y no es un valor). En estos casos particulares que no está definido, no haríamos una regla de tipado para ese caso, y, si tenemos que hacer una macro, en el caso nil devolveríamos un $\bot$ del tipo de salida del case. 
+\subsubsection*{Unión Disjunta}
+$\sigma ::= ... \mid \sigma + \sigma$ \\
+$M ::= ... \mid left_{\sigma}(M) \mid right_{\sigma}(M) \mid$ case M of $left(x) \rightarrow M \mid right(y) \rightarrow M$ \\
+De acá, los valores de mi nueva extensión que representan a mi tipo son: $V ::= ... \mid left_{\sigma}(V) \mid right_{\sigma}(V)$. Los del case no aportan nada porque podrían devolver cualquier cosa que no tengan la forma de mis nuevos términos.
 \subsection*{Cantidad de Reglas de Tipado}
 Agregamos, al menos una por cada término. 
 \subsubsection*{Reglas de tipado con términos con ocurrencias libres}
