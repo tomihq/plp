@@ -1133,13 +1133,22 @@ Cuando el término está en forma normal pero no es un valor.
 \subsubsection*{Operador fix ($\bot$)}
 Es útil cuando necesitamos devolver una respuesta en un caso inválido con un tipo específico. \\
 Ej.: $raiz_{\sigma}$ = $\lambda x:AB$ $\sigma \rightarrow$ case x of $Nil_{\sigma} \rightarrow$  $\bot_{\sigma} \mid$  Bin(i, r, d) $\rightarrow$ r
+\subsubsection*{Anotación de Tipo (Tipo Anotado)}
+Un término tiene anotación de tipo cuando se indica, en el término, su tipo. Ej.: $Nil_{\sigma}$ 
+\subsubsection*{Subtérmino}
+Un subtérmino no es más que un término dentro de otro término. \\
+Ej.: $Bin(M, N, O)$ el término es Bin y los subtérminos son $M$, $N$ y $O$. \\
+Ej.: Case M of Nil $\rightarrow$ True $\mid$ Bin(i, r, d) $\rightarrow$ False, el término es el case y los subtérminos son True y False.
 \subsection*{Extensiones del Cálculo Lambda}
 Voy a escribir un par de tips o cosas interesantes que encontré, y después voy a escribir algunos ejercicios como guía que justamente utilizan estos tips. \\
-En las reglas de tipado tenemos contexto, en las reglas de semántica, no. Hay una \textbf{pequeña excepción}, y es, cuando necesitamos de antemano conocer como dato el tipo de salida de una función a la hora de aplicar la regla de semántica. \textbf{Véase el ejercicio de la extensión de árboles binarios con map.}
+En las reglas de tipado tenemos contexto, en las reglas de semántica, no. Hay una \textbf{pequeña excepción}, y es, cuando necesitamos de antemano conocer como dato el tipo de salida de una función a la hora de aplicar la regla de semántica. 
+\[\begin{minipage}[b]{1\textwidth}
+    \includegraphics[width=\linewidth]{assets/tipos_semantica.jpg}
+\end{minipage}\]
 \subsection*{Valores}
 Los valores de la extensión de cálculo lambda particular son los valores con los que quiero operar en mis términos. Las operaciones que devuelven cosas que no reducen a algo de mi tipo, no son valores posibles. \\
 Ej.: $\tau ::= ... \mid Nil_{\sigma} \mid Bin(M, N, O)_{\sigma} \mid esRaiz(M) \mid esNil(M) \mid $ case M of Nil $\rightarrow$ N; Bin(i, r, d) $\rightarrow$ O \\
-De acá los valores de mi nueva extensión serían: $Nil_{\sigma}$ y $Bin(V, V, V)$. ¿Por qué case, esRaiz y esNil no? Porque no necesariamente aportan un valor diferente. \\
+De acá los valores de mi nueva extensión serían: $Nil_{\sigma}$ y $Bin(V, V, V)$. ¿Por qué case, esRaiz y esNil no? Porque no nos aportan ningun posible valor nuevo. \\
 Si reducimos raiz(M) va a terminar siendo, o bien un Nil o un Bin(V1, V2, V3) $\rightarrow$ V2 \\
 Si reducimos esNil(M) va a terminar siendo, o bien true o false que opera en base a un Nil o un Bin(V, V, V). \\
 \textbf{Importante}: ¿Qué pasa si hacemos \text{raiz(Nil)}? Explota (perdemos progreso, porque no puede reducirse más y no es un valor). En estos casos particulares que no está definido, no haríamos una regla de tipado para ese caso, y, si tenemos que hacer una macro, en el caso nil devolveríamos un $\bot$ del tipo de salida del case. 
@@ -1161,11 +1170,11 @@ Normalmente, tenemos una por cada término. No obstante, si el término tiene m�
 Ej.: $Bin(M, N, O)$ es un único término pero que tiene 3 subtérminos. Por lo tanto, tendría 3 reglas de congruencia para reducirlo a un valor. 
 \subsubsection*{Cantidad de Reglas de Cómputo (Semántica)}
 Normalmente tenemos una por valor. No obstante, si es una estructura tipo if/case tenemos más de una por cada posible salida. \\
-\textbf{Importante}: Si las salidas condicionales son un término que podría eventualmente tener variables libres, hay que sustituir esas variables libres por el valor correspondiente que deberán tener ligado. 
+\textbf{Importante}: Si las salidas condicionales son un término que podría eventualmente tener variables libres, hay que sustituir esas variables libres por el valor correspondiente que deberán tener ligado. \\
 \textbf{Importante}: Como estamos en call-by-value, \textbf{no reducimos ni casos then/else} de estructuras de control. Es decir, en un case, solo reduciriamos su guarda, y lo mismo en el if. 
 \subsubsection*{Cantidad de Reglas de Cómputo}
 Normalmente, agregamos una por cada término usando los valores del tipo reducido. No obstante, hay veces que un término tiene más de una regla de cómputo. \\
-Ej.: case
+Ej.: Un case reduce a dos posibles cosas. Por lo tanto, tendría dos reglas de cómputo. \\
 
 \section*{Inferencia de Tipos}
 \textbf{Términos \textcolor{red}{sin} anotaciones de tipos}: U :: = x | $\textcolor{red}{\lambda x.U}$ | U U | True | False | if U then U else U \\
