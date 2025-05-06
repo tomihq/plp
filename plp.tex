@@ -1142,7 +1142,7 @@ Ej.: $\tau ::= ... \mid Nil_{\sigma} \mid Bin(M, N, O)_{\sigma} \mid esRaiz(M) \
 De acá los valores de mi nueva extensión serían: $Nil_{\sigma}$ y $Bin(V, V, V)$. ¿Por qué case, esRaiz y esNil no? Porque no necesariamente aportan un valor diferente. \\
 Si reducimos raiz(M) va a terminar siendo, o bien un Nil o un Bin(V1, V2, V3) $\rightarrow$ V2 \\
 Si reducimos esNil(M) va a terminar siendo, o bien true o false que opera en base a un Nil o un Bin(V, V, V). \\
-\textbf{Importante}: ¿Qué pasa si hacemos \text{raiz(Nil)}? Explota. En estos casos particulares que no está definido, no haríamos una regla de tipado para ese caso, y, si tenemos que hacer una macro, en el caso nil devolveríamos un $\bot$ del tipo de salida del case. 
+\textbf{Importante}: ¿Qué pasa si hacemos \text{raiz(Nil)}? Explota (perdemos progreso, porque no puede reducirse más y no es un valor). En estos casos particulares que no está definido, no haríamos una regla de tipado para ese caso, y, si tenemos que hacer una macro, en el caso nil devolveríamos un $\bot$ del tipo de salida del case. 
 \subsection*{Cantidad de Reglas de Tipado}
 Agregamos, al menos una por cada término. 
 \subsubsection*{Reglas de tipado con términos con ocurrencias libres}
