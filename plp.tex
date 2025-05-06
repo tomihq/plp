@@ -1180,11 +1180,11 @@ Si tenemos una estructura del tipo condicional como un case, que devuelve un té
 \end{minipage}\]
 \subsubsection*{Cantidad de Reglas de Congruencia (Semántica)}
 Normalmente, tenemos una por cada término. No obstante, si el término tiene más de un argumento, va a tener esa cantidad. \\
-Ej.: $Bin(M, N, O)$ es un único término pero que tiene 3 subtérminos. Por lo tanto, tendría 3 reglas de congruencia para reducirlo a un valor. 
+Ej.: $Bin(M, N, O)$ es un único término pero que tiene 3 subtérminos. Por lo tanto, tendría 3 reglas de congruencia para reducirlo a un valor. \\
+\textbf{Importante}: Como estamos en call-by-value, \textbf{no reducimos ni casos then/else} de estructuras de control. Es decir, en un case, solo reduciriamos su guarda, y lo mismo en el if.
 \subsubsection*{Cantidad de Reglas de Cómputo (Semántica)}
 Normalmente tenemos una por valor. No obstante, si es una estructura tipo if/case tenemos más de una por cada posible salida. \\
 \textbf{Importante}: Si las salidas condicionales son un término que podría eventualmente tener variables libres, hay que sustituir esas variables libres por el valor correspondiente que deberán tener ligado. \\
-\textbf{Importante}: Como estamos en call-by-value, \textbf{no reducimos ni casos then/else} de estructuras de control. Es decir, en un case, solo reduciriamos su guarda, y lo mismo en el if. 
 \subsubsection*{Cantidad de Reglas de Cómputo}
 Normalmente, agregamos una por cada término usando los valores del tipo reducido. No obstante, hay veces que un término tiene más de una regla de cómputo. \\
 Ej.: Un case reduce a dos posibles cosas. Por lo tanto, tendría dos reglas de cómputo.
