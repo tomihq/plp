@@ -25,6 +25,6 @@ aplicar op n
     | otherwise = Just (componerTodas fun n)
             where fun = reverse(foldOpe
                         (\x -> [(+ x)])
-                        (\x -> [\n -> n `div` x])
+                        (\x -> [flip div x])
                         concat
                         (aplanar op))
