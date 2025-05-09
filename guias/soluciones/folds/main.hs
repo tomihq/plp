@@ -17,7 +17,7 @@ aplanar :: Operador -> Operador
 aplanar = foldOpe (\n -> Sumar n)(\n -> DividirPor n) (\r -> Secuencia(concatMap aplanarSecuencias r))
 
 componerTodas :: [a -> a] -> (a -> a)
-componerTodas = foldl (.) id
+componerTodas = foldl (.) id {-((F1 . F2) . F3) con foldr seria (F1 . (F2 . (F3))). id es para que cuando llegue al caso base simplemente retorne lo que armó-}
 
 aplicar :: Operador -> Int -> Maybe Int
 aplicar op n 
