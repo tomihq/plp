@@ -743,9 +743,15 @@ Entonces mergesort = insertionSort desde el lado extensional, porque hacen lo mi
 Sean $f, \ g :: a \rightarrow b$. \\
 \textbf{Principio de extensionalidad funcional}: Si $(\forall x :: a)(f \ x  =  g \ x) $ entonces $f=g$ \\
 El ppio. de extensionalidad funcional nos dice que si son funciones son iguales entonces son iguales punto a punto donde las evaluemos.
+\[\begin{minipage}[b]{1\textwidth}
+    \includegraphics[width=\linewidth]{assets/ext_funcional.jpg}
+\end{minipage}\]
 \section*{Lemas de Generación}
 Nos permite predicar sobre la forma de algo particular y nos da la ventaja de poder seguir estudiando algo particular y poder sacar ciertas conclusiones. \\
 \textbf{Importante}: Es súper común tener que aplicar este tipo de estrategias durante una demostración varias veces.   
+\[\begin{minipage}[b]{1\textwidth}
+    \includegraphics[width=\linewidth]{assets/ext_funcional_pares.jpg}
+\end{minipage}\]
 \subsection*{Lema de Generación de Booleanos}
 Dada una condición booleana, difurcamos en dos casos: o es verdadero, o es falso. \\
 Ej.: $e == x$ se separa en dos casos 
@@ -758,6 +764,15 @@ Dada una lista, que no sabemos que pinta tiene, podemos predicar sobre ella dici
 \begin{itemize}
     \item xs = []
     \item $\exists z::a, z::[a] \ / \ xs = (z:zs)$
+\end{itemize}
+\subsection*{Lema de Generación de Pares}
+Si p :: (a, b), entonces $\exists x::a . \exists y :: b. p(x,y)$
+\subsection*{Lema de Generación de Sumas}
+data Either a b = Left a $\mid$ Right b \\
+Si $e::Either \ a \ b$ entonces 
+\begin{itemize}
+    \item $\exists x::a. e = Left(x)$
+    \item $\exists y::b. e = Right(y)$
 \end{itemize}
 \subsection*{Demostración de Desigualdades}
 ¿Cómo demostramos que no vale una igualdad e1 = e2 :: A? \\
