@@ -1055,9 +1055,13 @@ Lo importante es acordarse que
     \item Si en el contexto tenés algo que NO te sirve para tipar en M, entonces podés sacarlo que no te va a afectar en nada (strengthening).
 \end{itemize}
 \subsubsection*{Tipos Habitados}
-Uu tipo está habitado si existe un término M tal que el juicio $\vdash M:\tau$ es derivable. \\
-Por ejemplo, si nos piden algo que cumpla $\vdash M:(\tau \rightarrow \rho) \rightarrow (\sigma \rightarrow \tau) \rightarrow (\sigma \rightarrow \rho)$. \\
-Podemos notar que una función que haga esto, sería la composición: $\lambda f:\tau \rightarrow e . \lambda g :\sigma \rightarrow \tau . \lambda x:\sigma . f (gx)$ o mejor escrita $(\lambda f:\tau \rightarrow e) (\lambda g :\sigma \rightarrow \tau)(\lambda x:\sigma) (f (gx))$
+Uu tipo está habitado si existe un término M tal que el juicio $\vdash M:\tau$ es derivable. 
+\[\begin{minipage}[b]{1\textwidth}
+    \includegraphics[width=\linewidth]{assets/tipo_habitado.jpg}
+\end{minipage}\]
+\[\begin{minipage}[b]{1\textwidth}
+    \includegraphics[width=\linewidth]{assets/tipo_habitado_2.jpg}
+\end{minipage}\]
 \subsection*{Semántica Formal}
 Nos permite darle significado a nuestros programas.
 \begin{itemize}
@@ -1070,7 +1074,9 @@ Nos permite darle significado a nuestros programas.
     \item \textbf{Semántica Axiomática}: Establece relaciones lógicas entre el estado del programa antes y después de la ejecución.
 \end{itemize}
 \subsubsection*{Forma Normal}
-Un término está en forma normal cuando no existe ninguna regla que lo reduzca a otro.
+Un término está en forma normal cuando no existe ninguna regla que lo reduzca a otro. \\
+Hay casos donde a la forma normal donde redujo es un valor o un error. \\
+Ej.: pred(zero) no está definido como valor, por lo tanto es un error. Pero $(\lambda x:Bool. x) \ true \rightarrow true$ está en forma normal y reduce a true.
 \subsubsection*{Determinismo}
 Cuando cada término que \textbf{NO} está en forma normal tiene una única forma de reducir.
 \subsubsection*{Estrategia de Reducción}
@@ -1081,7 +1087,7 @@ Es un término M tipable y cerrado (fv(M) = $\emptyset$) que debe ser derivable 
 \subsubsection*{Juicios de Evaluación}
 La semántica operacional hace afirmaciones sobre juicios de evaluación $M \rightarrow N$ donde M y N son programas.
 \subsubsection*{Valores}
-Los valores son los posibles resultados de evaluar programas, se definen como los términos cerrados y bien tipados V producidos por la gramática de valores. \\
+Los valores son los resultados de evaluar programas, se definen como los términos cerrados y bien tipados V producidos por la gramática de valores. \\
 La estrategia call-by-value define los siguientes valores: $V ::= true \ | \ false \ | \ \lambda x:\sigma.M$, estos ya tienen todos sus parámetros completamente reducidos, de lo contrario, no serían valores. \\
 \textbf{Ej.}: $V ::= \ \dots \ | \ Nil \ | \ Bin(V, V, V)$ corresponde a los valores de trabajar con un árbol binario. 
 \subsubsection*{Obtener Valores}
@@ -1134,7 +1140,7 @@ Cuando el término está en forma normal pero no es un valor.
 Es útil cuando necesitamos devolver una respuesta en un caso inválido con un tipo específico. \\
 Ej.: $raiz_{\sigma}$ = $\lambda x:AB$ $\sigma \rightarrow$ case x of $Nil_{\sigma} \rightarrow$  $\bot_{\sigma} \mid$  Bin(i, r, d) $\rightarrow$ r
 \subsubsection*{Anotación de Tipo (Tipo Anotado)}
-Un término tiene anotación de tipo cuando se indica, en el término, su tipo. Ej.: $Nil_{\sigma}$ 
+Un término tiene anotación de tipo cuando se indica, en el término, su tipo. Ej.: $Nil_{\sigma}$
 \subsubsection*{Subtérmino}
 Un subtérmino no es más que un término dentro de otro término. \\
 Ej.: $Bin(M, N, O)$ el término es Bin y los subtérminos son $M$, $N$ y $O$. \\
@@ -1147,13 +1153,30 @@ Ej.: Macro que nos dice si un arbol es Nil o no. \\
 $esNil = \lambda x: AB_{\sigma} \rightarrow$ case x of $Nil_{\sigma} \rightarrow True \mid Bin(i, r, d) \rightarrow False$
 \subsection*{Extensiones del Cálculo Lambda}
 Voy a escribir un par de tips o cosas interesantes que encontré, y después voy a escribir algunos ejercicios como guía que justamente utilizan estos tips. \\
-En las reglas de tipado tenemos contexto, en las reglas de semántica, no. Hay una \textbf{pequeña excepción}, y es, cuando necesitamos de antemano conocer como dato el tipo de salida de una función a la hora de aplicar la regla de semántica. 
+\textbf{Tipos y Recursión en Semántica}: En las reglas de tipado tenemos contexto, en las reglas de semántica, no. Hay una \textbf{pequeña excepción}, y es, cuando necesitamos de antemano conocer como dato el tipo de salida de una función a la hora de aplicar la regla de semántica. 
+1.
 \[\begin{minipage}[b]{1\textwidth}
     \includegraphics[width=\linewidth]{assets/tipos_semantica.jpg}
 \end{minipage}\]
-\textbf{La excepción de hablar de tipos acá, en este caso particular en semántica, viene a que Nil como es un tipo anotado y ser inicialmente $Nil_{\tau}$ al aplicarle el map, necesitamos saber en qué se convierte ese $\tau$. En el caso del BIN no pasa porque no tiene un tipo anotado.}
+\textbf{La excepción de hablar de tipos acá, en este caso particular en semántica, viene a que Nil como es un tipo anotado y ser inicialmente $Nil_{\tau}$ al aplicarle el map, necesitamos saber en qué se convierte ese $\tau$. En el caso del BIN no pasa porque no tiene un tipo anotado.} \\
+
+2. Tenemos que modelar colas bidireccionales y se nos pide realizar las siguientes operaciones: proximo(M) y desencolar(M) con los siguientes valores: $<>_{\sigma}, V1 \cdot V2$ donde V1 es la cola de la lista y V2 es el último elemento agregado. \\
+Como proximo(M) y desencolar(M) son funciones que laburan con el \textbf{primer elemento de la cola} y no el último, tenemos que hacer recursión sobre las reglas hasta llegar al caso vacío o al caso que tiene al menos un elemento. \\
+El problema, es que, si no lo explícitamos bien perdemos determinismo. ¿Por qué? \\
+proximo($V1 \cdot V2$) $\rightarrow$ proximo($V2$). En este caso estaríamos haciendo recursión tantas veces sea necesario para llegar al primer elemento encolado pero ¿qué pasa con si V1 es vacío?, entonces agregamos proximo($<>_{\sigma} \cdot V2$) $\rightarrow$ V2 pero hay un problema. Tenemos dos posibles reglas para aplicar (porque no sabemos que es V1 en proximo($V1 \cdot V2$)) por lo tanto perderíamos determinismo. ¿Cómo podríamos recuperarlo? Haciendo que la primera regla que usamos sea proximo($(V1 \cdot V2) \cdot V3$) $\rightarrow$ proximo($V1 \cdot V2$)
+\[\begin{minipage}[b]{1\textwidth}
+    \includegraphics[width=\linewidth]{assets/dequeue.jpg}
+\end{minipage}\]
+\textbf{A nivel enunciado, para notar esto de $(V1 \cdot V2) \cdot V3$ te lo mencionan como: "puede ser necesario mirar más de un nivel de un término para saber a qué reduce"} \\
+3.Añadir la función de map para listas. 
+\[\begin{minipage}[b]{1\textwidth}
+    \includegraphics[width=\linewidth]{assets/map_tipado.jpg}
+\end{minipage}\]
+\[\begin{minipage}[b]{1\textwidth}
+    \includegraphics[width=\linewidth]{assets/map_congruencia.jpg}
+\end{minipage}\]
 \subsection*{Valores}
-Los valores de la extensión de cálculo lambda particular son los términos reducidos de mi extensión que representan mi tipo en forma irreducible. 
+Los valores son los términos que ya están completamente evaluados y no se les puede aplicar ninguna regla de evaluación adicional. En una extensión del cálculo lambda, los valores se definen inductivamente según la estructura del tipo
 \subsubsection*{Valores en Árboles Binarios}
 $\sigma ::= ... \mid AB_{\sigma}$ \\\
 $M = ::= ... \mid Nil_{\sigma} \mid Bin(M, N, O)_{\sigma} \mid esRaiz(M) \mid esNil(M) \mid $ case M of Nil $\rightarrow$ N; Bin(i, r, d) $\rightarrow$ O \\
@@ -1165,8 +1188,8 @@ Si reducimos esNil(M) va a terminar siendo, o bien true o false que opera en bas
 $\sigma ::= ... \mid \sigma + \sigma$ \\
 $M ::= ... \mid left_{\sigma}(M) \mid right_{\sigma}(M) \mid$ case M of $left(x) \rightarrow M \mid right(y) \rightarrow M$ \\
 De acá, los valores de mi nueva extensión que representan a mi tipo son: $V ::= ... \mid left_{\sigma}(V) \mid right_{\sigma}(V)$. Los del case no aportan nada porque podrían devolver cualquier cosa que no tengan la forma de mis nuevos términos.
-\subsection*{Cantidad de Reglas de Tipado}
-Agregamos, al menos una por cada término. 
+\subsection*{Reglas de Tipado}
+Agregamos, al menos una por cada término nuevo que se introduce. 
 \subsubsection*{Reglas de tipado con términos con ocurrencias libres}
 Si tenemos una estructura del tipo condicional como un case, que devuelve un término que puede tener variables libres, entonces, en el contexto de ese caso, tenemos que añadir las variables que necesite. 
 \[\begin{minipage}[b]{1\textwidth}
@@ -1178,13 +1201,26 @@ Si tenemos una estructura del tipo condicional como un case, que devuelve un té
 \[\begin{minipage}[b]{1\textwidth}
     \includegraphics[width=\linewidth]{assets/recr_lambda.jpg}
 \end{minipage}\]
+\subsection*{Reglas de Semántica}
+No ponemos ningún tipo en semántica porque asumimos que todo está bien tipado. \\
+\textbf{Nota}: Colocamos solamente las anotaciones de tipos en los términos correspondientes.
 \subsubsection*{Cantidad de Reglas de Congruencia (Semántica)}
 Normalmente, tenemos una por cada término. No obstante, si el término tiene más de un argumento, va a tener esa cantidad. \\
 Ej.: $Bin(M, N, O)$ es un único término pero que tiene 3 subtérminos. Por lo tanto, tendría 3 reglas de congruencia para reducirlo a un valor. \\
 \textbf{Importante}: Como estamos en call-by-value, \textbf{no reducimos ni casos then/else} de estructuras de control. Es decir, en un case, solo reduciriamos su guarda, y lo mismo en el if.
 \subsubsection*{Cantidad de Reglas de Cómputo (Semántica)}
 Normalmente tenemos una por valor. No obstante, si es una estructura tipo if/case tenemos más de una por cada posible salida. \\
-\textbf{Importante}: Si las salidas condicionales son un término que podría eventualmente tener variables libres, hay que sustituir esas variables libres por el valor correspondiente que deberán tener ligado. \\
+\textbf{Importante}: Si las salidas condicionales son un término que podría eventualmente tener variables libres, hay que sustituir esas variables libres por el valor correspondiente que deberán tener ligado.
+\subsubsection*{Reemplazando ocurrencias libres en llamados recursivos o estructuras lazy}
+\[\begin{minipage}[b]{1\textwidth}
+    \includegraphics[width=\linewidth]{assets/tipado_listas.jpg}
+\end{minipage}\]
+\[\begin{minipage}[b]{1\textwidth}
+    \includegraphics[width=\linewidth]{assets/foldr_listas.jpg}
+\end{minipage}\]
+\[\begin{minipage}[b]{1\textwidth}
+    \includegraphics[width=\linewidth]{assets/foldr_listas_2.jpg}
+\end{minipage}\]
 \subsubsection*{Cantidad de Reglas de Cómputo (Semántica)}
 Normalmente, agregamos una por cada término usando los valores del tipo reducido. No obstante, hay veces que un término tiene más de una regla de cómputo. \\
 Ej.: Un case reduce a dos posibles cosas. Por lo tanto, tendría dos reglas de cómputo.
@@ -1202,8 +1238,6 @@ Ahora sí, adjunto reglas para un ejemplo con árboles binarios y reducción de 
 \[\begin{minipage}[b]{1\textwidth}
     \includegraphics[width=\linewidth]{assets/reduccion_un_paso_ab.jpg}
 \end{minipage}\]
-
-
 \section*{Inferencia de Tipos}
 \textbf{Términos \textcolor{red}{sin} anotaciones de tipos}: U :: = x | $\textcolor{red}{\lambda x.U}$ | U U | True | False | if U then U else U \\
 \textbf{Términos \textcolor{blue}{con} anotaciones de tipos}: U :: = x | $\textcolor{blue}{\lambda x.M}$ | M M | True | False | if U then U else U
