@@ -1147,10 +1147,15 @@ Ej.: $Bin(M, N, O)$ el término es Bin y los subtérminos son $M$, $N$ y $O$. \\
 Ej.: Case M of Nil $\rightarrow$ True $\mid$ Bin(i, r, d) $\rightarrow$ False, el término es el case y los subtérminos son True y False.
 \subsubsection*{Macros}
 Son un reemplazo sintáctico, no se computan. Se arman utilizando lambdas y los términos que tengamos disponibles. \\
-Ej.: Digamos que necesitamos currificar en base una función y dos parámetros. \\
+\textbf{Ej.}: Digamos que necesitamos currificar en base una función y dos parámetros. \\
 $Curry_{\sigma, \tau, \delta} = \lambda f:(\sigma, \tau) \rightarrow \delta . \lambda x:\sigma .\lambda y:\tau . f(x,y)$ \\
-Ej.: Macro que nos dice si un arbol es Nil o no. \\
-$esNil = \lambda x: AB_{\sigma} \rightarrow$ case x of $Nil_{\sigma} \rightarrow True \mid Bin(i, r, d) \rightarrow False$
+
+\textbf{Ej.}: Macro que nos dice si un arbol es Nil o no. \\
+$esNil = \lambda x: AB_{\sigma} \rightarrow$ case x of $Nil_{\sigma} \rightarrow True \mid Bin(i, r, d) \rightarrow False$ \\
+
+\textbf{Ej.}: Realice un macro de AND para usarlo de la siguiente forma $AND \ M \ N$. \\
+Lo primero que tenemos que entender es cómo definimos la macro. Como son dos términos M y N que serán completamente reducidos y serán verificables a nivel booleanos, entonces, serán de tipo booleano. \\
+Luego, nos queda: $AND = \lambda x: Bool . \lambda y: Bool$. if x then y else False
 \subsection*{Extensiones del Cálculo Lambda}
 Voy a escribir un par de tips o cosas interesantes que encontré, y después voy a escribir algunos ejercicios como guía que justamente utilizan estos tips. \\
 \textbf{Tipos y Recursión en Semántica}: En las reglas de tipado tenemos contexto, en las reglas de semántica, no. Hay una \textbf{pequeña excepción}, y es, cuando necesitamos de antemano conocer como dato el tipo de salida de una función a la hora de aplicar la regla de semántica. 
