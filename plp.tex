@@ -682,7 +682,8 @@ Existen 3 formas conocidas de demostrar cosas, por lo menos en la materia lo hac
         \item Digamos que del lado izquierdo para aplicar la HI tuvimos que entrar a varios casos, por ejemplo: xs = (z:zs), e == z. Si llegamos a una respuesta trivial del lado izquierdo entonces desarrollamos el lado derecho asumiendo que xs tiene la pinta (z:zs) y efectivamente e == z. Esto nos hará todo mucho más corto.  
     \end{itemize}
 \end{itemize}
-Estas estrategias, las dejaré en el anexo para que claramente se note su diferencia y ventajas en cada caso. 
+Estas estrategias, las dejaré en el anexo para que claramente se note su diferencia y ventajas en cada caso. \\
+\textbf{Good to Know: Si tenés que probar $A \ge B$ y empezás desarrollando el lado derecho y aplicás HI, tenés que decir, que como la HI te manda desde B a A entonces lo que tenías antes (B) es más chico. Se nota así: $\stackrel{HI}{\le} A$}. Después agarrarías el lado izquierdo y finalizarías diciendo $A \ge A$ y es verdadero por int, o alguna cosa así.
 \subsection*{Inducción sobre booleanos}
 Si $\mathcal{P}(True)$ y $\mathcal{P}(False)$ entonces $\forall x :: Bool \ \mathcal{P} (x)$ 
 \[\begin{minipage}[b]{0.7\textwidth}
@@ -742,17 +743,17 @@ Entonces mergesort = insertionSort desde el lado extensional, porque hacen lo mi
 Sean $f, \ g :: a \rightarrow b$. \\
 \textbf{Principio de extensionalidad funcional}: Si $(\forall x :: a)(f \ x  =  g \ x) $ entonces $f=g$ \\
 El ppio. de extensionalidad funcional nos dice que si son funciones son iguales entonces son iguales punto a punto donde las evaluemos.
-\section*{Principio de Extensionalidad}
+\section*{Lemas de Generación}
 Nos permite predicar sobre la forma de algo particular y nos da la ventaja de poder seguir estudiando algo particular y poder sacar ciertas conclusiones. \\
 \textbf{Importante}: Es súper común tener que aplicar este tipo de estrategias durante una demostración varias veces.   
-\subsection*{Principio de Extensionalidad de Booleanos}
+\subsection*{Lema de Generación de Booleanos}
 Dada una condición booleana, difurcamos en dos casos: o es verdadero, o es falso. \\
 Ej.: $e == x$ se separa en dos casos 
 \begin{itemize}
     \item e == x = true 
     \item e == x = false
 \end{itemize}
-\subsection*{Principio de Extensionalidad sobre Listas}
+\subsection*{Lema de Generación sobre Listas}
 Dada una lista, que no sabemos que pinta tiene, podemos predicar sobre ella diciendo que tenemos dos casos 
 \begin{itemize}
     \item xs = []
