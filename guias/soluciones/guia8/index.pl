@@ -77,9 +77,10 @@ borrar([H | T], E, [H | Ls]) :- E \=H,  borrar(T, E, Ls).
 vacio(nil).
 raiz(bin(I, R, D), R). 
 
-% plego izq y plego der. Cuando llego al final sumo las dos ramas, y a su vez, acumulo 1 + AI + AD. La recursion hace el resto con el + 1 + 1 todo el tiempo.
+% plego izq y plego der. Cuando llego al final hago 1 + max(AI, AD)
 altura(nil, 0).
 altura(bin(I, R, D), A) :- altura(I, AI), altura(D, AD), AT is max(AI, AD), A is 1 + AT.
 
+% plego izq y plego der. Cuando llego al final sumo las dos ramas, y a su vez, acumulo 1 + AI + AD. La recursion hace el resto con el + 1 + 1 todo el tiempo.
 cantNodos(nil, 0).
 cantNodos(bin(I, R, D), A) :- cantNodos(I, AI), cantNodos(D, AD), A is 1 + AI + AD.
