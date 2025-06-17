@@ -1,1 +1,0 @@
-aplanar([E], [E]) :- atomic(E).
