@@ -31,4 +31,4 @@ sacarDuplicados([X | XS], L2) :- borrar(XS, X, LSE), sacarDuplicados(LSE, RR), a
 % +L = [1, 2, 3] N = 3, LListas: append(Lista1, ResRecursivo, L), al final sucede que length(Llistas, N).
 % ¿Hay una limitación sobre la cantidad de elementos en cada sublista? No. La realidad es que lo unico que tiene que cumplr Llistas es que sea de longitud N (tenga N listas adentro) y concatenadas den L.
 reparto(X, 1, [X]).
-reparto(L, N, [X | Ls]) :-   N > 1, M is N-1, append(X, Xs, L), reparto(Xs, M, Ls).
+reparto(L, N, [X | Ls]) :- N > 1, M is N-1, append(X, Xs, L), reparto(Xs, M, Ls).
