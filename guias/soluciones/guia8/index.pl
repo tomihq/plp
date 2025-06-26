@@ -84,3 +84,5 @@ altura(bin(I, R, D), A) :- altura(I, AI), altura(D, AD), AT is max(AI, AD), A is
 % plego izq y plego der. Cuando llego al final sumo las dos ramas, y a su vez, acumulo 1 + AI + AD. La recursion hace el resto con el + 1 + 1 todo el tiempo.
 cantNodos(nil, 0).
 cantNodos(bin(I, R, D), A) :- cantNodos(I, AI), cantNodos(D, AD), A is 1 + AI + AD.
+
+memberDeterministico(X, L) :- append(S, [X | _], L), not(memberDeterministico(X, S)).

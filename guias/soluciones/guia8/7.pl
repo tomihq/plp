@@ -1,47 +1,22 @@
+% X es un miembro de la lista L si existe una partición S y [X | _] tal que al hacer append(S, [X | _], L) da como resultado L, y además X no aparece en S. %
+memberDeterministico(X, L) :- append(S, [X | _], L), not(memberDeterministico(X, S)).
+
 % interseccion(+L1, +L2, -L3). El caso base es que si la lista es vacia en L1 entonces L3 tambien.%
-/* 
-    Preguntar: usé un cut porque no sabía como eliminar los duplicados (salen del member), te da dos true true si el elem está dos veces.
-*/
 interseccion([], _, []).
-interseccion([X | XS], L2, [X | L3]) :- member(X, L2), interseccion(XS, L2, L3), !, not(member(X, L3)).
-interseccion([X | XS], L2, L3) :- not(member(X, L2)), interseccion(XS, L2, L3).
+interseccion([X | XS], L2, [X | L3]) :- interseccion(XS, L2, L3), memberDeterministico(X, L2).
+interseccion([X | XS], L2, L3) :- interseccion(XS, L2, L3), not(memberDeterministico(X, L2)).
 
 %partir(N, L, L1, L2) donde L1 tiene los primeros N elementos de L y L2 el resto.%
-/* 
-    ¿Qué significa esto? Bueno, 
-    L1 tiene N elementos.
-    L2 tiene N elementos.
-    y L1 + L2 = L osea append(L1, L2, L).
-    
-*/ 
-
+% ¿Qué significa esto? Bueno, L1 tiene N elementos. L2 tiene N elementos y L1 + L2 = L osea append(L1, L2, L).
 partir(N, L, L1, L2) :- length(L, LL), LL >= N, length(L1, N), length(L2, N), append(L1, L2, L).
 
-%borrar(+L, +X, -Ls)%
-/* 
-    ¿Qué significa esto? 
-        La longitud de Ls será longitud total - cant apariciones elemento.
-        X no está en Ls.
-*/
+%borrar(+L, +X, -LSD) que elimina todas las ocurrencias de X en L. %
+borrar([], X, []).
+borrar([E | XS], X, LSD) :- E \= X, borrar(XS, X, R), append([E], R, LSD). 
+borrar([X | XS], X, LSD) :- borrar(XS, X, LSD).  
 
-/* 
+%sacarDuplicados(+L1, -L2).%
+%% La lista sin duplicados de L1 es una lista que contiene exactamente una aparición de cada elemento que aparece en L1, respetando el orden de su primera aparición. Para construirla, tomamos el primer elemento X de la lista y lo incluimos en la salida. Luego eliminamos todas sus ocurrencias en el resto de la lista (XS), obteniendo una nueva lista LSE sin X. Aplicamos recursivamente el mismo procedimiento sobre LSE, y concatenamos X con el resultado.
+sacarDuplicados([], []).
+sacarDuplicados([X | XS], L2) :- borrar(XS, X, LSE), sacarDuplicados(LSE, RR), append([X], RR, L2). 
 
-    Preguntar: usé un cut porque no sabia como eliminar los duplicados
-                  [1,2,3,1]
-                  /         \
-     quitar 1° ocurrencia   quitar 2° ocurrencia
-           |                        |
-        [2,3,1]                  [1,2,3]
-           |                        |
-        quitar 1                 quitar 1
-           |                        |
-         [2,3]                   [2,3]   ← mismas soluciones
-*/
-borrar(L, X, R) :- not(member(X, L)), R = L.
-borrar(L, X, R) :- append(A, [X | B], L), append(A, B, L1), !, borrar(L1, X, R).
-
-cantApariciones([], X, 0).
-cantApariciones([X | XSS], X, T) :-  cantApariciones(XSS, X, R), T is R+1.
-cantApariciones([E | XSS], X, T) :- E \=X, cantApariciones(XSS, X, T).
-
-/* sacarDuplicados(L1, L2) :-  */
