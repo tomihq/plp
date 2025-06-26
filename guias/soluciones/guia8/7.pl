@@ -20,3 +20,15 @@ borrar([X | XS], X, LSD) :- borrar(XS, X, LSD).
 sacarDuplicados([], []).
 sacarDuplicados([X | XS], L2) :- borrar(XS, X, LSE), sacarDuplicados(LSE, RR), append([X], RR, L2). 
 
+%permutación(+L1, ?L2)
+%member acá no nos interesa porque podemos tener repetidos. Solo usamos append. El desafío acá es intercalar la cabeza de cada lista.
+% [1, 2]. Suponemos que la lista vacía y la lista con un elemento ya esta permutada.
+% [] -> [].
+% [1] -> [1], [2] -> [2]
+% [1, 2] -> [1] ++ [2] o [2] ++ [1]
+
+%reparto(+L, +N, -LListas): que da true si LListas es UNA LISTA de N listas (N>=1) de cualquier longitud tales que al concatenarlas se obtiene la lista L.
+% +L = [1, 2, 3] N = 3, LListas: append(Lista1, ResRecursivo, L), al final sucede que length(Llistas, N).
+% ¿Hay una limitación sobre la cantidad de elementos en cada sublista? No. La realidad es que lo unico que tiene que cumplr Llistas es que sea de longitud N (tenga N listas adentro) y concatenadas den L.
+reparto(X, 1, [X]).
+reparto(L, N, [X | Ls]) :-   N > 1, M is N-1, append(X, Xs, L), reparto(Xs, M, Ls).
