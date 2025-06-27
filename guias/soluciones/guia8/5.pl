@@ -4,7 +4,7 @@ last(L, U) :- append(_, [U], L).
 
 % reverse(+L, ?R) %
 reverseL([], []).
-reverseL(L, [X | R]) :- append(S, [X | _], L), reverse(S, R).
+reverseL(L, [X | R]) :- append(S, [X], L), reverseL(S, R).
 
 % prefijo(?P, +L) %
 /* Da true si y solo sí P es un prefijo de P. La idea es que ?P + cualquierCosa = L*/
