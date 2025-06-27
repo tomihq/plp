@@ -20,4 +20,4 @@ sublista(S, L) :- sufijo(S1, L), prefijo(S, S1).
 %Podemos validar si X es la cabeza de algún sufijo. [1, 2, 3, 4] -> [], [4], [3, 4], [2, 3, 4], [1, 2, 3, 4]%
 pertenece(X, L) :- sufijo(S1, L), S1 \= [], S1 = [X | _].
 
-perteneceB(X, L) :- append(S, [X |_], L]. 
+perteneceB(X, L) :- append(S, [X |_], L).
