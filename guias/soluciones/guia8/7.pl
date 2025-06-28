@@ -14,7 +14,7 @@ partir(N, L, L1, L2) :- length(L, LL), LL >= N, length(L1, N), length(L2, N), ap
 borrar([], X, []).
 borrar([E | XS], X, LSD) :- E \= X, borrar(XS, X, R), append([E], R, LSD). 
 borrar([X | XS], X, LSD) :- borrar(XS, X, LSD).  
-
+%o la segunda clausula podria ser borrar([E | XS], X, [E|R]) :- E \= X, borrar(XS, X, R). 
 %sacarDuplicados(+L1, -L2).%
 %% La lista sin duplicados de L1 es una lista que contiene exactamente una aparición de cada elemento que aparece en L1, respetando el orden de su primera aparición. Para construirla, tomamos el primer elemento X de la lista y lo incluimos en la salida. Luego eliminamos todas sus ocurrencias en el resto de la lista (XS), obteniendo una nueva lista LSE sin X. Aplicamos recursivamente el mismo procedimiento sobre LSE, y concatenamos X con el resultado.
 sacarDuplicados([], []).
