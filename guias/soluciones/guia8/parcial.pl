@@ -1,9 +1,11 @@
 estudiante(juan).
 estudiante(maria).
+estudiante(nicolas).
 
 nota(juan, plp, 3).
 nota(juan, plp, 9).
 nota(maria, tlen, 2).
+nota(nicolas, tda, 9). 
 
 notas(XS) :- findall((E, M, N), nota(E, M, N), XS).
 
@@ -19,3 +21,5 @@ listaNotasEstudiante([NME | LS], E, [N | NE]) :- NME = (E, _, N), listaNotasEstu
 listaNotasEstudiante([NME | LS], E, NE) :- NME = (E2, _, _), E \= E2, listaNotasEstudiante(LS, E, NE).
 
 promedio(A, P) :- estudiante(A), notas(XS), eliminarAplazos(XS, NSA), listaNotasEstudiante(NSA, A, LNE), sum_list(LNE, S), length(LNE, L), P is S//L.
+
+mejorPromedio(A) :- estudiante(A), promedio(A, P), not((estudiante(B), promedio(B, P2), P2 > P)).
