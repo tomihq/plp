@@ -2,7 +2,7 @@
 iesimo(0, [X | XS], X).
 iesimo(N, [X | XS], E) :- N2 is N-1, iesimo(N2, XS, E).  
 
-%iesimoReversible(?N, +L, -E) obtenga el iesimo elemento de una lista
+%iesimoReversible(?I, +L, -E) obtenga el iesimo elemento de una lista
 iesimoReversible(I, L, E) :- length(L, LL), between(0, LL, I), iesimo(I, L, E).
 
 
