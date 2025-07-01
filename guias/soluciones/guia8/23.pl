@@ -13,14 +13,15 @@ arbol(A) :- desde(1, N), arbolConProfundidad(N, A).
 
 %generarArbolProfundidad(+N, -A)
 arbolConProfundidad(0, nil). 
-arbolConProfundidad(N, bin(L, _, R)) :-
+arbolConProfundidad(N, bin(I, _, D)) :-
     N > 0,
-    N1 is N - 1,
-    between(0, N1, NL),
-    NR is N1 - NL,
-    arbolConProfundidad(NL, L),
-    arbolConProfundidad(NR, R).
+    NR is N - 1,
+    between(0, NR, NI),
+    ND is NR - NI,
+    arbolConProfundidad(NI, I),
+    arbolConProfundidad(NR, D).
 
+% NR: nodos restantes, NI: nodos a izquierda, ND: nodos a derecha (cota max (NR - asignados a izq)
 %nodosEn(?A, +L): Tengo que gastar la lista de elementos poniendo cada elemento en cada posible raíz. 
 %Tengo varias opciones: Ponerlo o no ponerlo en este paso.
 nodosEn(nil, []).
