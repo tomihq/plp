@@ -34,6 +34,7 @@ reparto(X, 1, [X]).
 reparto(L, N, [X | Ls]) :- N > 1, M is N-1, append(X, Xs, L), reparto(Xs, M, Ls).
 
 
-%insertar(+L, +E, +I, -R) que inserta el elemento E en la lista L en la posición I.
+%insertar(+L, +E, ?I, -R) que inserta el elemento E en la lista L en la posición I.
 %La idea es garantizar que inicialmente L1 y L2 daban L (para garantizar que L1 y L2 tengan los elementos que hay en L). 
-insertar(L, E, I, R) :- append(L1, L2, L), length(L1, I), append(L1, [E | L2], R). 
+insertar(L, E, I, R) :- var(I), append(L1, L2, L), append(L1, [E | L2], R), length(L1, I).
+insertar(L, E, I, R) :- nonvar(I), append(L1, L2, L), length(L1, I), append(L1, [E | L2], R). 

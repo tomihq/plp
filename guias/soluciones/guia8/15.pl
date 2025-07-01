@@ -21,7 +21,8 @@ perimetro(T, P) :- not(ground(T)), var(P), % c.i
 
 
 %Si el perimetro está dado tengo que encontrar nros A + B + C que sumen P. Cada uno es máximo P.
-triplasQueSuman(A, B, C, P) :- desde(0, P), between(0, P, A), between(0, P, B), C is P-A-B, C>0.
+%triplasQueSuman(-A, -B, -C, +P)
+triplasQueSuman(A, B, C, P) :- desdeReversible(0, P), between(0, P, A), between(0, P, B), C is P-A-B, C>0.
 
 %triangulo(-T) genera todos los triangulos
 triangulo(T) :- perimetro(T, _).
