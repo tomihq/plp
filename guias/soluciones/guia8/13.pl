@@ -19,4 +19,12 @@ coprimosOld(X, Y) :- desde(0, S), X is S, between(1, S, Y), X >0, Y > 0, gcd(S, 
     N = 3 → (3,0), (2,1), (1,2), (0,3)
     luego se filtran los que cumplen X > 0, Y > 0 y gcd(X, Y) = 1.
 */
-coprimos(X, Y) :- desde(0, N), between(0, N, X), Y is N-X, X > 0, Y > 0, gcd(X, Y, P), P is 1.
+
+%coprimos(-X, -Y)
+coprimos(X, Y) :- generarPares(X, Y), X > 0, Y > 0, gcd(X, Y, P), P is 1.
+
+%generarPares(-X, -Y)
+generarPares(X, Y) :- desde(0, N), paresQueSuman(N, X, Y).
+
+%paresQueSuman(+N, -X, -Y)
+paresQueSuman(N, X, Y) :- between(0, N, X), Y is N-X.
