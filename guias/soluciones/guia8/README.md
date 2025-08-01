@@ -1,0 +1,1 @@
+En mis apuntes de la guia (en papel), dejé muchos "?" que luego quedaron resueltos. En dudas particulares de cómo se hacen los árboles de Prolog y como vas eligiendo y cambiando el goal, eso mejor revisá en la guía de resolución que la mayoría de ejercicios los hice con un JTP al lado y me los corrigió. 
